@@ -11,6 +11,7 @@
             --primary-color: #10B981;
             --primary-dark: #059669;
             --primary-light: #34D399;
+            --emerald-glow: #10B981;
             --discord-color: #5865F2;
             --discord-dark: #4752C4;
             --text-color: #1F2937;
@@ -21,32 +22,31 @@
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            --gradient: linear-gradient(135deg, #10B981 0%, #047857 100%);
             --discord-gradient: linear-gradient(135deg, var(--discord-color) 0%, var(--discord-dark) 100%);
-            --gradient-rainbow: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #f093fb 100%);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
         }
-        
+
         body {
             color: var(--text-color);
             line-height: 1.6;
             background-color: var(--light-bg);
             overflow-x: hidden;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
-        /* Header Styles - Enhanced */
+
+        /* ── HEADER ── */
         header {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
             backdrop-filter: blur(10px);
@@ -57,50 +57,67 @@
             transition: var(--transition);
             border-bottom: 1px solid rgba(16, 185, 129, 0.1);
         }
-        
+
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            padding: 12px 0;
         }
-        
+
+        /* ── LOGO: ACTUAL EMERALD GEM ── */
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
             font-weight: 800;
             font-size: 24px;
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.45));
+            transition: var(--transition);
+        }
+
+        .logo-icon svg:hover {
+            filter: drop-shadow(0 0 24px rgba(16, 185, 129, 0.7)) scale(1.05);
+            transform: rotate(-4deg);
+        }
+
+        .logo-text {
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-decoration: none;
-            transition: var(--transition);
+            font-size: 26px;
+            letter-spacing: -0.5px;
         }
-        
-        .logo i {
-            font-size: 32px;
-            transition: var(--transition);
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        .logo:hover .logo-icon svg {
+            transform: rotate(-6deg) scale(1.04);
         }
-        
-        .logo:hover {
-            transform: translateY(-2px);
-        }
-        
-        .logo:hover i {
-            transform: rotate(20deg) scale(1.1);
-        }
-        
+
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 28px;
         }
-        
+
         nav a {
             text-decoration: none;
             color: var(--text-color);
@@ -108,8 +125,9 @@
             transition: var(--transition);
             position: relative;
             padding: 5px 0;
+            font-size: 15px;
         }
-        
+
         nav a:after {
             content: '';
             position: absolute;
@@ -121,22 +139,23 @@
             transition: var(--transition);
             border-radius: 2px;
         }
-        
+
         nav a:hover {
             color: var(--primary-color);
         }
-        
+
         nav a:hover:after {
             width: 100%;
         }
-        
+
         .header-buttons {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
-        
-        .cta-button, .secondary-button {
-            padding: 10px 20px;
+
+        .cta-button,
+        .secondary-button {
+            padding: 9px 18px;
             border-radius: 8px;
             font-weight: 500;
             cursor: pointer;
@@ -145,36 +164,35 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
+            font-size: 13px;
             position: relative;
             overflow: hidden;
         }
-        
+
         .cta-button {
             background: var(--discord-gradient);
             color: white;
             border: none;
         }
-        
+
         .cta-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
         }
-        
+
         .secondary-button {
             background-color: white;
             color: var(--text-color);
             border: 1px solid var(--border-color);
         }
-        
+
         .secondary-button:hover {
             background-color: var(--light-bg);
             transform: translateY(-2px);
             box-shadow: var(--shadow);
             border-color: var(--primary-light);
         }
-        
-        /* Mobile Menu */
+
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -187,23 +205,31 @@
             border-radius: 8px;
             transition: var(--transition);
         }
-        
+
         .mobile-menu-btn:hover {
             background-color: var(--light-bg);
         }
-        
-        /* Hero Section - Enhanced */
+
+        /* ── PAGE SYSTEM ── */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+
+        /* ── HERO ── */
         .hero {
-            padding: 140px 0 100px;
+            padding: 130px 0 90px;
             text-align: center;
             background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
             position: relative;
             overflow: hidden;
-            min-height: 90vh;
+            min-height: 85vh;
             display: flex;
             align-items: center;
         }
-        
+
         .hero:before {
             content: '';
             position: absolute;
@@ -211,21 +237,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(88, 101, 242, 0.1) 0%, transparent 50%);
+            background:
+                radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.10) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(88, 101, 242, 0.08) 0%, transparent 50%);
         }
-        
+
         .hero-content {
             max-width: 900px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
         }
-        
+
         .hero h1 {
-            font-size: 52px;
-            margin-bottom: 20px;
+            font-size: 50px;
+            margin-bottom: 18px;
             color: var(--text-color);
             line-height: 1.2;
             background: linear-gradient(135deg, var(--text-color) 0%, var(--primary-color) 100%);
@@ -233,37 +259,37 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .hero p {
-            font-size: 20px;
-            margin: 0 auto 30px;
+            font-size: 19px;
+            margin: 0 auto 28px;
             color: var(--text-light);
             max-width: 700px;
             font-weight: 400;
         }
-        
+
         .hero-buttons {
             display: flex;
-            gap: 20px;
+            gap: 18px;
             justify-content: center;
-            margin-top: 40px;
+            margin-top: 35px;
             flex-wrap: wrap;
         }
-        
+
         .btn {
-            padding: 16px 32px;
+            padding: 15px 30px;
             border-radius: 12px;
             font-weight: 600;
             text-decoration: none;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            font-size: 16px;
+            gap: 10px;
+            font-size: 15px;
             position: relative;
             overflow: hidden;
         }
-        
+
         .btn:before {
             content: '';
             position: absolute;
@@ -274,52 +300,52 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: 0.5s;
         }
-        
+
         .btn:hover:before {
             left: 100%;
         }
-        
+
         .btn-primary {
             background: var(--gradient);
             color: white;
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
             border: none;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
         }
-        
+
         .btn-secondary {
             background-color: white;
             color: var(--text-color);
             border: 2px solid var(--primary-light);
             box-shadow: var(--shadow);
         }
-        
+
         .btn-secondary:hover {
             background-color: var(--light-bg);
             transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
             border-color: var(--primary-color);
         }
-        
+
         .stats {
             display: flex;
             justify-content: center;
-            gap: 60px;
-            margin-top: 80px;
+            gap: 50px;
+            margin-top: 70px;
             flex-wrap: wrap;
         }
-        
+
         .stat-item {
             text-align: center;
             position: relative;
-            padding: 20px;
-            min-width: 150px;
+            padding: 16px 20px;
+            min-width: 140px;
         }
-        
+
         .stat-item:before {
             content: '';
             position: absolute;
@@ -332,79 +358,80 @@
             opacity: 0;
             transition: var(--transition);
         }
-        
+
         .stat-item:hover:before {
             opacity: 1;
         }
-        
+
         .stat-number {
-            font-size: 42px;
+            font-size: 40px;
             font-weight: 800;
             color: var(--primary-color);
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             transition: var(--transition);
         }
-        
+
         .stat-item:hover .stat-number {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
-        
+
         .stat-label {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-light);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             font-weight: 600;
         }
-        
-        /* Features Section - Enhanced */
-        .features {
-            padding: 120px 0;
-            background-color: var(--card-bg);
-        }
-        
+
+        /* ── SECTION TITLE ── */
         .section-title {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
-        
+
         .section-title h2 {
-            font-size: 42px;
-            margin-bottom: 20px;
+            font-size: 38px;
+            margin-bottom: 16px;
             position: relative;
             display: inline-block;
         }
-        
+
         .section-title h2:after {
             content: '';
             position: absolute;
-            width: 80px;
-            height: 5px;
+            width: 70px;
+            height: 4px;
             background: var(--gradient);
-            bottom: -15px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            border-radius: 3px;
+            border-radius: 2px;
         }
-        
+
         .section-title p {
             color: var(--text-light);
             max-width: 600px;
-            margin: 30px auto 0;
-            font-size: 18px;
+            margin: 28px auto 0;
+            font-size: 17px;
         }
-        
+
+        /* ── FEATURES ── */
+        .features {
+            padding: 100px 0;
+            background-color: var(--card-bg);
+        }
+
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
         }
-        
+
         .feature-card {
             background-color: var(--card-bg);
             border-radius: 16px;
-            padding: 35px;
+            padding: 32px;
             box-shadow: var(--shadow);
             transition: var(--transition);
             border: 1px solid var(--border-color);
@@ -414,7 +441,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .feature-card:before {
             content: '';
             position: absolute;
@@ -427,57 +454,57 @@
             transition: var(--transition);
             transform-origin: left;
         }
-        
+
         .feature-card:hover:before {
             transform: scaleX(1);
         }
-        
+
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-lg);
             border-color: var(--primary-light);
         }
-        
+
         .feature-icon {
             background: var(--gradient);
-            width: 70px;
-            height: 70px;
-            border-radius: 16px;
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 25px;
+            margin-bottom: 22px;
             color: white;
-            font-size: 28px;
+            font-size: 26px;
             transition: var(--transition);
         }
-        
+
         .feature-card:hover .feature-icon {
-            transform: rotate(5deg) scale(1.1);
+            transform: rotate(4deg) scale(1.06);
         }
-        
+
         .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
+            font-size: 21px;
+            margin-bottom: 12px;
             color: var(--text-color);
         }
-        
+
         .feature-card p {
             color: var(--text-light);
             flex-grow: 1;
-            line-height: 1.8;
+            line-height: 1.7;
         }
-        
-        /* New: Get Started Section */
+
+        /* ── GET STARTED ── */
         .get-started {
-            padding: 100px 0;
+            padding: 90px 0;
             background: var(--gradient);
             color: white;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
-        
+
         .get-started:before {
             content: '';
             position: absolute;
@@ -485,20 +512,20 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.3;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.25;
         }
-        
+
         .get-started h2 {
-            font-size: 42px;
-            margin-bottom: 20px;
+            font-size: 38px;
+            margin-bottom: 16px;
             position: relative;
             z-index: 1;
         }
-        
+
         .get-started p {
-            font-size: 18px;
-            margin-bottom: 40px;
+            font-size: 17px;
+            margin-bottom: 35px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
@@ -506,280 +533,278 @@
             z-index: 1;
             opacity: 0.9;
         }
-        
+
         .get-started .btn {
             background: white;
             color: var(--primary-color);
             font-weight: 600;
-            padding: 18px 40px;
+            padding: 16px 38px;
             border-radius: 12px;
-            font-size: 18px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-size: 17px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
-        
+
         .get-started .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
         }
-        
-        /* Commands Section - Enhanced */
+
+        /* ── COMMANDS PAGE ── */
         .commands {
-            padding: 120px 0;
+            padding: 100px 0;
             background-color: var(--light-bg);
         }
-        
+
         .commands-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 40px;
+            gap: 8px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
         }
-        
+
         .tab-button {
-            padding: 12px 24px;
+            padding: 10px 20px;
             background: white;
             border: 2px solid var(--border-color);
             border-radius: 8px;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
+            font-size: 13px;
         }
-        
+
         .tab-button:hover {
             border-color: var(--primary-light);
             transform: translateY(-2px);
         }
-        
+
         .tab-button.active {
             background: var(--gradient);
             color: white;
             border-color: var(--primary-color);
             box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
         }
-        
+
         .commands-search {
-            max-width: 600px;
-            margin: 0 auto 40px;
+            max-width: 560px;
+            margin: 0 auto 35px;
             position: relative;
         }
-        
+
         .commands-search input {
             width: 100%;
-            padding: 18px 20px 18px 50px;
+            padding: 16px 18px 16px 48px;
             border-radius: 12px;
             border: 2px solid var(--border-color);
-            font-size: 16px;
+            font-size: 15px;
             transition: var(--transition);
             background: white;
         }
-        
+
         .commands-search input:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.08);
         }
-        
+
         .commands-search i {
             position: absolute;
-            left: 20px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-light);
-            font-size: 18px;
+            font-size: 17px;
         }
-        
+
         .commands-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 22px;
         }
-        
+
         .command-card {
             background: white;
-            border-radius: 16px;
-            padding: 25px;
+            border-radius: 14px;
+            padding: 22px;
             box-shadow: var(--shadow);
             transition: var(--transition);
             border: 1px solid var(--border-color);
         }
-        
+
         .command-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
             border-color: var(--primary-light);
         }
-        
+
         .command-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
-        
+
         .command-name {
             font-weight: 600;
             color: var(--primary-color);
-            font-size: 18px;
+            font-size: 17px;
         }
-        
+
         .command-category {
             background: var(--light-bg);
             color: var(--text-light);
-            padding: 6px 12px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
+            text-transform: capitalize;
         }
-        
+
         .command-description {
             color: var(--text-light);
             font-size: 14px;
             line-height: 1.6;
         }
-        
-        /* Demo Section - Enhanced */
+
+        /* ── DEMO ── */
         .demo {
-            padding: 120px 0;
+            padding: 100px 0;
             background-color: var(--card-bg);
         }
-        
+
         .demo-container {
             display: flex;
             align-items: center;
             gap: 50px;
         }
-        
+
         .demo-content {
             flex: 1;
         }
-        
+
         .demo-content h2 {
-            font-size: 42px;
-            margin-bottom: 20px;
+            font-size: 38px;
+            margin-bottom: 18px;
             background: linear-gradient(135deg, var(--text-color) 0%, var(--primary-color) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .demo-content p {
             color: var(--text-light);
-            margin-bottom: 30px;
-            font-size: 18px;
+            margin-bottom: 28px;
+            font-size: 17px;
             line-height: 1.8;
         }
-        
+
         .demo-terminal {
             flex: 1;
             background: linear-gradient(145deg, #1F2937 0%, #111827 100%);
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            transform: perspective(1000px) rotateY(-4deg) rotateX(4deg);
             transition: var(--transition);
             border: 1px solid #374151;
         }
-        
+
         .demo-terminal:hover {
             transform: perspective(1000px) rotateY(0) rotateX(0);
         }
-        
+
         .terminal-header {
             background-color: #111827;
-            padding: 15px 25px;
+            padding: 14px 22px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #374151;
         }
-        
+
         .terminal-buttons {
             display: flex;
             gap: 8px;
         }
-        
+
         .terminal-button {
-            width: 14px;
-            height: 14px;
+            width: 13px;
+            height: 13px;
             border-radius: 50%;
             transition: var(--transition);
         }
-        
         .terminal-button:hover {
             transform: scale(1.2);
         }
-        
         .terminal-button.close {
             background-color: #ff5f56;
         }
-        
         .terminal-button.minimize {
             background-color: #ffbd2e;
         }
-        
         .terminal-button.maximize {
             background-color: #27ca3f;
         }
-        
+
         .terminal-title {
             color: #9CA3AF;
-            font-size: 14px;
+            font-size: 13px;
             font-family: 'Courier New', monospace;
         }
-        
+
         .terminal-body {
-            padding: 30px;
+            padding: 28px;
             font-family: 'Courier New', monospace;
             color: #E5E7EB;
-            min-height: 350px;
+            min-height: 320px;
             line-height: 1.8;
         }
-        
+
         .terminal-line {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
         }
-        
+
         .terminal-prompt {
             color: #10B981;
             margin-right: 10px;
             font-weight: bold;
         }
-        
+
         .terminal-cursor {
             display: inline-block;
             width: 8px;
-            height: 20px;
+            height: 18px;
             background-color: #10B981;
             animation: blink 1s infinite;
             margin-left: 5px;
             border-radius: 1px;
         }
-        
+
         .discord-message {
             background-color: #374151;
             border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
+            padding: 14px;
+            margin: 12px 0;
             border-left: 4px solid var(--discord-color);
             transition: var(--transition);
         }
-        
+
         .discord-message:hover {
-            transform: translateX(5px);
+            transform: translateX(4px);
         }
-        
+
         .message-author {
             color: #8B5CF6;
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
+
         .message-author:before {
             content: '';
             display: inline-block;
@@ -789,99 +814,102 @@
             background-color: #10B981;
             animation: pulse 2s infinite;
         }
-        
+
         .message-content {
             color: #E5E7EB;
             line-height: 1.5;
         }
-        
         .bot-response {
             border-left-color: var(--primary-color);
         }
-        
+
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.2;
+            }
         }
-        
-        /* Why Choose Section - Enhanced */
+
+        /* ── WHY CHOOSE ── */
         .why-choose {
-            padding: 120px 0;
+            padding: 100px 0;
             background-color: var(--light-bg);
         }
-        
+
         .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+            margin-top: 35px;
         }
-        
+
         .benefit-item {
             display: flex;
             align-items: flex-start;
-            gap: 20px;
-            padding: 30px;
+            gap: 18px;
+            padding: 28px;
             background: var(--card-bg);
             border-radius: 16px;
             transition: var(--transition);
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
-        
+
         .benefit-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
             border-color: var(--primary-light);
         }
-        
+
         .benefit-icon {
             background: var(--gradient);
             color: white;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 22px;
             flex-shrink: 0;
             transition: var(--transition);
         }
-        
+
         .benefit-item:hover .benefit-icon {
-            transform: rotate(10deg) scale(1.1);
+            transform: rotate(6deg) scale(1.06);
         }
-        
+
         .benefit-content h3 {
-            margin-bottom: 10px;
-            font-size: 20px;
+            margin-bottom: 8px;
+            font-size: 19px;
         }
-        
         .benefit-content p {
             color: var(--text-light);
             line-height: 1.7;
         }
-        
-        /* Testimonials Section */
+
+        /* ── TESTIMONIALS ── */
         .testimonials {
-            padding: 120px 0;
+            padding: 100px 0;
             background-color: var(--card-bg);
             position: relative;
         }
-        
+
         .testimonials-slider {
-            max-width: 900px;
+            max-width: 850px;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
         }
-        
+
         .testimonials-track {
             display: flex;
             transition: transform 0.5s ease;
         }
-        
+
         .testimonial {
             min-width: 100%;
             padding: 40px;
@@ -891,231 +919,234 @@
             text-align: center;
             border: 1px solid var(--border-color);
         }
-        
+
         .testimonial-avatar {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
-            margin: 0 auto 30px;
+            margin: 0 auto 24px;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 40px;
+            font-size: 36px;
             box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
         }
-        
+
         .testimonial-content {
             font-style: italic;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
             color: var(--text-light);
-            font-size: 18px;
+            font-size: 17px;
             line-height: 1.8;
             position: relative;
         }
-        
+
         .testimonial-content:before,
         .testimonial-content:after {
             content: '"';
-            font-size: 60px;
+            font-size: 50px;
             color: var(--primary-light);
             position: absolute;
-            opacity: 0.2;
+            opacity: 0.15;
         }
-        
+
         .testimonial-content:before {
-            top: -30px;
-            left: -10px;
+            top: -24px;
+            left: -8px;
         }
-        
         .testimonial-content:after {
-            bottom: -50px;
-            right: -10px;
+            bottom: -40px;
+            right: -8px;
         }
-        
+
         .testimonial-author {
             font-weight: 700;
             color: var(--text-color);
-            font-size: 20px;
-            margin-bottom: 5px;
+            font-size: 19px;
+            margin-bottom: 4px;
         }
-        
+
         .testimonial-role {
             color: var(--text-light);
-            font-size: 16px;
+            font-size: 15px;
         }
-        
+
         .testimonial-nav {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-top: 40px;
+            margin-top: 35px;
         }
-        
+
         .testimonial-dot {
-            width: 14px;
-            height: 14px;
+            width: 13px;
+            height: 13px;
             border-radius: 50%;
             background: var(--border-color);
             cursor: pointer;
             transition: var(--transition);
         }
-        
+
         .testimonial-dot.active {
             background: var(--primary-color);
             transform: scale(1.2);
         }
-        
-        /* FAQ - Enhanced */
+
+        /* ── FAQ ── */
         .faq {
-            padding: 120px 0;
+            padding: 100px 0;
             background-color: var(--light-bg);
         }
-        
+
         .faq-container {
-            max-width: 900px;
+            max-width: 850px;
             margin: 0 auto;
         }
-        
+
         .faq-item {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             transition: var(--transition);
         }
-        
+
         .faq-item:hover {
             box-shadow: var(--shadow-lg);
         }
-        
+
         .faq-question {
             background: white;
-            padding: 25px;
+            padding: 22px 26px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
             transition: var(--transition);
-            font-size: 18px;
+            font-size: 17px;
         }
-        
+
         .faq-question:hover {
             background: var(--light-bg);
         }
-        
+
         .faq-question i {
             transition: var(--transition);
             color: var(--primary-color);
         }
-        
         .faq-question.active i {
             transform: rotate(180deg);
         }
-        
+
         .faq-answer {
             background: white;
-            padding: 0 25px;
+            padding: 0 26px;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease, padding 0.4s ease;
             line-height: 1.8;
         }
-        
+
         .faq-answer.active {
-            padding: 25px;
+            padding: 22px 26px;
             max-height: 500px;
         }
-        
-        /* Status Page - Enhanced */
+
+        /* ── STATUS ── */
         .status-page {
-            padding: 120px 0;
+            padding: 100px 0;
             text-align: center;
             min-height: 70vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
+
         .status-card {
             background-color: white;
             border-radius: 20px;
-            padding: 60px;
+            padding: 50px;
             box-shadow: var(--shadow-lg);
-            max-width: 800px;
+            max-width: 750px;
             width: 100%;
             border: 1px solid var(--border-color);
             position: relative;
         }
-        
+
         .status-card:before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 8px;
+            height: 6px;
             background: var(--gradient);
             border-radius: 20px 20px 0 0;
         }
-        
+
         .status-icon {
-            font-size: 80px;
+            font-size: 72px;
             color: var(--primary-color);
-            margin-bottom: 30px;
+            margin-bottom: 24px;
             animation: float 3s ease-in-out infinite;
         }
-        
+
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
-        
+
         .status-badge {
             display: inline-block;
             background: var(--gradient);
             color: white;
-            padding: 12px 30px;
+            padding: 10px 28px;
             border-radius: 30px;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
             box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
         }
-        
-        /* Legal Pages - Enhanced */
+
+        /* ── LEGAL PAGES ── */
         .legal-page {
-            padding: 120px 0;
+            padding: 100px 0;
             background-color: var(--light-bg);
-            min-height: 80vh;
+            min-height: 75vh;
         }
-        
+
         .legal-content {
             background-color: white;
             border-radius: 20px;
-            padding: 60px;
+            padding: 50px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             position: relative;
         }
-        
+
         .legal-content:before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 8px;
+            height: 6px;
             background: var(--gradient);
             border-radius: 20px 20px 0 0;
         }
-        
+
         .legal-content h1 {
-            font-size: 42px;
-            margin-bottom: 30px;
+            font-size: 38px;
+            margin-bottom: 24px;
             color: var(--text-color);
             text-align: center;
             background: linear-gradient(135deg, var(--text-color) 0%, var(--primary-color) 100%);
@@ -1123,46 +1154,523 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .legal-content h2 {
-            font-size: 28px;
-            margin: 50px 0 25px;
+            font-size: 26px;
+            margin: 40px 0 20px;
             color: var(--text-color);
-            padding-bottom: 15px;
+            padding-bottom: 12px;
             border-bottom: 2px solid var(--border-color);
         }
-        
+
         .legal-content h3 {
-            font-size: 20px;
-            margin: 30px 0 15px;
+            font-size: 19px;
+            margin: 24px 0 12px;
             color: var(--text-color);
         }
-        
+
         .legal-content p {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             color: var(--text-light);
             line-height: 1.8;
         }
-        
+
         .legal-content ul {
-            margin-bottom: 25px;
-            padding-left: 25px;
+            margin-bottom: 22px;
+            padding-left: 24px;
         }
-        
+
         .legal-content li {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: var(--text-light);
             line-height: 1.7;
         }
-        
-        /* Footer - Enhanced */
+
+        /* ── PREMIUM PAGE ── */
+        .premium-page {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+        }
+
+        .premium-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .premium-header .premium-badge {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 8px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.25);
+        }
+
+        .premium-header h1 {
+            font-size: 44px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #065F46 0%, #10B981 50%, #34D399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .premium-header p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .comparison-table {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            margin-bottom: 50px;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 18px 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--gradient);
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .comparison-table th:first-child {
+            border-radius: 0;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .free-col {
+            color: var(--text-light);
+        }
+        .comparison-table .premium-col {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .comparison-table .check {
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+        .comparison-table .cross {
+            color: #EF4444;
+            font-size: 18px;
+        }
+
+        .comparison-table tr:hover td {
+            background: #f8fafc;
+        }
+
+        .premium-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .premium-feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .premium-feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .premium-feature-card .icon {
+            font-size: 38px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .premium-feature-card h3 {
+            font-size: 19px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .premium-feature-card p {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .premium-cta {
+            text-align: center;
+            margin-top: 50px;
+            padding: 40px;
+            background: var(--gradient);
+            border-radius: 20px;
+            color: white;
+        }
+
+        .premium-cta h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .premium-cta p {
+            opacity: 0.9;
+            margin-bottom: 24px;
+            font-size: 17px;
+        }
+
+        .premium-cta .btn {
+            background: white;
+            color: var(--primary-color);
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 12px;
+            font-size: 17px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .premium-cta .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ── CUSTOM PAGE ── */
+        .custom-page {
+            padding: 100px 0;
+            background-color: var(--light-bg);
+        }
+
+        .custom-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .custom-header h1 {
+            font-size: 40px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--text-color) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .custom-header p {
+            color: var(--text-light);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin-top: 30px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .package-card .badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--gradient);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .package-card .price {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 8px 0 4px;
+        }
+
+        .package-card .price-sub {
+            color: var(--text-light);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .package-card h3 {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .package-card .subtitle {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .package-card ul {
+            list-style: none;
+            padding: 0;
+            flex-grow: 1;
+        }
+
+        .package-card ul li {
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .package-card ul li i {
+            color: var(--primary-color);
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .package-card .btn-order {
+            margin-top: 20px;
+            padding: 12px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 15px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .package-card .btn-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .package-card.premium-package {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15), var(--shadow);
+        }
+
+        .package-card.premium-package .badge {
+            background: linear-gradient(135deg, #F59E0B, #F97316);
+        }
+
+        /* Custom Services */
+        .custom-services {
+            margin-top: 60px;
+        }
+
+        .custom-services .section-title {
+            margin-bottom: 40px;
+        }
+
+        .custom-service-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .custom-service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .custom-service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .custom-service-card h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .custom-service-card h3 i {
+            color: var(--primary-color);
+        }
+
+        .custom-service-card .price-range {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 6px 0 16px;
+        }
+
+        .custom-service-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .custom-service-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .custom-service-card ul li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .custom-service-card ul li i {
+            color: var(--primary-color);
+        }
+
+        .custom-service-card .btn-order {
+            margin-top: 18px;
+            padding: 11px 24px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .custom-service-card .btn-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* ── OPTIONAL ADD-ONS ── */
+        .addons-section {
+            margin-top: 50px;
+            background: white;
+            border-radius: 20px;
+            padding: 36px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .addons-section h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .addons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .addon-item {
+            background: var(--light-bg);
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .addon-item .name {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .addon-item .price-tag {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .rules-box {
+            margin-top: 30px;
+            background: var(--light-bg);
+            padding: 24px 28px;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .rules-box h4 {
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        .rules-box ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .rules-box ul li {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* ── FOOTER ── */
         footer {
             background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
             color: #9CA3AF;
-            padding: 80px 0 30px;
+            padding: 70px 0 28px;
             position: relative;
         }
-        
+
         footer:before {
             content: '';
             position: absolute;
@@ -1172,41 +1680,41 @@
             height: 4px;
             background: var(--gradient);
         }
-        
+
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 36px;
+            margin-bottom: 36px;
         }
-        
+
         .footer-column h3 {
             color: white;
-            margin-bottom: 25px;
-            font-size: 20px;
+            margin-bottom: 20px;
+            font-size: 19px;
             position: relative;
             display: inline-block;
         }
-        
+
         .footer-column h3:after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -6px;
             left: 0;
-            width: 40px;
+            width: 36px;
             height: 3px;
             background: var(--gradient);
             border-radius: 2px;
         }
-        
+
         .footer-column ul {
             list-style: none;
         }
-        
+
         .footer-column ul li {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
-        
+
         .footer-column a {
             color: #9CA3AF;
             text-decoration: none;
@@ -1214,60 +1722,61 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-size: 14px;
         }
-        
+
         .footer-column a:hover {
             color: white;
-            transform: translateX(5px);
+            transform: translateX(4px);
         }
-        
+
         .social-links {
             display: flex;
-            gap: 15px;
-            margin-top: 25px;
+            gap: 14px;
+            margin-top: 20px;
         }
-        
+
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             background-color: #1F2937;
             border-radius: 50%;
             transition: var(--transition);
             color: #9CA3AF;
-            font-size: 18px;
+            font-size: 17px;
         }
-        
+
         .social-links a:hover {
             background: var(--gradient);
             color: white;
-            transform: translateY(-5px);
+            transform: translateY(-4px);
         }
-        
+
         .footer-bottom {
             border-top: 1px solid #1F2937;
-            padding-top: 30px;
+            padding-top: 26px;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             color: #6B7280;
         }
-        
-        /* Back to Top - Enhanced */
+
+        /* ── BACK TO TOP ── */
         .back-to-top {
             position: fixed;
-            bottom: 40px;
-            right: 40px;
-            width: 60px;
-            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
             background: var(--gradient);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
             cursor: pointer;
             transition: var(--transition);
             opacity: 0;
@@ -1276,204 +1785,228 @@
             border: none;
             z-index: 999;
         }
-        
+
         .back-to-top.active {
             opacity: 1;
             visibility: visible;
         }
-        
+
         .back-to-top:hover {
-            transform: translateY(-5px) scale(1.1);
+            transform: translateY(-4px) scale(1.06);
             box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
         }
-        
-        /* Page Navigation */
-        .page {
-            display: none;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .hero h1 {
-                font-size: 48px;
-            }
-            
-            .section-title h2 {
-                font-size: 38px;
-            }
-        }
-        
+
+        /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
             .demo-container {
                 flex-direction: column;
             }
-            
             .demo-terminal {
                 transform: none;
                 width: 100%;
             }
-            
             .demo-terminal:hover {
-                transform: translateY(-10px);
+                transform: translateY(-6px);
+            }
+            .custom-service-row {
+                grid-template-columns: 1fr;
             }
         }
-        
+
         @media (max-width: 768px) {
             .header-content {
                 flex-wrap: wrap;
             }
-            
             nav {
                 order: 3;
                 width: 100%;
-                margin-top: 20px;
+                margin-top: 16px;
                 display: none;
             }
-            
             nav.active {
                 display: block;
             }
-            
             nav ul {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
                 background: white;
-                padding: 20px;
+                padding: 18px;
                 border-radius: 12px;
                 box-shadow: var(--shadow);
             }
-            
             .mobile-menu-btn {
                 display: block;
             }
-            
             .header-buttons {
                 width: 100%;
                 justify-content: center;
-                margin-top: 20px;
+                margin-top: 16px;
             }
-            
             .hero {
-                padding: 120px 0 80px;
+                padding: 110px 0 70px;
             }
-            
             .hero h1 {
-                font-size: 36px;
+                font-size: 34px;
             }
-            
             .hero p {
-                font-size: 18px;
+                font-size: 17px;
             }
-            
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
             .btn {
                 width: 100%;
                 justify-content: center;
-                max-width: 300px;
+                max-width: 280px;
             }
-            
             .stats {
-                gap: 30px;
+                gap: 24px;
             }
-            
             .stat-item {
-                min-width: 120px;
-                padding: 15px;
+                min-width: 100px;
+                padding: 12px;
             }
-            
             .stat-number {
-                font-size: 32px;
+                font-size: 30px;
             }
-            
             .features-grid {
                 grid-template-columns: 1fr;
             }
-            
             .benefits-grid {
                 grid-template-columns: 1fr;
             }
-            
             .commands-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .status-card, .legal-content {
-                padding: 30px 20px;
+            .status-card,
+            .legal-content {
+                padding: 28px 18px;
             }
-            
             .footer-content {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 28px;
             }
-            
             .back-to-top {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 18px;
+                bottom: 16px;
+                right: 16px;
+                width: 48px;
+                height: 48px;
+                font-size: 17px;
             }
-        }
-        
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 32px;
+            .comparison-table {
+                overflow-x: auto;
             }
-            
-            .hero p {
-                font-size: 16px;
+            .comparison-table table {
+                font-size: 13px;
+                min-width: 500px;
             }
-            
-            .section-title h2 {
-                font-size: 32px;
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px 16px;
             }
-            
-            .features-grid, .benefits-grid, .commands-grid {
+            .package-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .stat-number {
+            .premium-header h1 {
+                font-size: 32px;
+            }
+            .custom-header h1 {
+                font-size: 30px;
+            }
+            .section-title h2 {
+                font-size: 30px;
+            }
+            .premium-cta h2 {
+                font-size: 26px;
+            }
+            .addons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
                 font-size: 28px;
             }
-            
+            .hero p {
+                font-size: 15px;
+            }
+            .section-title h2 {
+                font-size: 26px;
+            }
+            .stat-number {
+                font-size: 26px;
+            }
             .stat-label {
-                font-size: 12px;
+                font-size: 11px;
+            }
+            .legal-content h1 {
+                font-size: 28px;
+            }
+            .legal-content h2 {
+                font-size: 22px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+
+    <!-- ═══════ HEADER ═══════ -->
     <header>
         <div class="container">
             <div class="header-content">
+                <!-- ── LOGO: EMERALD GEM SVG ── -->
                 <a href="#" class="logo nav-link" data-page="home">
-                    <i class="fas fa-gem"></i>
-                    <span>Emerald Bot</span>
+                    <span class="logo-icon">
+                        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="gemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#34D399" />
+                                    <stop offset="35%" stop-color="#10B981" />
+                                    <stop offset="70%" stop-color="#059669" />
+                                    <stop offset="100%" stop-color="#047857" />
+                                </linearGradient>
+                                <linearGradient id="gemShine" x1="0%" y1="0%" x2="50%" y2="50%">
+                                    <stop offset="0%" stop-color="rgba(255,255,255,0.6)" />
+                                    <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Emerald shape (octagonal cut) -->
+                            <polygon points="32,4 52,14 52,36 42,56 22,56 12,36 12,14"
+                            fill="url(#gemGrad)" stroke="#047857" stroke-width="1.5" />
+                            <!-- Facet lines -->
+                            <polygon points="32,4 42,14 32,24 22,14" fill="rgba(255,255,255,0.12)" />
+                            <polygon points="42,14 52,36 42,44 32,24" fill="rgba(255,255,255,0.05)" />
+                            <polygon points="22,14 12,36 22,44 32,24" fill="rgba(0,0,0,0.05)" />
+                            <polygon points="32,24 42,44 32,56 22,44" fill="rgba(0,0,0,0.08)" />
+                            <!-- Shine highlight -->
+                            <polygon points="28,12 38,20 32,26 22,18" fill="url(#gemShine)" opacity="0.5" />
+                            <!-- Center sparkle -->
+                            <circle cx="32" cy="32" r="4" fill="white" opacity="0.25" />
+                            <circle cx="32" cy="32" r="1.5" fill="white" opacity="0.5" />
+                            <!-- Small sparkle top-left -->
+                            <circle cx="22" cy="18" r="2" fill="white" opacity="0.15" />
+                            <circle cx="22" cy="18" r="0.8" fill="white" opacity="0.4" />
+                        </svg>
+                    </span>
+                    <span class="logo-text">Emerald Bot</span>
                 </a>
-                
+
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
-                
+
                 <nav id="main-nav">
                     <ul>
                         <li><a href="#" class="nav-link" data-page="home">Home</a></li>
                         <li><a href="#" class="nav-link" data-page="commands">Commands</a></li>
+                        <li><a href="#" class="nav-link" data-page="premium">Premium</a></li>
+                        <li><a href="#" class="nav-link" data-page="custom">Custom</a></li>
                         <li><a href="#" class="nav-link" data-page="status">Status</a></li>
-                        <li><a href="#" class="nav-link" data-page="privacy">Privacy</a></li>
-                        <li><a href="#" class="nav-link" data-page="tos">Terms</a></li>
                     </ul>
                 </nav>
-                
+
                 <div class="header-buttons">
                     <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="secondary-button" target="_blank">
                         <i class="fab fa-discord"></i> Support
@@ -1486,13 +2019,12 @@
         </div>
     </header>
 
-    <!-- Home Page -->
+    <!-- ═══════ HOME PAGE ═══════ -->
     <div id="home" class="page active">
-        <!-- Hero Section -->
+        <!-- Hero -->
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <!-- REMOVED PREMIUM FEATURES BADGE -->
                     <h1>🌿 Emerald — Your All-In-One Discord Companion 💎</h1>
                     <p>Meet Emerald, the ultimate bot built to keep your community safe, active, and thriving! From advanced moderation to leveling systems — Emerald does it all with style and simplicity.</p>
                     <div class="hero-buttons">
@@ -1503,7 +2035,6 @@
                             <i class="fab fa-discord"></i> Join Support Server
                         </a>
                     </div>
-                    
                     <div class="stats">
                         <div class="stat-item">
                             <span class="stat-number" id="server-count">100+</span>
@@ -1522,7 +2053,7 @@
             </div>
         </section>
 
-        <!-- Features Section -->
+        <!-- Features -->
         <section class="features" id="features">
             <div class="container">
                 <div class="section-title">
@@ -1531,73 +2062,55 @@
                 </div>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-gavel"></i>
-                        </div>
+                        <div class="feature-icon"><i class="fas fa-gavel"></i></div>
                         <h3>Advanced Moderation</h3>
-                        <p>Keep your server clean and under control with powerful tools. Kick, ban, mute, and warn users. Automatic logging & customizable filters with AI-powered detection.</p>
+                        <p>Keep your server clean and under control with powerful tools. Kick, ban, mute, and warn users. Automatic logging &amp; customizable filters.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-door-open"></i>
-                        </div>
+                        <div class="feature-icon"><i class="fas fa-door-open"></i></div>
                         <h3>Welcome System</h3>
-                        <p>Make every member feel at home! Send beautiful welcome & leave messages with embeds or images. Auto-assign roles to newcomers with custom onboarding flows.</p>
+                        <p>Make every member feel at home! Send beautiful welcome &amp; leave messages with embeds or images. Auto-assign roles to newcomers.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-ticket-alt"></i>
-                        </div>
+                        <div class="feature-icon"><i class="fas fa-ticket-alt"></i></div>
                         <h3>Ticket System</h3>
-                        <p>Create and manage support tickets with ease. Secure, organized ticket channels with optional transcripts for record-keeping and custom branding options.</p>
+                        <p>Create and manage support tickets with ease. Secure, organized ticket channels with optional transcripts for record-keeping.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-smile"></i>
-                        </div>
+                        <div class="feature-icon"><i class="fas fa-smile"></i></div>
                         <h3>Reaction Roles</h3>
-                        <p>Let your members choose their own roles! Add emojis to messages for role selection. Perfect for self-roles and access control with multi-role panels.</p>
+                        <p>Let your members choose their own roles! Add emojis to messages for role selection. Perfect for self-roles and access control.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
                         <h3>Level System</h3>
-                        <p>Keep your community active and rewarded! Gain XP for chatting. Level up & unlock special roles. Track progress on leaderboards with custom rank cards.</p>
+                        <p>Keep your community active and rewarded! Gain XP for chatting. Level up &amp; unlock special roles. Track progress on leaderboards.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-music"></i>
-                        </div>
+                        <div class="feature-icon"><i class="fas fa-music"></i></div>
                         <h3>Music Player</h3>
-                        <p>High-quality music playback directly in your voice channels. Play from YouTube, Spotify, and SoundCloud with intuitive controls and queue management.</p>
+                        <p>High-quality music playback directly in your voice channels. Play from YouTube, Spotify, and SoundCloud with intuitive controls.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                         <h3>Auto-Moderation</h3>
-                        <p>Automatically detect and handle spam, bad words, excessive mentions, and more with customizable filters and sensitivity settings including image scanning.</p>
+                        <p>Automatically detect and handle spam, bad words, excessive mentions, and more with customizable filters and sensitivity settings.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
+                        <div class="feature-icon"><i class="fas fa-robot"></i></div>
                         <h3>Auto-Reply System</h3>
-                        <p>Set up custom triggers and responses for automatic replies. Perfect for FAQs, welcome messages, and interactive conversations with regex support.</p>
+                        <p>Set up custom triggers and responses for automatic replies. Perfect for FAQs, welcome messages, and interactive conversations.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-vote-yea"></i>
-                        </div>
+                        <div class="feature-icon"><i class="fas fa-vote-yea"></i></div>
                         <h3>Voting Rewards</h3>
-                        <p>Reward users for voting on top.gg with XP, roles, or custom currency. Keep your community engaged and active with automated voting reminders.</p>
+                        <p>Reward users for voting on top.gg with XP, roles, or custom currency. Keep your community engaged with automated reminders.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Demo Section -->
+        <!-- Demo -->
         <section class="demo" id="demo">
             <div class="container">
                 <div class="demo-container">
@@ -1618,18 +2131,10 @@
                             <div class="terminal-title">Emerald Bot — Live Demo</div>
                         </div>
                         <div class="terminal-body">
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">$</span> emerald status
-                            </div>
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">></span> Emerald Bot Online - v2.1.4
-                            </div>
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">></span> Connected to 100+ servers | 100+ commands
-                            </div>
-                            <div class="terminal-line">
-                                <br>
-                            </div>
+                            <div class="terminal-line"><span class="terminal-prompt">$</span> emerald status</div>
+                            <div class="terminal-line"><span class="terminal-prompt">></span> Emerald Bot Online - v2.1.4</div>
+                            <div class="terminal-line"><span class="terminal-prompt">></span> Connected to 100+ servers | 100+ commands</div>
+                            <div class="terminal-line"><br></div>
                             <div class="discord-message">
                                 <div class="message-author">User123</div>
                                 <div class="message-content">This is a really cool server!</div>
@@ -1642,29 +2147,21 @@
                                 <div class="message-author">Emerald Bot</div>
                                 <div class="message-content">⚠️ Deleted message from ToxicUser42 for bad word usage. User has been warned (1/3).</div>
                             </div>
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">#</span> Auto-moderation: Removed inappropriate message in #general
-                            </div>
-                            <div class="terminal-line">
-                                <br>
-                            </div>
+                            <div class="terminal-line"><span class="terminal-prompt">#</span> Auto-moderation: Removed inappropriate message in #general</div>
+                            <div class="terminal-line"><br></div>
                             <div class="discord-message bot-response">
                                 <div class="message-author">Emerald Bot</div>
                                 <div class="message-content">🎉 Welcome to the server, NewUser123! Check out #rules and #roles to get started.</div>
                             </div>
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">#</span> Welcome message sent to NewUser123
-                            </div>
-                            <div class="terminal-line">
-                                <span class="terminal-prompt">$</span> <span class="terminal-cursor"></span>
-                            </div>
+                            <div class="terminal-line"><span class="terminal-prompt">#</span> Welcome message sent to NewUser123</div>
+                            <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-cursor"></span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Why Choose Section -->
+        <!-- Why Choose -->
         <section class="why-choose">
             <div class="container">
                 <div class="section-title">
@@ -1673,64 +2170,52 @@
                 </div>
                 <div class="benefits-grid">
                     <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
+                        <div class="benefit-icon"><i class="fas fa-bolt"></i></div>
                         <div class="benefit-content">
                             <h3>Easy Setup</h3>
-                            <p>Get started in minutes with our intuitive setup process and guided configuration. Perfect for any community size, from small groups to massive servers.</p>
+                            <p>Get started in minutes with our intuitive setup process and guided configuration. Perfect for any community size.</p>
                         </div>
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
+                        <div class="benefit-icon"><i class="fas fa-rocket"></i></div>
                         <div class="benefit-content">
-                            <h3>Fast & Reliable</h3>
-                            <p>Lightning-fast responses with 99.9% uptime guarantee. Your server is always protected with our distributed server infrastructure.</p>
+                            <h3>Fast &amp; Reliable</h3>
+                            <p>Lightning-fast responses with 99.9% uptime guarantee. Your server is always protected with our distributed infrastructure.</p>
                         </div>
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-palette"></i>
-                        </div>
+                        <div class="benefit-icon"><i class="fas fa-palette"></i></div>
                         <div class="benefit-content">
                             <h3>Fully Customizable</h3>
                             <p>Tailor Emerald to match your server's style and needs with extensive configuration options, custom prefixes, and personalized responses.</p>
                         </div>
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
+                        <div class="benefit-icon"><i class="fas fa-headset"></i></div>
                         <div class="benefit-content">
                             <h3>Active Support</h3>
                             <p>Regular updates and a dedicated support team available 24/7 to help you with any issues or questions about Emerald's features.</p>
                         </div>
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
+                        <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
                         <div class="benefit-content">
                             <h3>Advanced Security</h3>
                             <p>Professional logging system, anti-raid protection, comprehensive audit logs, and data encryption to keep your server secure.</p>
                         </div>
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
+                        <div class="benefit-icon"><i class="fas fa-code"></i></div>
                         <div class="benefit-content">
                             <h3>100+ Commands</h3>
-                            <p>Extensive command library covering moderation, utility, fun, and server management. New commands added regularly based on community feedback.</p>
+                            <p>Extensive command library covering moderation, utility, fun, and server management. New commands added regularly based on feedback.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Testimonials Section - UPDATED -->
+        <!-- Testimonials -->
         <section class="testimonials">
             <div class="container">
                 <div class="section-title">
@@ -1740,17 +2225,13 @@
                 <div class="testimonials-slider">
                     <div class="testimonials-track">
                         <div class="testimonial">
-                            <div class="testimonial-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
+                            <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
                             <p class="testimonial-content">"Emerald is the best bot in my opinion i use it for a server called Wamps Advertising. You should join!! Very cool bot has like anything on it!"</p>
                             <div class="testimonial-author">__satrn__</div>
                             <div class="testimonial-role">Owner, Wamps Advertising</div>
                         </div>
                         <div class="testimonial">
-                            <div class="testimonial-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
+                            <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
                             <p class="testimonial-content">"Good bot, perfect Moderation, it has EVERYTHING i need!"</p>
                             <div class="testimonial-author">thegoober235</div>
                             <div class="testimonial-role">Owner, The Nexus</div>
@@ -1764,7 +2245,7 @@
             </div>
         </section>
 
-        <!-- FAQ Section -->
+        <!-- FAQ -->
         <section class="faq">
             <div class="container">
                 <div class="section-title">
@@ -1773,55 +2254,30 @@
                 </div>
                 <div class="faq-container">
                     <div class="faq-item">
-                        <div class="faq-question">
-                            <span>How do I add Emerald Bot to my server?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Simply click the "Invite to Server" button on our website. You'll be redirected to Discord's authorization page where you can select your server and grant the necessary permissions. The bot will automatically join and be ready to use!</p>
-                        </div>
+                        <div class="faq-question"><span>How do I add Emerald Bot to my server?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Simply click the "Invite to Server" button on our website. You'll be redirected to Discord's authorization page where you can select your server and grant the necessary permissions.</p></div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
-                            <span>What permissions does Emerald Bot need?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Emerald requires basic permissions like reading messages, sending messages, managing messages, and kicking/banning members for moderation features. You can customize permissions during the invite process. We recommend using the recommended permissions for full functionality.</p>
-                        </div>
+                        <div class="faq-question"><span>What permissions does Emerald Bot need?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Emerald requires basic permissions like reading messages, sending messages, managing messages, and kicking/banning members for moderation features. You can customize permissions during the invite process.</p></div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
-                            <span>Is Emerald Bot free to use?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Yes, Emerald Bot is completely free with all core features available. We may introduce premium features in the future, but the core functionality will always remain free. We believe in providing value to the Discord community.</p>
-                        </div>
+                        <div class="faq-question"><span>Is Emerald Bot free to use?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Yes, Emerald Bot is completely free with all core features available. We may introduce premium features in the future, but the core functionality will always remain free.</p></div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
-                            <span>How can I get support for Emerald Bot?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Join our Discord support server using the "Support" button on our website. Our community and support team are available 24/7 to help with any questions or issues. You can also check our documentation for common troubleshooting steps.</p>
-                        </div>
+                        <div class="faq-question"><span>How can I get support for Emerald Bot?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Join our Discord support server using the "Support" button on our website. Our community and support team are available 24/7 to help with any questions or issues.</p></div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
-                            <span>Can I suggest new features for Emerald?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Absolutely! We welcome feature suggestions in our Discord server. We regularly review community feedback and implement popular requests in our updates. Your suggestions help shape the future of Emerald Bot!</p>
-                        </div>
+                        <div class="faq-question"><span>Can I suggest new features for Emerald?</span><i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer"><p>Absolutely! We welcome feature suggestions in our Discord server. We regularly review community feedback and implement popular requests in our updates.</p></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Get Started Section -->
+        <!-- Get Started -->
         <section class="get-started">
             <div class="container">
                 <h2>Ready to Enhance Your Discord Server?</h2>
@@ -1830,7 +2286,7 @@
                     <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn btn-primary" target="_blank">
                         <i class="fas fa-plus"></i> Add Emerald Now
                     </a>
-                    <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn btn-secondary" target="_blank" style="background: rgba(255, 255, 255, 0.1); color: white; border-color: rgba(255, 255, 255, 0.3);">
+                    <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn btn-secondary" target="_blank" style="background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.3);">
                         <i class="fas fa-question-circle"></i> Need Help?
                     </a>
                 </div>
@@ -1838,7 +2294,7 @@
         </section>
     </div>
 
-    <!-- Commands Page -->
+    <!-- ═══════ COMMANDS PAGE ═══════ -->
     <div id="commands" class="page">
         <section class="commands">
             <div class="container">
@@ -1846,7 +2302,6 @@
                     <h2>Emerald Commands</h2>
                     <p>Explore all the commands available with Emerald Bot</p>
                 </div>
-                
                 <div class="commands-tabs">
                     <button class="tab-button active" data-category="all">All Commands</button>
                     <button class="tab-button" data-category="logging">Logging</button>
@@ -1861,19 +2316,14 @@
                     <button class="tab-button" data-category="antiraid">Anti-Raid</button>
                     <button class="tab-button" data-category="utility">Utility</button>
                 </div>
-                
                 <div class="commands-search">
                     <i class="fas fa-search"></i>
                     <input type="text" id="command-search" placeholder="Search for commands...">
                 </div>
-                
-                <div class="commands-grid" id="commands-container">
-                    <!-- Command cards will be loaded here -->
-                </div>
-                
-                <div style="text-align: center; margin-top: 50px;">
-                    <p style="color: var(--text-light); font-size: 16px;">And many more commands! Use <code style="background: var(--light-bg); padding: 4px 8px; border-radius: 4px;">/help</code> in Discord to see them all.</p>
-                    <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn btn-primary" style="margin-top: 20px;" target="_blank">
+                <div class="commands-grid" id="commands-container"></div>
+                <div style="text-align:center; margin-top:50px;">
+                    <p style="color:var(--text-light); font-size:16px;">And many more commands! Use <code style="background:var(--light-bg); padding:4px 8px; border-radius:4px;">/help</code> in Discord to see them all.</p>
+                    <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn btn-primary" style="margin-top:20px;" target="_blank">
                         <i class="fas fa-plus"></i> Try These Commands Now
                     </a>
                 </div>
@@ -1881,56 +2331,323 @@
         </section>
     </div>
 
-    <!-- Status Page -->
+    <!-- ═══════ PREMIUM PAGE ═══════ -->
+    <div id="premium" class="page">
+        <section class="premium-page">
+            <div class="container">
+                <div class="premium-header">
+                    <div class="premium-badge">✨ NEW</div>
+                    <h1>🌿 Emerald Premium Is Here!</h1>
+                    <p>Unlock exclusive features and enjoy faster, priority responses. Take your server to the next level with Emerald Premium.</p>
+                </div>
+
+                <!-- Comparison Table -->
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th style="text-align:center;">Free</th>
+                                <th style="text-align:center;">Premium ✨</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Premium-exclusive commands</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>Priority support</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>Exclusive fun commands</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>Enhanced utility features</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>Advanced moderation tools</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>Exclusive Premium role</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>💸 20% OFF all our services</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>Custom profile pictures</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>Custom banners</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                            <tr>
+                                <td>Expanded customization options</td>
+                                <td style="text-align:center;"><span class="cross">✕</span></td>
+                                <td style="text-align:center;"><span class="check">✓</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Premium Features Grid -->
+                <div class="premium-features-grid">
+                    <div class="premium-feature-card">
+                        <span class="icon">⚡</span>
+                        <h3>Priority Responses</h3>
+                        <p>Get faster, priority processing for all your commands. No more waiting in line.</p>
+                    </div>
+                    <div class="premium-feature-card">
+                        <span class="icon">🎨</span>
+                        <h3>Custom Profile Pictures</h3>
+                        <p>Choose your own style with custom profile pictures for your bot experience.</p>
+                    </div>
+                    <div class="premium-feature-card">
+                        <span class="icon">🖼️</span>
+                        <h3>Custom Banners</h3>
+                        <p>Stand out with custom banners that reflect your server's personality and brand.</p>
+                    </div>
+                    <div class="premium-feature-card">
+                        <span class="icon">🛠️</span>
+                        <h3>Advanced Moderation</h3>
+                        <p>Access advanced moderation tools including mass actions, detailed logs, and more.</p>
+                    </div>
+                </div>
+
+                <!-- Upcoming Features -->
+                <div style="margin-top:40px; background:white; border-radius:20px; padding:32px; box-shadow:var(--shadow); border:1px solid var(--border-color);">
+                    <h3 style="font-size:24px; margin-bottom:16px;">🔮 Upcoming Features</h3>
+                    <ul style="list-style:none; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;">
+                        <li style="padding:10px 16px; background:var(--light-bg); border-radius:10px; display:flex; align-items:center; gap:10px;">
+                            <span style="color:var(--primary-color); font-size:20px;">✦</span> Even more advanced Premium-only commands
+                        </li>
+                        <li style="padding:10px 16px; background:var(--light-bg); border-radius:10px; display:flex; align-items:center; gap:10px;">
+                            <span style="color:var(--primary-color); font-size:20px;">✦</span> Expanded customization options
+                        </li>
+                        <li style="padding:10px 16px; background:var(--light-bg); border-radius:10px; display:flex; align-items:center; gap:10px;">
+                            <span style="color:var(--primary-color); font-size:20px;">✦</span> 🎨 Custom profile pictures
+                        </li>
+                        <li style="padding:10px 16px; background:var(--light-bg); border-radius:10px; display:flex; align-items:center; gap:10px;">
+                            <span style="color:var(--primary-color); font-size:20px;">✦</span> 🖼️ Custom banners
+                        </li>
+                        <li style="padding:10px 16px; background:var(--light-bg); border-radius:10px; display:flex; align-items:center; gap:10px;">
+                            <span style="color:var(--primary-color); font-size:20px;">✦</span> More exciting Premium perks coming soon!
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- CTA -->
+                <div class="premium-cta">
+                    <h2>💚 Upgrade to Emerald Premium Today!</h2>
+                    <p>Get access to all premium features and enjoy 20% OFF all our services. Support Emerald and take your server to the next level.</p>
+                    <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn" target="_blank">
+                        <i class="fab fa-discord"></i> Contact Us to Upgrade
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ═══════ CUSTOM PAGE ═══════ -->
+    <div id="custom" class="page">
+        <section class="custom-page">
+            <div class="container">
+                <div class="custom-header">
+                    <h1>🤖 Custom Bot Services</h1>
+                    <p>Looking for a bot for your server or project? Check out our packages!</p>
+                </div>
+
+                <!-- Packages -->
+                <div class="package-grid">
+                    <!-- Simple -->
+                    <div class="package-card">
+                        <span class="badge">Best for small servers</span>
+                        <h3>🟢 Simple Bot</h3>
+                        <div class="price">2–4 €</div>
+                        <div class="price-sub">Best for small servers &amp; basic automation</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Up to 5 commands</li>
+                            <li><i class="fas fa-check"></i> Text-based responses</li>
+                            <li><i class="fas fa-check"></i> Discord or Telegram</li>
+                            <li><i class="fas fa-check"></i> Clean &amp; tested code</li>
+                            <li style="margin-top:8px; color:var(--text-light); font-size:13px;">⏱️ Estimated Delivery: 24–48h</li>
+                            <li style="color:var(--text-light); font-size:13px;">Examples: !ping, !help, !rules, !info, !say</li>
+                        </ul>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order Now</a>
+                    </div>
+
+                    <!-- Standard -->
+                    <div class="package-card">
+                        <span class="badge">Growing communities</span>
+                        <h3>🔵 Standard Bot</h3>
+                        <div class="price">8–15 €</div>
+                        <div class="price-sub">Perfect for growing communities</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Up to 15 commands</li>
+                            <li><i class="fas fa-check"></i> Admin/User permissions</li>
+                            <li><i class="fas fa-check"></i> Embedded messages</li>
+                            <li><i class="fas fa-check"></i> Basic database (JSON)</li>
+                            <li><i class="fas fa-check"></i> Welcome &amp; goodbye system</li>
+                            <li><i class="fas fa-check"></i> Basic auto-moderation</li>
+                            <li style="margin-top:8px; color:var(--text-light); font-size:13px;">⏱️ Estimated Delivery: 2–4 days</li>
+                        </ul>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order Now</a>
+                    </div>
+
+                    <!-- Advanced -->
+                    <div class="package-card">
+                        <span class="badge">Bigger projects</span>
+                        <h3>🟣 Advanced Bot</h3>
+                        <div class="price">20–35 €</div>
+                        <div class="price-sub">For bigger projects &amp; semi-professional use</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 30–50 commands</li>
+                            <li><i class="fas fa-check"></i> Advanced logic &amp; database (SQLite / MongoDB)</li>
+                            <li><i class="fas fa-check"></i> API integrations</li>
+                            <li><i class="fas fa-check"></i> Custom features per client</li>
+                            <li><i class="fas fa-check"></i> Error handling &amp; logging</li>
+                            <li style="margin-top:8px; color:var(--text-light); font-size:13px;">⏱️ Estimated Delivery: 4–7 days</li>
+                        </ul>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order Now</a>
+                    </div>
+
+                    <!-- Premium/Custom -->
+                    <div class="package-card premium-package">
+                        <span class="badge">⭐ Fully Custom</span>
+                        <h3>🔴 Premium / Custom Bot</h3>
+                        <div class="price">40 €+</div>
+                        <div class="price-sub">Fully custom, business-grade bots</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Unlimited commands</li>
+                            <li><i class="fas fa-check"></i> Fully custom systems</li>
+                            <li><i class="fas fa-check"></i> Optional dashboard or web panel</li>
+                            <li><i class="fas fa-check"></i> Priority support</li>
+                            <li><i class="fas fa-check"></i> Long-term maintenance available</li>
+                            <li style="margin-top:8px; color:var(--text-light); font-size:13px;">💬 Price depends on complexity</li>
+                        </ul>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Contact for Quote</a>
+                    </div>
+                </div>
+
+                <!-- Optional Add-Ons -->
+                <div class="addons-section">
+                    <h3>➕ Optional Add-Ons</h3>
+                    <div class="addons-grid">
+                        <div class="addon-item"><span class="name">Extra commands</span><span class="price-tag">+1 € each</span></div>
+                        <div class="addon-item"><span class="name">Monthly updates &amp; support</span><span class="price-tag">+5–15 €/month</span></div>
+                        <div class="addon-item"><span class="name">Priority delivery</span><span class="price-tag">+5 €</span></div>
+                        <div class="addon-item"><span class="name">Custom dashboard</span><span class="price-tag">Quote</span></div>
+                    </div>
+                </div>
+
+                <!-- Custom Services: Profile & Banner -->
+                <div class="custom-services">
+                    <div class="section-title">
+                        <h2>🎨 Custom Design Services</h2>
+                        <p>Make your bot truly yours with custom profile pictures and banners</p>
+                    </div>
+                    <div class="custom-service-row">
+                        <!-- Custom Profile -->
+                        <div class="custom-service-card">
+                            <h3><i class="fas fa-user-circle"></i> Custom Profile Picture</h3>
+                            <div class="price-range">15–30 €</div>
+                            <p>Get a unique, custom-made profile picture for your bot that matches your brand or server theme.</p>
+                            <ul>
+                                <li><i class="fas fa-check"></i> High-quality design</li>
+                                <li><i class="fas fa-check"></i> Multiple revisions</li>
+                                <li><i class="fas fa-check"></i> Any style (minimalist, detailed, animated, etc.)</li>
+                                <li><i class="fas fa-check"></i> Delivered in 2–4 days</li>
+                            </ul>
+                            <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order Profile</a>
+                        </div>
+
+                        <!-- Custom Banner -->
+                        <div class="custom-service-card">
+                            <h3><i class="fas fa-image"></i> Custom Banner</h3>
+                            <div class="price-range">20–40 €</div>
+                            <p>Stand out with a custom banner that represents your server or bot's identity.</p>
+                            <ul>
+                                <li><i class="fas fa-check"></i> Custom design tailored to you</li>
+                                <li><i class="fas fa-check"></i> High-resolution output</li>
+                                <li><i class="fas fa-check"></i> Multiple revisions</li>
+                                <li><i class="fas fa-check"></i> Delivered in 3–5 days</li>
+                            </ul>
+                            <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order Banner</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rules & Terms -->
+                <div class="rules-box">
+                    <h4>📜 Rules &amp; Terms</h4>
+                    <ul>
+                        <li>Bots are sold as-is. Minor bugs fixed within 3 days.</li>
+                        <li>Refunds only if the bot cannot be delivered or is non-functional.</li>
+                        <li>Illegal use is strictly prohibited (spamming, phishing, etc.).</li>
+                        <li>Reselling without permission is not allowed.</li>
+                        <li>Premium support &amp; updates only included if purchased.</li>
+                        <li>Payment must be completed before delivery.</li>
+                        <li>Delivery times are estimates; complex bots may take longer.</li>
+                        <li>Custom features outside the package may require extra payment.</li>
+                    </ul>
+                    <p style="margin-top:16px; font-weight:500; color:var(--text-color);">💬 DM us now to order your bot today!</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ═══════ STATUS PAGE ═══════ -->
     <div id="status" class="page">
         <section class="status-page">
             <div class="container">
                 <div class="status-card">
-                    <div class="status-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
+                    <div class="status-icon"><i class="fas fa-check-circle"></i></div>
                     <div class="status-badge">All Systems Operational</div>
                     <h1>Service Status</h1>
                     <p>Both the Emerald Bot and this website are fully functional and operating normally.</p>
-                    
-                    <div style="margin-top: 40px; text-align: left;">
-                        <h3 style="text-align: center;">System Status</h3>
-                        <div style="background: #f6f8fa; padding: 25px; border-radius: 12px; margin-top: 25px; border: 1px solid var(--border-color);">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e1e4e8;">
-                                <div>
-                                    <span style="font-weight: 600; font-size: 18px;">Emerald Bot</span><br>
-                                    <span style="color: var(--text-light); font-size: 14px;">Discord bot services</span>
-                                </div>
-                                <span style="color: var(--primary-color); font-weight: 600; font-size: 18px;">Operational</span>
+                    <div style="margin-top:36px; text-align:left;">
+                        <h3 style="text-align:center;">System Status</h3>
+                        <div style="background:#f6f8fa; padding:24px; border-radius:12px; margin-top:20px; border:1px solid var(--border-color);">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #e1e4e8;">
+                                <div><span style="font-weight:600; font-size:17px;">Emerald Bot</span><br><span style="color:var(--text-light); font-size:13px;">Discord bot services</span></div>
+                                <span style="color:var(--primary-color); font-weight:600; font-size:17px;">Operational</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #e1e4e8;">
-                                <div>
-                                    <span style="font-weight: 600; font-size: 18px;">Website</span><br>
-                                    <span style="color: var(--text-light); font-size: 14px;">Documentation & dashboard</span>
-                                </div>
-                                <span style="color: var(--primary-color); font-weight: 600; font-size: 18px;">Operational</span>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #e1e4e8;">
+                                <div><span style="font-weight:600; font-size:17px;">Website</span><br><span style="color:var(--text-light); font-size:13px;">Documentation &amp; dashboard</span></div>
+                                <span style="color:var(--primary-color); font-weight:600; font-size:17px;">Operational</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                                <div>
-                                    <span style="font-weight: 600; font-size: 18px;">API Services</span><br>
-                                    <span style="color: var(--text-light); font-size: 14px;">External integrations</span>
-                                </div>
-                                <span style="color: var(--primary-color); font-weight: 600; font-size: 18px;">Operational</span>
+                            <div style="display:flex; justify-content:space-between;">
+                                <div><span style="font-weight:600; font-size:17px;">API Services</span><br><span style="color:var(--text-light); font-size:13px;">External integrations</span></div>
+                                <span style="color:var(--primary-color); font-weight:600; font-size:17px;">Operational</span>
                             </div>
                         </div>
                     </div>
-                    
-                    <div style="margin-top: 40px; text-align: left;">
-                        <h3 style="text-align: center;">Recent Incidents</h3>
-                        <div style="background: #f6f8fa; padding: 25px; border-radius: 12px; margin-top: 25px; border: 1px solid var(--border-color);">
-                            <div style="text-align: center; padding: 20px;">
-                                <i class="fas fa-check-circle" style="font-size: 48px; color: var(--primary-color); margin-bottom: 15px;"></i>
-                                <p style="color: var(--text-light); font-size: 16px;">No incidents reported in the last 30 days</p>
+                    <div style="margin-top:36px; text-align:left;">
+                        <h3 style="text-align:center;">Recent Incidents</h3>
+                        <div style="background:#f6f8fa; padding:24px; border-radius:12px; margin-top:20px; border:1px solid var(--border-color);">
+                            <div style="text-align:center; padding:16px;">
+                                <i class="fas fa-check-circle" style="font-size:42px; color:var(--primary-color); margin-bottom:12px;"></i>
+                                <p style="color:var(--text-light); font-size:15px;">No incidents reported in the last 30 days</p>
                             </div>
                         </div>
                     </div>
-                    
-                    <p style="margin-top: 40px; font-size: 14px; color: #586069; text-align: center;">
+                    <p style="margin-top:36px; font-size:13px; color:#586069; text-align:center;">
                         Last updated: <span id="current-date"></span> • Updated every 5 minutes
                     </p>
                 </div>
@@ -1938,18 +2655,15 @@
         </section>
     </div>
 
-    <!-- Privacy Policy Page - COMPLETED -->
+    <!-- ═══════ PRIVACY POLICY ═══════ -->
     <div id="privacy" class="page">
         <section class="legal-page">
             <div class="container">
                 <div class="legal-content">
                     <h1>Privacy Policy</h1>
                     <p><strong>Last updated:</strong> <span id="privacy-date"></span></p>
-                    
-                    <p>This Privacy Policy explains how Emerald Bot ("we", "us", or "our") collects, uses, and protects your information when you use our Discord bot. We are committed to protecting your privacy and complying with applicable data protection laws.</p>
-                    
+                    <p>This Privacy Policy explains how Emerald Bot ("we", "us", or "our") collects, uses, and protects your information when you use our Discord bot.</p>
                     <h2>1. Information We Collect</h2>
-                    <p>Emerald Bot collects and processes the following categories of personal data:</p>
                     <ul>
                         <li><strong>Server Information:</strong> Server ID, name, configuration settings, and channel IDs necessary for bot functionality</li>
                         <li><strong>User Information:</strong> User IDs, usernames, and discriminators for features like moderation, leveling, and welcome messages</li>
@@ -1957,158 +2671,106 @@
                         <li><strong>Usage Data:</strong> Command usage statistics, feature interaction data, and error logs to improve our services</li>
                         <li><strong>Configuration Data:</strong> Your custom settings, preferences, and bot configurations for your server</li>
                     </ul>
-                    
                     <h2>2. How We Use Your Information</h2>
-                    <p>We use the collected information for the following purposes:</p>
                     <ul>
-                        <li>To provide and maintain the bot's core functionality (moderation, welcome messages, etc.)</li>
+                        <li>To provide and maintain the bot's core functionality</li>
                         <li>To improve and customize the user experience</li>
                         <li>To monitor for abuse and enforce our Terms of Service</li>
                         <li>To respond to user support requests and troubleshoot issues</li>
                         <li>To develop new features and improve existing ones</li>
                         <li>To ensure the security and integrity of our services</li>
                     </ul>
-                    
                     <h2>3. Data Storage and Security</h2>
-                    <p>We implement appropriate technical and organizational security measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. These measures include:</p>
-                    <ul>
-                        <li>Encryption of data in transit using SSL/TLS protocols</li>
-                        <li>Secure server infrastructure with regular security updates</li>
-                        <li>Access controls limiting data access to authorized personnel only</li>
-                        <li>Regular security assessments and monitoring</li>
-                    </ul>
-                    <p>While we strive to protect your personal data, no method of transmission over the Internet or electronic storage is 100% secure.</p>
-                    
+                    <p>We implement appropriate technical and organizational security measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.</p>
                     <h2>4. Data Retention</h2>
-                    <p>We retain personal data only for as long as necessary to fulfill the purposes for which it was collected, including to satisfy any legal, accounting, or reporting requirements. Our retention periods are:</p>
                     <ul>
                         <li><strong>Server Data:</strong> Retained until the bot is removed from your server</li>
                         <li><strong>User Data:</strong> Retained for the duration of your server membership where Emerald is present</li>
                         <li><strong>Moderation Logs:</strong> Retained for 90 days to handle disputes and appeals</li>
                         <li><strong>Analytics Data:</strong> Retained in anonymized form for up to 2 years</li>
                     </ul>
-                    <p>You can request data deletion at any time by contacting us or removing the bot from your server.</p>
-                    
                     <h2>5. Third-Party Services</h2>
-                    <p>Emerald Bot only interacts with Discord's API to provide its services. We do not sell or share your data with third parties for marketing purposes. We may use subprocessors for hosting and infrastructure, all of which maintain high security standards.</p>
-                    
+                    <p>Emerald Bot only interacts with Discord's API to provide its services. We do not sell or share your data with third parties for marketing purposes.</p>
                     <h2>6. Your Rights</h2>
-                    <p>You have the following rights regarding your personal data:</p>
                     <ul>
-                        <li><strong>Right of Access:</strong> You can request a copy of the personal data we hold about you</li>
-                        <li><strong>Right to Rectification:</strong> You can request correction of inaccurate or incomplete data</li>
-                        <li><strong>Right to Erasure:</strong> You can request deletion of your personal data</li>
-                        <li><strong>Right to Restriction of Processing:</strong> You can request temporary restriction of processing in certain circumstances</li>
-                        <li><strong>Right to Object:</strong> You can object to our use of your data based on legitimate interests</li>
+                        <li><strong>Right of Access:</strong> Request a copy of the personal data we hold about you</li>
+                        <li><strong>Right to Rectification:</strong> Request correction of inaccurate or incomplete data</li>
+                        <li><strong>Right to Erasure:</strong> Request deletion of your personal data</li>
+                        <li><strong>Right to Restriction of Processing:</strong> Request temporary restriction of processing</li>
+                        <li><strong>Right to Object:</strong> Object to our use of your data based on legitimate interests</li>
                     </ul>
-                    <p>To exercise these rights, please contact us through our support server. We will respond to your request within 30 days.</p>
-                    
                     <h2>7. Children's Privacy</h2>
-                    <p>Our services are not directed to individuals under the age of 13. We do not knowingly collect personal data from children under 13. If you become aware that a child has provided us with personal data, please contact us immediately.</p>
-                    
+                    <p>Our services are not directed to individuals under the age of 13. We do not knowingly collect personal data from children under 13.</p>
                     <h2>8. Automated Decision-Making</h2>
-                    <p>Emerald Bot uses automated processes for moderation features (such as filtering inappropriate content). These automated decisions are necessary for the performance of our services. You have the right to request human intervention or challenge these decisions by contacting us.</p>
-                    
+                    <p>Emerald Bot uses automated processes for moderation features. You have the right to request human intervention or challenge these decisions by contacting us.</p>
                     <h2>9. Changes to This Policy</h2>
-                    <p>We may update this Privacy Policy from time to time. We will notify users of any material changes through our support server and update the "Last updated" date. Continued use of Emerald Bot after changes constitutes acceptance of the updated policy.</p>
-                    
+                    <p>We may update this Privacy Policy from time to time. Continued use of Emerald Bot after changes constitutes acceptance of the updated policy.</p>
                     <h2>10. Contact Us</h2>
-                    <p>If you have questions about this Privacy Policy or our data practices, please contact us through our <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank">support server</a>.</p>
+                    <p>If you have questions about this Privacy Policy, please contact us through our <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank">support server</a>.</p>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- Terms of Service Page - COMPLETED -->
+    <!-- ═══════ TERMS OF SERVICE ═══════ -->
     <div id="tos" class="page">
         <section class="legal-page">
             <div class="container">
                 <div class="legal-content">
                     <h1>Terms of Service</h1>
                     <p><strong>Last updated:</strong> <span id="tos-date"></span></p>
-                    
-                    <p>By using Emerald Bot ("the Bot", "our", "we", or "us"), you agree to these Terms of Service. Please read them carefully. These Terms constitute a legally binding agreement between you and Emerald Bot.</p>
-                    
+                    <p>By using Emerald Bot ("the Bot", "our", "we", or "us"), you agree to these Terms of Service.</p>
                     <h2>1. Acceptance of Terms</h2>
-                    <p>By inviting and using Emerald Bot on your Discord server, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you are using the Bot on behalf of an organization, you represent that you have the authority to bind that organization to these Terms.</p>
-                    
+                    <p>By inviting and using Emerald Bot on your Discord server, you acknowledge that you have read, understood, and agree to be bound by these Terms.</p>
                     <h2>2. Description of Service</h2>
-                    <p>Emerald Bot is a Discord bot that provides moderation, utility, entertainment, and administrative features for Discord servers. We reserve the right to modify, suspend, or discontinue the service (or any part of it) at any time with or without notice.</p>
-                    
+                    <p>Emerald Bot is a Discord bot that provides moderation, utility, entertainment, and administrative features for Discord servers.</p>
                     <h2>3. Eligibility</h2>
-                    <p>To use Emerald Bot, you must:</p>
                     <ul>
                         <li>Be at least 13 years old (or the age of digital consent in your jurisdiction)</li>
                         <li>Have the legal capacity to enter into binding contracts</li>
                         <li>Comply with Discord's Terms of Service and Community Guidelines</li>
                         <li>Have the necessary permissions to add bots to your Discord server</li>
                     </ul>
-                    
                     <h2>4. User Responsibilities</h2>
-                    <p>You agree to:</p>
                     <ul>
                         <li>Use the Bot in compliance with all applicable laws and regulations</li>
                         <li>Use the Bot in compliance with Discord's Terms of Service</li>
                         <li>Not use the Bot for any illegal, fraudulent, or unauthorized purpose</li>
                         <li>Not abuse, harass, or exploit the Bot's features or API</li>
                         <li>Not attempt to reverse engineer, decompile, or modify the Bot</li>
-                        <li>Not use the Bot to transmit malware, viruses, or other harmful code</li>
-                        <li>Not use the Bot to spam, phish, or engage in other deceptive practices</li>
-                        <li>Ensure that your use of the Bot complies with these Terms</li>
                     </ul>
-                    
                     <h2>5. Prohibited Uses</h2>
-                    <p>You may not use the Bot to:</p>
                     <ul>
                         <li>Harass, abuse, defame, threaten, or intimidate others</li>
                         <li>Distribute spam, malicious content, or illegal material</li>
                         <li>Violate any applicable laws, regulations, or third-party rights</li>
                         <li>Impersonate others or provide false information</li>
                         <li>Collect or harvest personal information without consent</li>
-                        <li>Interfere with or disrupt the Bot's functionality or servers</li>
-                        <li>Engage in any activity that could damage, disable, or impair our services</li>
-                        <li>Promote or facilitate illegal activities</li>
-                        <li>Circumvent any security measures or access controls</li>
                     </ul>
-                    
                     <h2>6. Service Availability</h2>
-                    <p>We strive to maintain 99.9% uptime but cannot guarantee uninterrupted service. We reserve the right to temporarily suspend access for maintenance, security reasons, or to prevent abuse. We will make reasonable efforts to provide advance notice of planned downtime.</p>
-                    
+                    <p>We strive to maintain 99.9% uptime but cannot guarantee uninterrupted service. We reserve the right to temporarily suspend access for maintenance, security reasons, or to prevent abuse.</p>
                     <h2>7. Intellectual Property</h2>
-                    <p>All rights to Emerald Bot, including its name, logo, code, design, features, and documentation, are owned by Emerald Bot developers or our licensors. You are granted a limited, non-exclusive, non-transferable license to use the Bot in accordance with these Terms. You may not copy, modify, distribute, or create derivative works based on the Bot without our express written permission.</p>
-                    
-                    <h2>8. User Content</h2>
-                    <p>You retain ownership of any content you create or share using the Bot. By using the Bot, you grant us a limited license to process and display your content solely for the purpose of providing the Bot's services. You are solely responsible for the content you create or share using the Bot.</p>
-                    
-                    <h2>9. Limitation of Liability</h2>
-                    <p>To the fullest extent permitted by applicable law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or goodwill, arising from your use of the Bot. Our total liability for any claims under these Terms shall not exceed the amount you have paid us for the service (if applicable) in the twelve months preceding the claim.</p>
-                    
-                    <h2>10. Indemnification</h2>
-                    <p>You agree to indemnify and hold harmless Emerald Bot developers, employees, and affiliates from any claims, damages, losses, or expenses (including reasonable attorneys' fees) arising from your use of the Bot, your violation of these Terms, or your violation of any rights of another party.</p>
-                    
-                    <h2>11. Disclaimer of Warranties</h2>
-                    <p>The Bot is provided "as is" and "as available" without warranties of any kind, either express or implied. We disclaim all warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not warrant that the Bot will be uninterrupted, error-free, or secure.</p>
-                    
-                    <h2>12. Termination</h2>
-                    <p>We reserve the right to terminate or suspend your access to the Bot at any time, with or without cause, and with or without notice. You may terminate these Terms by removing the Bot from your server. Upon termination, your right to use the Bot will immediately cease.</p>
-                    
-                    <h2>13. Governing Law and Dispute Resolution</h2>
-                    <p>These Terms shall be governed by and construed in accordance with the laws of the United States, without regard to its conflict of law provisions. Any disputes arising from these Terms or your use of the Bot shall be subject to the exclusive jurisdiction of the courts of the United States.</p>
-                    
-                    <h2>14. Severability</h2>
-                    <p>If any provision of these Terms is found to be unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary, and the remaining provisions shall remain in full force and effect.</p>
-                    
-                    <h2>15. Changes to Terms</h2>
-                    <p>We may update these Terms from time to time. We will notify users of material changes through our support server and update the "Last updated" date. Continued use of the Bot after changes constitutes acceptance of the new Terms.</p>
-                    
-                    <h2>16. Contact Information</h2>
+                    <p>All rights to Emerald Bot, including its name, logo, code, design, features, and documentation, are owned by Emerald Bot developers or our licensors.</p>
+                    <h2>8. Limitation of Liability</h2>
+                    <p>To the fullest extent permitted by applicable law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Bot.</p>
+                    <h2>9. Indemnification</h2>
+                    <p>You agree to indemnify and hold harmless Emerald Bot developers, employees, and affiliates from any claims, damages, losses, or expenses arising from your use of the Bot.</p>
+                    <h2>10. Disclaimer of Warranties</h2>
+                    <p>The Bot is provided "as is" and "as available" without warranties of any kind, either express or implied.</p>
+                    <h2>11. Termination</h2>
+                    <p>We reserve the right to terminate or suspend your access to the Bot at any time, with or without cause, and with or without notice.</p>
+                    <h2>12. Governing Law</h2>
+                    <p>These Terms shall be governed by and construed in accordance with the laws of the United States.</p>
+                    <h2>13. Changes to Terms</h2>
+                    <p>We may update these Terms from time to time. Continued use of the Bot after changes constitutes acceptance of the new Terms.</p>
+                    <h2>14. Contact Information</h2>
                     <p>For questions about these Terms, please contact us through our <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank">support server</a>.</p>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- Footer -->
+    <!-- ═══════ FOOTER ═══════ -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -2126,6 +2788,8 @@
                     <ul>
                         <li><a href="#" class="nav-link" data-page="home">Home</a></li>
                         <li><a href="#" class="nav-link" data-page="commands">Commands</a></li>
+                        <li><a href="#" class="nav-link" data-page="premium">Premium</a></li>
+                        <li><a href="#" class="nav-link" data-page="custom">Custom</a></li>
                         <li><a href="#" class="nav-link" data-page="status">Status</a></li>
                         <li><a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" target="_blank">Invite Bot</a></li>
                     </ul>
@@ -2149,29 +2813,23 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2023 Emerald Bot. All rights reserved. This bot is not affiliated with Discord Inc.</p>
-                <p style="margin-top: 10px; font-size: 12px;">Made with <i class="fas fa-heart" style="color: #ef4444;"></i> for the Discord community</p>
+                <p style="margin-top:8px; font-size:12px;">Made with <i class="fas fa-heart" style="color:#ef4444;"></i> for the Discord community</p>
             </div>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <div class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </div>
+    <!-- ═══════ BACK TO TOP ═══════ -->
+    <div class="back-to-top"><i class="fas fa-arrow-up"></i></div>
 
+    <!-- ═══════ JAVASCRIPT ═══════ -->
     <script>
-        // Set current date for status and legal pages
-        const currentDate = new Date().toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
-        
+        // ── DATES ──
+        const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         document.getElementById('current-date').textContent = currentDate;
         document.getElementById('privacy-date').textContent = currentDate;
         document.getElementById('tos-date').textContent = currentDate;
-        
-        // Commands data
+
+        // ── COMMANDS DATA ──
         const commandsData = [
             { name: "/log_setup", category: "logging", description: "Setup professional logging system for your server" },
             { name: "/log_status", category: "logging", description: "Check logging system status and configuration" },
@@ -2241,8 +2899,8 @@
             { name: "/audit", category: "utility", description: "View audit log" },
             { name: "/case", category: "utility", description: "View specific moderation case" }
         ];
-        
-        // Initialize page
+
+        // ── INIT ──
         document.addEventListener('DOMContentLoaded', function() {
             initNavigation();
             initCommands();
@@ -2252,210 +2910,175 @@
             initStatsAnimation();
             initTerminalAnimation();
         });
-        
-        // Navigation functionality
+
+        // ── NAVIGATION ──
         function initNavigation() {
             const navLinks = document.querySelectorAll('.nav-link');
             const pages = document.querySelectorAll('.page');
             const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
             const mainNav = document.getElementById('main-nav');
-            
+
             function showPage(pageId) {
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                const targetPage = document.getElementById(pageId);
-                if (targetPage) {
-                    targetPage.classList.add('active');
-                }
-                
+                pages.forEach(p => p.classList.remove('active'));
+                const target = document.getElementById(pageId);
+                if (target) target.classList.add('active');
                 mainNav.classList.remove('active');
                 window.scrollTo(0, 0);
             }
-            
+
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const pageId = this.getAttribute('data-page');
                     showPage(pageId);
-                    
-                    // Update active nav link
-                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                 });
             });
-            
+
             mobileMenuBtn.addEventListener('click', function() {
                 mainNav.classList.toggle('active');
-                this.innerHTML = mainNav.classList.contains('active') ? 
-                    '<i class="fas fa-times"></i>' : 
+                this.innerHTML = mainNav.classList.contains('active') ?
+                    '<i class="fas fa-times"></i>' :
                     '<i class="fas fa-bars"></i>';
             });
-            
-            // Set home as active initially
+
             document.querySelector('.nav-link[data-page="home"]').classList.add('active');
         }
-        
-        // Commands functionality
+
+        // ── COMMANDS ──
         function initCommands() {
-            const commandsContainer = document.getElementById('commands-container');
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const commandSearch = document.getElementById('command-search');
-            
-            // Render commands
-            function renderCommands(filter = 'all', search = '') {
-                commandsContainer.innerHTML = '';
-                
-                const filteredCommands = commandsData.filter(cmd => {
-                    const matchesCategory = filter === 'all' || cmd.category === filter;
-                    const matchesSearch = search === '' || 
-                        cmd.name.toLowerCase().includes(search.toLowerCase()) || 
-                        cmd.description.toLowerCase().includes(search.toLowerCase());
-                    return matchesCategory && matchesSearch;
+            const container = document.getElementById('commands-container');
+            const tabs = document.querySelectorAll('.tab-button');
+            const search = document.getElementById('command-search');
+
+            function render(filter = 'all', query = '') {
+                container.innerHTML = '';
+                const filtered = commandsData.filter(cmd => {
+                    const matchCat = filter === 'all' || cmd.category === filter;
+                    const matchSearch = query === '' ||
+                        cmd.name.toLowerCase().includes(query.toLowerCase()) ||
+                        cmd.description.toLowerCase().includes(query.toLowerCase());
+                    return matchCat && matchSearch;
                 });
-                
-                if (filteredCommands.length === 0) {
-                    commandsContainer.innerHTML = `
-                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-                            <i class="fas fa-search" style="font-size: 48px; color: var(--text-light); margin-bottom: 20px;"></i>
-                            <h3 style="color: var(--text-color); margin-bottom: 10px;">No commands found</h3>
-                            <p style="color: var(--text-light);">Try a different search term or category</p>
-                        </div>
-                    `;
+
+                if (!filtered.length) {
+                    container.innerHTML =
+                        `<div style="grid-column:1/-1;text-align:center;padding:40px;">
+                            <i class="fas fa-search" style="font-size:40px;color:var(--text-light);margin-bottom:16px;"></i>
+                            <h3 style="color:var(--text-color);">No commands found</h3>
+                            <p style="color:var(--text-light);">Try a different search term or category</p>
+                        </div>`;
                     return;
                 }
-                
-                filteredCommands.forEach(cmd => {
-                    const commandCard = document.createElement('div');
-                    commandCard.className = 'command-card';
-                    commandCard.setAttribute('data-category', cmd.category);
-                    commandCard.innerHTML = `
+
+                filtered.forEach(cmd => {
+                    const card = document.createElement('div');
+                    card.className = 'command-card';
+                    card.innerHTML = `
                         <div class="command-header">
                             <span class="command-name">${cmd.name}</span>
                             <span class="command-category">${cmd.category}</span>
                         </div>
                         <p class="command-description">${cmd.description}</p>
                     `;
-                    commandsContainer.appendChild(commandCard);
+                    container.appendChild(card);
                 });
             }
-            
-            // Tab functionality
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            tabs.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabs.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    const category = this.getAttribute('data-category');
-                    renderCommands(category, commandSearch.value);
+                    const cat = this.getAttribute('data-category');
+                    render(cat, search.value);
                 });
             });
-            
-            // Search functionality
-            commandSearch.addEventListener('input', function() {
-                const activeTab = document.querySelector('.tab-button.active');
-                const category = activeTab ? activeTab.getAttribute('data-category') : 'all';
-                renderCommands(category, this.value);
+
+            search.addEventListener('input', function() {
+                const active = document.querySelector('.tab-button.active');
+                const cat = active ? active.getAttribute('data-category') : 'all';
+                render(cat, this.value);
             });
-            
-            // Initial render
-            renderCommands();
+
+            render();
         }
-        
-        // Testimonials functionality
+
+        // ── TESTIMONIALS ──
         function initTestimonials() {
-            const testimonialTrack = document.querySelector('.testimonials-track');
-            const testimonialDots = document.querySelectorAll('.testimonial-dot');
-            let currentSlide = 0;
-            
-            function showTestimonial(slideIndex) {
-                testimonialTrack.style.transform = `translateX(-${slideIndex * 100}%)`;
-                testimonialDots.forEach(dot => dot.classList.remove('active'));
-                testimonialDots[slideIndex].classList.add('active');
-                currentSlide = slideIndex;
+            const track = document.querySelector('.testimonials-track');
+            const dots = document.querySelectorAll('.testimonial-dot');
+            let current = 0;
+
+            function show(idx) {
+                track.style.transform = `translateX(-${idx * 100}%)`;
+                dots.forEach(d => d.classList.remove('active'));
+                dots[idx].classList.add('active');
+                current = idx;
             }
-            
-            testimonialDots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    const slideIndex = parseInt(this.getAttribute('data-slide'));
-                    showTestimonial(slideIndex);
+
+            dots.forEach(d => {
+                d.addEventListener('click', function() {
+                    show(parseInt(this.getAttribute('data-slide')));
                 });
             });
-            
-            // Auto-advance
+
             setInterval(() => {
-                currentSlide = (currentSlide + 1) % testimonialDots.length;
-                showTestimonial(currentSlide);
-            }, 8000);
+                current = (current + 1) % dots.length;
+                show(current);
+            }, 7000);
         }
-        
-        // FAQ functionality
+
+        // ── FAQ ──
         function initFAQ() {
-            const faqQuestions = document.querySelectorAll('.faq-question');
-            
-            faqQuestions.forEach(question => {
-                question.addEventListener('click', function() {
-                    const answer = this.nextElementSibling;
-                    
-                    // Close others
-                    faqQuestions.forEach(q => {
-                        if (q !== this) {
-                            q.classList.remove('active');
-                            q.nextElementSibling.classList.remove('active');
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.addEventListener('click', function() {
+                    const ans = this.nextElementSibling;
+                    document.querySelectorAll('.faq-question').forEach(el => {
+                        if (el !== this) {
+                            el.classList.remove('active');
+                            el.nextElementSibling.classList.remove('active');
                         }
                     });
-                    
-                    // Toggle current
                     this.classList.toggle('active');
-                    answer.classList.toggle('active');
+                    ans.classList.toggle('active');
                 });
             });
         }
-        
-        // Back to top functionality
+
+        // ── BACK TO TOP ──
         function initBackToTop() {
-            const backToTopButton = document.querySelector('.back-to-top');
-            
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    backToTopButton.classList.add('active');
-                } else {
-                    backToTopButton.classList.remove('active');
-                }
+            const btn = document.querySelector('.back-to-top');
+            window.addEventListener('scroll', () => {
+                btn.classList.toggle('active', window.pageYOffset > 300);
             });
-            
-            backToTopButton.addEventListener('click', function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+            btn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
-        // Stats animation
+
+        // ── STATS ANIMATION ──
         function initStatsAnimation() {
-            function animateCounter(element, target, duration) {
+            function animate(el, target, duration) {
                 let start = 0;
-                const increment = target / (duration / 16);
+                const step = target / (duration / 16);
                 const timer = setInterval(() => {
-                    start += increment;
+                    start += step;
                     if (start >= target) {
-                        element.textContent = target + '+';
+                        el.textContent = target + '+';
                         clearInterval(timer);
                     } else {
-                        element.textContent = Math.floor(start) + '+';
+                        el.textContent = Math.floor(start) + '+';
                     }
                 }, 16);
             }
-            
-            // Start animations
             setTimeout(() => {
-                animateCounter(document.getElementById('server-count'), 100, 2000);
-                animateCounter(document.getElementById('command-count'), 100, 1500);
+                animate(document.getElementById('server-count'), 100, 2000);
+                animate(document.getElementById('command-count'), 100, 1500);
             }, 500);
         }
-        
-        // Terminal animation
+
+        // ── TERMINAL CURSOR ──
         function initTerminalAnimation() {
             const cursor = document.querySelector('.terminal-cursor');
             if (cursor) {
@@ -2464,26 +3087,23 @@
                 }, 500);
             }
         }
-        
-        // Show FAQ from footer
+
+        // ── SHOW FAQ FROM FOOTER ──
         window.showFaq = function() {
-            const homeLink = document.querySelector('.nav-link[data-page="home"]');
-            if (homeLink) {
-                homeLink.click();
+            const home = document.querySelector('.nav-link[data-page="home"]');
+            if (home) {
+                home.click();
                 setTimeout(() => {
-                    const faqSection = document.querySelector('.faq');
-                    if (faqSection) {
-                        faqSection.scrollIntoView({ behavior: 'smooth' });
-                        
-                        // Open first FAQ
-                        const firstFaq = document.querySelector('.faq-question');
-                        if (firstFaq) {
-                            firstFaq.click();
-                        }
+                    const faq = document.querySelector('.faq');
+                    if (faq) {
+                        faq.scrollIntoView({ behavior: 'smooth' });
+                        const first = document.querySelector('.faq-question');
+                        if (first) first.click();
                     }
-                }, 100);
+                }, 200);
             }
         };
     </script>
+
 </body>
 </html>
