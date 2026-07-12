@@ -110,30 +110,16 @@
             animation: loaderFade 1.2s ease-in-out infinite alternate;
         }
         @keyframes loaderPulse {
-            0% {
-                transform: scale(0.85);
-                opacity: 0.6;
-            }
-            100% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
+            0% { transform: scale(0.85); opacity: 0.6; }
+            100% { transform: scale(1.1); opacity: 1; }
         }
         @keyframes loaderSpin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         @keyframes loaderFade {
-            0% {
-                opacity: 0.3;
-            }
-            100% {
-                opacity: 0.8;
-            }
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
         }
         .loader-rings-wrap {
             position: relative;
@@ -287,15 +273,9 @@
             color: var(--text);
         }
         @media (max-width: 480px) {
-            .premium-popup .benefits-list {
-                grid-template-columns: 1fr;
-            }
-            .premium-popup {
-                padding: 28px 20px 24px;
-            }
-            .premium-popup h2 {
-                font-size: 22px;
-            }
+            .premium-popup .benefits-list { grid-template-columns: 1fr; }
+            .premium-popup { padding: 28px 20px 24px; }
+            .premium-popup h2 { font-size: 22px; }
         }
 
         /* ── GLASS HEADER ── */
@@ -499,20 +479,13 @@
             display: block;
         }
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ── HERO ── */
         .hero {
-            padding: 100px 0 80px;
-            text-align: center;
+            padding: 80px 0 60px;
             background: radial-gradient(ellipse at 30% 20%, rgba(12, 218, 125, 0.06) 0%, transparent 60%),
                 radial-gradient(ellipse at 70% 80%, rgba(88, 101, 242, 0.05) 0%, transparent 60%);
             position: relative;
@@ -530,14 +503,20 @@
             pointer-events: none;
         }
         @keyframes heroGlow {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(5%, 5%) scale(1.2);
-            }
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5%, 5%) scale(1.2); }
         }
-        .hero-badge {
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+        }
+        .hero-content {
+            text-align: left;
+        }
+        .hero-content .hero-badge {
             display: inline-block;
             padding: 6px 18px;
             border-radius: 40px;
@@ -551,30 +530,24 @@
             animation: badgePulse 3s ease-in-out infinite;
         }
         @keyframes badgePulse {
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(12, 218, 125, 0.1);
-            }
-            50% {
-                box-shadow: 0 0 20px 4px rgba(12, 218, 125, 0.15);
-            }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(12, 218, 125, 0.1); }
+            50% { box-shadow: 0 0 20px 4px rgba(12, 218, 125, 0.15); }
         }
-        .hero h1 {
+        .hero-content h1 {
             font-size: 54px;
             font-weight: 800;
             line-height: 1.12;
             letter-spacing: -1.5px;
             margin-bottom: 18px;
-            position: relative;
         }
-        .hero h1 .highlight {
+        .hero-content h1 .highlight {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark), #047857);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             position: relative;
         }
-        .hero h1 .highlight::after {
+        .hero-content h1 .highlight::after {
             content: '';
             position: absolute;
             bottom: 2px;
@@ -585,20 +558,17 @@
             border-radius: 4px;
             opacity: 0.3;
         }
-        .hero p {
+        .hero-content p {
             font-size: 18px;
             color: var(--text-secondary);
-            max-width: 640px;
-            margin: 0 auto 32px;
+            max-width: 600px;
+            margin-bottom: 32px;
             line-height: 1.7;
-            position: relative;
         }
         .hero-buttons {
             display: flex;
             gap: 14px;
-            justify-content: center;
             flex-wrap: wrap;
-            position: relative;
         }
         .btn-large {
             padding: 14px 32px;
@@ -644,62 +614,125 @@
             box-shadow: var(--shadow-lg);
             border-color: var(--primary-light);
         }
-        .stats {
+
+        /* ── HERO CARD STACK ── */
+        .hero-cards {
+            position: relative;
             display: flex;
             justify-content: center;
-            gap: 50px;
-            margin-top: 70px;
-            flex-wrap: wrap;
+            align-items: center;
+            min-height: 380px;
+        }
+        .card-stack {
             position: relative;
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 16/10;
         }
-        .stat-item {
+        .card-stack .card {
+            position: absolute;
+            width: 85%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--card);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+        }
+        .card-stack .card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .card-stack .card:first-child {
+            top: 0;
+            left: 0;
+            z-index: 2;
+            transform: rotate(-4deg) scale(0.95);
+        }
+        .card-stack .card:last-child {
+            bottom: 0;
+            right: 0;
+            z-index: 1;
+            transform: rotate(6deg) scale(0.95);
+        }
+        .card-stack .card:hover {
+            transform: rotate(0deg) scale(1.02);
+            z-index: 3;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+        .card-stack .card:first-child:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        .card-stack .card:last-child:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        .hero-stats .stat-item {
             text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: statFade 0.8s ease forwards;
         }
-        .stat-item:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-        .stat-item:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .stat-item:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-        @keyframes statFade {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .stat-number {
-            font-size: 40px;
+        .hero-stats .stat-number {
+            font-size: 32px;
             font-weight: 800;
             color: var(--primary-dark);
             display: block;
             line-height: 1;
-            position: relative;
         }
-        .stat-number::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 4px;
-            opacity: 0.3;
-        }
-        .stat-label {
+        .hero-stats .stat-label {
             font-size: 13px;
             font-weight: 500;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: 10px;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            .hero-content {
+                text-align: center;
+            }
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-cards {
+                min-height: 300px;
+            }
+            .card-stack {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+        }
+        @media (max-width: 600px) {
+            .hero-content h1 {
+                font-size: 34px;
+            }
+            .card-stack {
+                max-width: 300px;
+            }
+            .hero-stats {
+                gap: 20px;
+            }
+            .hero-stats .stat-number {
+                font-size: 26px;
+            }
         }
 
         /* ── SECTION TITLES ── */
@@ -794,243 +827,6 @@
             color: var(--text-secondary);
             font-size: 14px;
             line-height: 1.7;
-        }
-
-        /* ── SCREENSHOT SHOWCASE ── */
-        .screenshot-showcase {
-            padding: 60px 0 80px;
-            background: var(--bg);
-        }
-        .screenshot-showcase .showcase-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-        .screenshot-showcase .showcase-item {
-            background: var(--card);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-        .screenshot-showcase .showcase-item:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.10);
-            border-color: var(--primary-light);
-        }
-        .screenshot-showcase .showcase-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-bottom: 1px solid var(--border);
-        }
-        .screenshot-showcase .showcase-item .caption {
-            padding: 16px 24px;
-            font-weight: 600;
-            font-size: 15px;
-            color: var(--text);
-            background: var(--card);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .screenshot-showcase .showcase-item .caption i {
-            color: var(--primary);
-        }
-        @media (max-width: 768px) {
-            .screenshot-showcase .showcase-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ── DEMO ── */
-        .demo {
-            padding: 80px 0;
-        }
-        .demo-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-        .demo-content h2 {
-            font-size: 34px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 16px;
-        }
-        .demo-content p {
-            color: var(--text-secondary);
-            font-size: 17px;
-            line-height: 1.8;
-            margin-bottom: 28px;
-        }
-        .terminal {
-            background: #0B1A1A;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.20);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: var(--transition);
-        }
-        .terminal:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
-        }
-        .terminal-header {
-            padding: 14px 20px;
-            background: rgba(255, 255, 255, 0.04);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-        .terminal-dot.red {
-            background: #FF5F56;
-        }
-        .terminal-dot.yellow {
-            background: #FFBD2E;
-        }
-        .terminal-dot.green {
-            background: #27CA3F;
-        }
-        .terminal:hover .terminal-dot.red {
-            animation: dotPulse 1s ease-in-out infinite;
-        }
-        .terminal:hover .terminal-dot.yellow {
-            animation: dotPulse 1s ease-in-out infinite 0.15s;
-        }
-        .terminal:hover .terminal-dot.green {
-            animation: dotPulse 1s ease-in-out infinite 0.3s;
-        }
-        @keyframes dotPulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.4;
-            }
-        }
-        .terminal-title {
-            color: #7A8E8E;
-            font-size: 13px;
-            font-weight: 500;
-            margin-left: 8px;
-        }
-        .terminal-body {
-            padding: 24px 28px;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            color: #D4E6E6;
-            min-height: 300px;
-            line-height: 1.8;
-        }
-        .terminal-line {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 6px;
-            opacity: 0;
-            animation: typeIn 0.3s ease forwards;
-        }
-        .terminal-line:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-        .terminal-line:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .terminal-line:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-        .terminal-line:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-        .terminal-line:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-        .terminal-line:nth-child(6) {
-            animation-delay: 0.6s;
-        }
-        .terminal-line:nth-child(7) {
-            animation-delay: 0.7s;
-        }
-        .terminal-line:nth-child(8) {
-            animation-delay: 0.8s;
-        }
-        .terminal-line:nth-child(9) {
-            animation-delay: 0.9s;
-        }
-        .terminal-line:nth-child(10) {
-            animation-delay: 1.0s;
-        }
-        .terminal-line:nth-child(11) {
-            animation-delay: 1.1s;
-        }
-        @keyframes typeIn {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        .terminal-prompt {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        .terminal-cursor {
-            display: inline-block;
-            width: 8px;
-            height: 18px;
-            background: var(--primary);
-            animation: blink 1s infinite;
-            border-radius: 2px;
-        }
-        @keyframes blink {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0;
-            }
-        }
-        .msg {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin: 8px 0;
-            border-left: 3px solid var(--discord);
-            transition: var(--transition);
-        }
-        .msg:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .msg.bot {
-            border-left-color: var(--primary);
-        }
-        .msg-author {
-            color: #A78BFA;
-            font-weight: 600;
-            font-size: 13px;
-            margin-bottom: 4px;
-            font-family: 'Inter', sans-serif;
-        }
-        .msg-content {
-            color: #D4E6E6;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
         }
 
         /* ── WHY CHOOSE ── */
@@ -1280,6 +1076,111 @@
         .cta-section .btn-large:hover {
             transform: translateY(-3px) scale(1.03);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.20);
+        }
+
+        /* ── COMMANDS PAGE ── */
+        .commands-page {
+            padding: 80px 0;
+        }
+        .commands-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+        .tab-btn {
+            padding: 8px 18px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+        }
+        .tab-btn:hover {
+            border-color: var(--primary-light);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 16px var(--primary-glow);
+        }
+        .commands-search {
+            max-width: 480px;
+            margin: 0 auto 36px;
+            position: relative;
+        }
+        .commands-search input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border-radius: 60px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            font-size: 15px;
+            transition: var(--transition);
+        }
+        .commands-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+            transform: scale(1.01);
+        }
+        .commands-search i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .cmd-card {
+            background: var(--card);
+            padding: 20px 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: default;
+        }
+        .cmd-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-light);
+        }
+        .cmd-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .cmd-name {
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 15px;
+        }
+        .cmd-category {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: var(--bg);
+            padding: 2px 12px;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+        .cmd-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         /* ── DOCS PAGE ── */
@@ -1675,22 +1576,11 @@
             animation: heartBeat 1.5s ease-in-out infinite;
         }
         @keyframes heartBeat {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            15% {
-                transform: scale(1.2);
-            }
-            30% {
-                transform: scale(1);
-            }
-            45% {
-                transform: scale(1.15);
-            }
-            60% {
-                transform: scale(1);
-            }
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.2); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
         }
         .donations-header h1 {
             font-size: 42px;
@@ -1898,15 +1788,8 @@
             animation: statusPulse 2s ease-in-out infinite;
         }
         @keyframes statusPulse {
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.05);
-                opacity: 0.8;
-            }
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
         }
         .status-badge {
             display: inline-block;
@@ -2093,15 +1976,8 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width: 992px) {
-            .demo-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
             .order-services-row {
                 grid-template-columns: 1fr;
-            }
-            .hero h1 {
-                font-size: 40px;
             }
         }
         @media (max-width: 768px) {
@@ -2138,17 +2014,10 @@
                 font-size: 12px;
             }
             .hero {
-                padding: 60px 0 50px;
+                padding: 60px 0 40px;
             }
-            .hero h1 {
+            .hero-content h1 {
                 font-size: 32px;
-            }
-            .stats {
-                gap: 30px;
-                margin-top: 40px;
-            }
-            .stat-number {
-                font-size: 30px;
             }
             .section-title h2 {
                 font-size: 28px;
@@ -2159,10 +2028,13 @@
             .benefits-grid {
                 grid-template-columns: 1fr;
             }
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
             .docs-grid {
                 grid-template-columns: 1fr;
             }
-            .order-package-grid {
+            .package-grid {
                 grid-template-columns: 1fr;
             }
             .donation-tiers {
@@ -2208,20 +2080,15 @@
             }
         }
         @media (max-width: 480px) {
-            .hero h1 {
+            .hero-content h1 {
                 font-size: 28px;
             }
-            .hero p {
+            .hero-content p {
                 font-size: 15px;
             }
             .btn-large {
                 padding: 12px 24px;
                 font-size: 14px;
-            }
-            .terminal-body {
-                padding: 16px 18px;
-                font-size: 13px;
-                min-height: 240px;
             }
             .testimonial-card {
                 padding: 24px 16px;
@@ -2262,33 +2129,21 @@
                         </linearGradient>
                         <filter id="gemGlow">
                             <feGaussianBlur stdDeviation="3" result="blur"/>
-                            <feMerge>
-                                <feMergeNode in="blur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
+                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                         </filter>
-                        <clipPath id="gemClip">
-                            <polygon points="40,4 66,18 66,48 52,70 28,70 14,48 14,18"/>
-                        </clipPath>
                     </defs>
-                    <!-- Outer glow -->
                     <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#emeraldGlow)" opacity="0.3"/>
-                    <!-- Main gem body -->
                     <polygon points="40,4 66,18 66,48 52,70 28,70 14,48 14,18" fill="url(#emeraldGrad)" stroke="#047857" stroke-width="1.5" filter="url(#gemGlow)"/>
-                    <!-- Facet highlights -->
                     <polygon points="40,4 52,18 40,30 28,18" fill="rgba(255,255,255,0.15)"/>
                     <polygon points="52,18 66,48 58,56 40,30" fill="rgba(255,255,255,0.06)"/>
                     <polygon points="28,18 14,48 22,56 40,30" fill="rgba(0,0,0,0.06)"/>
                     <polygon points="40,30 58,56 52,70 28,70 22,56" fill="rgba(0,0,0,0.08)"/>
-                    <!-- Top shine -->
                     <polygon points="34,12 46,20 40,26 30,18" fill="url(#emeraldShine)" opacity="0.5"/>
-                    <!-- Center sparkle -->
                     <circle cx="40" cy="34" r="6" fill="white" opacity="0.08"/>
                     <circle cx="40" cy="34" r="3" fill="white" opacity="0.25"/>
                     <circle cx="28" cy="22" r="2" fill="white" opacity="0.12"/>
                     <circle cx="28" cy="22" r="1" fill="white" opacity="0.3"/>
                     <circle cx="52" cy="50" r="1.5" fill="white" opacity="0.08"/>
-                    <!-- Inner gem brilliance -->
                     <polygon points="40,10 48,18 40,24 32,18" fill="rgba(255,255,255,0.05)"/>
                     <polygon points="48,18 58,34 48,46 40,24" fill="rgba(255,255,255,0.03)"/>
                     <polygon points="32,18 22,34 32,46 40,24" fill="rgba(0,0,0,0.03)"/>
@@ -2382,6 +2237,7 @@
                 <nav id="mainNav">
                     <ul>
                         <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="commands">Commands</a></li>
                         <li><a href="#" class="nav-link" data-page="docs">Docs</a></li>
                         <li><a href="#" class="nav-link" data-page="premium">Premium</a></li>
                         <li><a href="#" class="nav-link" data-page="order">Order</a></li>
@@ -2406,50 +2262,43 @@
     <div id="home" class="page active">
         <section class="hero">
             <div class="container">
-                <div class="hero-badge">✨ New: Emerald Premium with advanced features!</div>
-                <h1>Your All‑in‑One<br><span class="highlight">Discord Companion</span></h1>
-                <p>From advanced moderation to leveling, tickets, auto‑reply, and professional logging — Emerald does it all with style, speed, and simplicity.</p>
-                <div class="hero-buttons">
-                    <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-large primary" target="_blank">
-                        <i class="fas fa-plus"></i> Add to Server
-                    </a>
-                    <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-large secondary" target="_blank">
-                        <i class="fab fa-discord"></i> Join Support
-                    </a>
-                </div>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-number" id="serverCount">100+</span>
-                        <span class="stat-label">Servers</span>
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <div class="hero-badge">✨ New: Emerald Premium with advanced features!</div>
+                        <h1>Your All‑in‑One<br><span class="highlight">Discord Companion</span></h1>
+                        <p>From advanced moderation to leveling, tickets, auto‑reply, and professional logging — Emerald does it all with style, speed, and simplicity.</p>
+                        <div class="hero-buttons">
+                            <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-large primary" target="_blank">
+                                <i class="fas fa-plus"></i> Add to Server
+                            </a>
+                            <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-large secondary" target="_blank">
+                                <i class="fab fa-discord"></i> Join Support
+                            </a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" id="serverCount">100+</span>
+                                <span class="stat-label">Servers</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="cmdCount">100+</span>
+                                <span class="stat-label">Commands</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">99.9%</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="cmdCount">100+</span>
-                        <span class="stat-label">Commands</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">99.9%</span>
-                        <span class="stat-label">Uptime</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ── SCREENSHOT SHOWCASE ── -->
-        <section class="screenshot-showcase">
-            <div class="container">
-                <div class="section-title">
-                    <h2>See Emerald in action</h2>
-                    <p>Real screenshots from our dashboard and moderation tools.</p>
-                    <span class="accent-line"></span>
-                </div>
-                <div class="showcase-grid">
-                    <div class="showcase-item">
-                        <img src="https://github.com/emeralddiscordbot/Emerald/blob/main/Warning.JPG?raw=true" alt="AutoMod in action" loading="lazy" />
-                        <div class="caption"><i class="fas fa-shield-alt"></i> AutoMod catching spam and bad words in real‑time</div>
-                    </div>
-                    <div class="showcase-item">
-                        <img src="https://github.com/emeralddiscordbot/Emerald/blob/main/Settings%20emerald.JPG?raw=true" alt="Settings dashboard" loading="lazy" />
-                        <div class="caption"><i class="fas fa-sliders-h"></i> The powerful settings dashboard — all controls in one place</div>
+                    <div class="hero-cards">
+                        <div class="card-stack">
+                            <div class="card">
+                                <img src="https://github.com/emeralddiscordbot/Emerald/blob/main/Warning.JPG?raw=true" alt="AutoMod in action" loading="lazy" />
+                            </div>
+                            <div class="card">
+                                <img src="https://github.com/emeralddiscordbot/Emerald/blob/main/Settings%20emerald.JPG?raw=true" alt="Settings dashboard" loading="lazy" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2522,52 +2371,6 @@
                         <div class="feature-icon"><i class="fas fa-database"></i></div>
                         <h3>Backup &amp; Audit</h3>
                         <p>Full server configuration backup and detailed audit logs for all moderation actions.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="demo">
-            <div class="container">
-                <div class="demo-grid">
-                    <div class="demo-content">
-                        <h2>See Emerald in action</h2>
-                        <p>Watch how Emerald automatically moderates your server, removes inappropriate content, and welcomes new members — all in real‑time.</p>
-                        <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-large primary" target="_blank">
-                            <i class="fas fa-plus"></i> Try it now
-                        </a>
-                    </div>
-                    <div class="terminal">
-                        <div class="terminal-header">
-                            <span class="terminal-dot red"></span>
-                            <span class="terminal-dot yellow"></span>
-                            <span class="terminal-dot green"></span>
-                            <span class="terminal-title">Emerald Bot — Live</span>
-                        </div>
-                        <div class="terminal-body">
-                            <div class="terminal-line"><span class="terminal-prompt">$</span> emerald status</div>
-                            <div class="terminal-line"><span class="terminal-prompt">></span> Emerald v2.1.4 — Online</div>
-                            <div class="terminal-line"><span class="terminal-prompt">></span> 100+ servers · 100+ commands</div>
-                            <div class="terminal-line" style="margin-top:12px;"><span class="terminal-prompt">#</span> Incoming messages...</div>
-                            <div class="msg">
-                                <div class="msg-author">User123</div>
-                                <div class="msg-content">This server is awesome!</div>
-                            </div>
-                            <div class="msg">
-                                <div class="msg-author">ToxicUser42</div>
-                                <div class="msg-content">You are all ******* idiots!</div>
-                            </div>
-                            <div class="msg bot">
-                                <div class="msg-author">Emerald Bot</div>
-                                <div class="msg-content">⚠️ Deleted message from ToxicUser42 · Warning 1/3</div>
-                            </div>
-                            <div class="terminal-line" style="margin-top:8px;"><span class="terminal-prompt">#</span> Moderation: removed inappropriate content</div>
-                            <div class="msg bot">
-                                <div class="msg-author">Emerald Bot</div>
-                                <div class="msg-content">🎉 Welcome NewUser123! Check #rules and #roles to get started.</div>
-                            </div>
-                            <div class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-cursor"></span></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -2718,6 +2521,42 @@
                 <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-large" target="_blank">
                     <i class="fas fa-plus"></i> Add Emerald Now
                 </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- ═══ COMMANDS PAGE ═══ -->
+    <div id="commands" class="page">
+        <section class="commands-page">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Command library</h2>
+                    <p>Explore every command Emerald has to offer.</p>
+                    <span class="accent-line"></span>
+                </div>
+                <div class="commands-tabs" id="commandTabs">
+                    <button class="tab-btn active" data-cat="all">All</button>
+                    <button class="tab-btn" data-cat="logging">Logging</button>
+                    <button class="tab-btn" data-cat="autoreply">Auto‑Reply</button>
+                    <button class="tab-btn" data-cat="voting">Voting</button>
+                    <button class="tab-btn" data-cat="reactionroles">Reaction Roles</button>
+                    <button class="tab-btn" data-cat="tickets">Tickets</button>
+                    <button class="tab-btn" data-cat="automod">Auto‑Mod</button>
+                    <button class="tab-btn" data-cat="moderation">Moderation</button>
+                    <button class="tab-btn" data-cat="leveling">Leveling</button>
+                    <button class="tab-btn" data-cat="verification">Verification</button>
+                    <button class="tab-btn" data-cat="antiraid">Anti‑Raid</button>
+                    <button class="tab-btn" data-cat="utility">Utility</button>
+                    <button class="tab-btn" data-cat="premium">Premium</button>
+                </div>
+                <div class="commands-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="cmdSearch" placeholder="Search commands...">
+                </div>
+                <div class="commands-grid" id="commandsGrid"></div>
+                <div style="text-align:center;margin-top:40px;">
+                    <p style="color:var(--text-secondary);">And many more! Use <code style="background:var(--bg);padding:4px 10px;border-radius:40px;font-size:14px;">/help</code> in Discord to see the full list.</p>
+                </div>
             </div>
         </section>
     </div>
@@ -3220,6 +3059,7 @@
                     <h4>Quick links</h4>
                     <ul>
                         <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="commands">Commands</a></li>
                         <li><a href="#" class="nav-link" data-page="docs">Docs</a></li>
                         <li><a href="#" class="nav-link" data-page="premium">Premium</a></li>
                         <li><a href="#" class="nav-link" data-page="order">Order</a></li>
@@ -3268,7 +3108,6 @@
                     setTimeout(() => {
                         loader.classList.add('hidden');
                         document.body.classList.add('loaded');
-                        // Show premium popup after loader
                         showPremiumPopup();
                     }, minLoadTime - elapsed);
                 } else {
@@ -3289,7 +3128,6 @@
         // ── PREMIUM POPUP ──
         function showPremiumPopup() {
             const overlay = document.getElementById('premiumPopup');
-            // Check if user has dismissed before (session storage)
             if (sessionStorage.getItem('premiumPopupDismissed') === 'true') {
                 return;
             }
@@ -3308,7 +3146,6 @@
             sessionStorage.setItem('premiumPopupDismissed', 'true');
         });
 
-        // Close popup on overlay click (but not on the popup itself)
         document.getElementById('premiumPopup').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.remove('active');
@@ -3327,6 +3164,177 @@
         document.getElementById('statusDate').textContent = now;
         document.getElementById('privacyDate').textContent = now;
         document.getElementById('tosDate').textContent = now;
+
+        // ── COMMANDS DATA (for /commands page) ──
+        const commands = [
+            // Logging
+            { name: '/log_setup', cat: 'logging', desc: 'Setup professional logging system' },
+            { name: '/log_status', cat: 'logging', desc: 'Check logging status' },
+            { name: '/log_test', cat: 'logging', desc: 'Test logging with a sample event' },
+            { name: '/log_disable', cat: 'logging', desc: 'Disable logging system' },
+            // Auto-Reply
+            { name: '/autoreply_setup', cat: 'autoreply', desc: 'Enable auto‑reply system' },
+            { name: '/autoreply_add', cat: 'autoreply', desc: 'Add a new auto‑reply trigger' },
+            { name: '/autoreply_list', cat: 'autoreply', desc: 'List all auto‑reply triggers' },
+            { name: '/autoreply_remove', cat: 'autoreply', desc: 'Remove an auto‑reply trigger' },
+            { name: '/autoreply_test', cat: 'autoreply', desc: 'Test an auto‑reply trigger' },
+            // Voting
+            { name: '/voting_rewards_setup', cat: 'voting', desc: 'Setup voting rewards system' },
+            { name: '/voting_announce', cat: 'voting', desc: 'Set announcement channel' },
+            { name: '/voting_stats', cat: 'voting', desc: 'Show voting statistics' },
+            // Reaction Roles
+            { name: '/reactionrole_advanced', cat: 'reactionroles', desc: 'Create multi‑role reaction panel' },
+            { name: '/reactionrole_add_role', cat: 'reactionroles', desc: 'Add role to reaction panel' },
+            { name: '/reactionrole_setup', cat: 'reactionroles', desc: 'Interactive reaction role setup' },
+            { name: '/reactionrole', cat: 'reactionroles', desc: 'Create reaction role' },
+            { name: '/reactionrole_remove', cat: 'reactionroles', desc: 'Remove reaction role' },
+            { name: '/reactionrole_list', cat: 'reactionroles', desc: 'List all reaction roles' },
+            // Tickets
+            { name: '/ticket_panel', cat: 'tickets', desc: 'Create ticket panel' },
+            { name: '/ticket_setup', cat: 'tickets', desc: 'Setup ticket system' },
+            { name: '/ticket', cat: 'tickets', desc: 'Create support ticket' },
+            { name: '/ticket_close', cat: 'tickets', desc: 'Close ticket' },
+            { name: '/ticket_add_role', cat: 'tickets', desc: 'Add support role' },
+            { name: '/ticket_remove_role', cat: 'tickets', desc: 'Remove support role' },
+            // AutoMod
+            { name: '/automod_advanced', cat: 'automod', desc: 'Configure advanced AutoMod with escalation' },
+            { name: '/automod_config', cat: 'automod', desc: 'Basic AutoMod setup' },
+            { name: '/automod_test', cat: 'automod', desc: 'Test auto‑mod rules' },
+            { name: '/badwords', cat: 'automod', desc: 'Manage filtered words' },
+            { name: '/whitelist_add_role', cat: 'automod', desc: 'Add role to whitelist' },
+            { name: '/whitelist_add_channel', cat: 'automod', desc: 'Add channel to whitelist' },
+            { name: '/whitelist_remove_role', cat: 'automod', desc: 'Remove role from whitelist' },
+            { name: '/whitelist_remove_channel', cat: 'automod', desc: 'Remove channel from whitelist' },
+            { name: '/whitelist_view', cat: 'automod', desc: 'View whitelist settings' },
+            // Moderation
+            { name: '/ban', cat: 'moderation', desc: 'Ban a user' },
+            { name: '/kick', cat: 'moderation', desc: 'Kick a user' },
+            { name: '/warn', cat: 'moderation', desc: 'Warn a user' },
+            { name: '/clear', cat: 'moderation', desc: 'Bulk delete messages' },
+            { name: '/massban', cat: 'moderation', desc: 'Ban multiple users at once' },
+            { name: '/masskick', cat: 'moderation', desc: 'Kick multiple users at once' },
+            { name: '/softban', cat: 'moderation', desc: 'Ban & unban to delete messages' },
+            { name: '/hackban', cat: 'moderation', desc: 'Ban users not in server' },
+            { name: '/tempban', cat: 'moderation', desc: 'Temporarily ban a user' },
+            { name: '/tempmute', cat: 'moderation', desc: 'Temporarily mute a user' },
+            { name: '/voicekick', cat: 'moderation', desc: 'Disconnect from voice channel' },
+            { name: '/voicemute', cat: 'moderation', desc: 'Server mute in voice' },
+            { name: '/voiceunmute', cat: 'moderation', desc: 'Unmute in voice' },
+            { name: '/voice_move', cat: 'moderation', desc: 'Move voice members' },
+            { name: '/voice_disconnect', cat: 'moderation', desc: 'Clear voice channel' },
+            { name: '/nickname', cat: 'moderation', desc: 'Change user nickname' },
+            { name: '/role', cat: 'moderation', desc: 'Add/remove roles' },
+            { name: '/lockdown', cat: 'moderation', desc: 'Lock all channels' },
+            { name: '/unlockdown', cat: 'moderation', desc: 'Unlock all channels' },
+            { name: '/slowmode', cat: 'moderation', desc: 'Set channel slowmode' },
+            { name: '/lock', cat: 'moderation', desc: 'Lock specific channel' },
+            { name: '/unlock', cat: 'moderation', desc: 'Unlock specific channel' },
+            { name: '/nuke', cat: 'moderation', desc: 'Clone and clear channel' },
+            { name: '/warn_bulk', cat: 'moderation', desc: 'Warn multiple users at once' },
+            { name: '/clear_warnings', cat: 'moderation', desc: 'Clear warnings for a user' },
+            { name: '/warn_count', cat: 'moderation', desc: 'Check user warnings' },
+            // Leveling
+            { name: '/level_setup', cat: 'leveling', desc: 'Setup leveling system' },
+            { name: '/level_reward', cat: 'leveling', desc: 'Add role reward for level' },
+            { name: '/rank', cat: 'leveling', desc: 'Check your rank' },
+            { name: '/xp', cat: 'leveling', desc: 'Check your XP' },
+            { name: '/leaderboard', cat: 'leveling', desc: 'Show level leaderboard' },
+            // Verification
+            { name: '/verification_setup', cat: 'verification', desc: 'Setup verification' },
+            { name: '/verification_disable', cat: 'verification', desc: 'Disable verification' },
+            { name: '/verify', cat: 'verification', desc: 'Manually verify user' },
+            // Anti-Raid
+            { name: '/antiraid_setup', cat: 'antiraid', desc: 'Configure raid protection' },
+            { name: '/antiraid_status', cat: 'antiraid', desc: 'Check raid protection status' },
+            { name: '/raid_lockdown', cat: 'antiraid', desc: 'Manual raid lockdown' },
+            { name: '/raid_unlock', cat: 'antiraid', desc: 'Remove raid lockdown' },
+            // Utility
+            { name: '/userinfo', cat: 'utility', desc: 'Get user information' },
+            { name: '/serverinfo', cat: 'utility', desc: 'Get server information' },
+            { name: '/modstats', cat: 'utility', desc: 'View moderation statistics' },
+            { name: '/audit', cat: 'utility', desc: 'View audit log' },
+            { name: '/case', cat: 'utility', desc: 'View specific moderation case' },
+            { name: '/settings', cat: 'utility', desc: 'Open central settings dashboard' },
+            { name: '/backup', cat: 'utility', desc: 'Backup server configuration' },
+            { name: '/poll', cat: 'utility', desc: 'Create a poll' },
+            { name: '/reminder', cat: 'utility', desc: 'Set a reminder' },
+            { name: '/announce', cat: 'utility', desc: 'Send an announcement' },
+            { name: '/bumpdashboard', cat: 'utility', desc: 'Open bump system dashboard' },
+            // Premium
+            { name: '/premium', cat: 'premium', desc: 'Access premium features dashboard' },
+            { name: '/owner', cat: 'premium', desc: 'Owner dashboard for premium management' },
+            // Custom commands & tags
+            { name: '/custom_command', cat: 'utility', desc: 'Create a custom command' },
+            { name: '/custom_command_list', cat: 'utility', desc: 'List custom commands' },
+            { name: '/custom_command_remove', cat: 'utility', desc: 'Remove a custom command' },
+            { name: '/tag', cat: 'utility', desc: 'Create a tag' },
+            { name: '/tag_show', cat: 'utility', desc: 'Show a tag' },
+            { name: '/tag_list', cat: 'utility', desc: 'List all tags' },
+            // Starboard
+            { name: '/starboard_setup', cat: 'utility', desc: 'Configure starboard system' },
+            // Fun
+            { name: '/8ball', cat: 'utility', desc: 'Ask the magic 8-ball' },
+            { name: '/wyr', cat: 'utility', desc: 'Would you rather?' },
+            { name: '/meme', cat: 'utility', desc: 'Get a random meme' },
+            // Emoji / Sticker
+            { name: '/emoji_steal', cat: 'utility', desc: 'Copy emoji from another server' },
+            { name: '/sticker_steal', cat: 'utility', desc: 'Copy sticker from another server' },
+            // Welcome / Leave
+            { name: '/welcome_setup', cat: 'utility', desc: 'Setup welcome system' },
+            { name: '/welcome_test', cat: 'utility', desc: 'Test welcome message' },
+            { name: '/leave_setup', cat: 'utility', desc: 'Setup leave system' },
+            { name: '/leave_test', cat: 'utility', desc: 'Test leave message' },
+        ];
+
+        // ── RENDER COMMANDS PAGE ──
+        const grid = document.getElementById('commandsGrid');
+        const searchInput = document.getElementById('cmdSearch');
+        const tabBtns = document.querySelectorAll('#commandTabs .tab-btn');
+
+        function renderCommands(cat = 'all', query = '') {
+            const filtered = commands.filter(c => {
+                const matchCat = cat === 'all' || c.cat === cat;
+                const matchQ = query === '' ||
+                    c.name.toLowerCase().includes(query.toLowerCase()) ||
+                    c.desc.toLowerCase().includes(query.toLowerCase());
+                return matchCat && matchQ;
+            });
+
+            grid.innerHTML = filtered.map(c => `
+                <div class="cmd-card">
+                    <div class="cmd-header">
+                        <span class="cmd-name">${c.name}</span>
+                        <span class="cmd-category">${c.cat}</span>
+                    </div>
+                    <div class="cmd-desc">${c.desc}</div>
+                </div>
+            `).join('');
+
+            if (!filtered.length) {
+                grid.innerHTML = `
+                    <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">
+                        <i class="fas fa-search" style="font-size:32px;display:block;margin-bottom:12px;"></i>
+                        No commands found
+                    </div>
+                `;
+            }
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderCommands(this.dataset.cat, searchInput.value);
+            });
+        });
+
+        searchInput.addEventListener('input', function() {
+            const active = document.querySelector('#commandTabs .tab-btn.active');
+            const cat = active ? active.dataset.cat : 'all';
+            renderCommands(cat, this.value);
+        });
+
+        renderCommands();
 
         // ── DOCS DATA ──
         const docsData = [{
@@ -3689,29 +3697,13 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.feature-card, .benefit-item, .premium-feat, .tier-card, .package-card, .service-card, .docs-card')
+        document.querySelectorAll('.feature-card, .benefit-item, .premium-feat, .tier-card, .package-card, .service-card, .docs-card, .cmd-card')
             .forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(30px)';
                 el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
                 observer.observe(el);
             });
-
-        // ── SCREENSHOT LAZY LOAD FALLBACK ──
-        document.querySelectorAll('.showcase-item img').forEach(img => {
-            img.addEventListener('error', function() {
-                this.style.display = 'none';
-                const parent = this.closest('.showcase-item');
-                if (parent) {
-                    const fallback = document.createElement('div');
-                    fallback.style.cssText =
-                        'padding:40px 20px;text-align:center;background:var(--bg);color:var(--text-muted);font-size:14px;';
-                    fallback.innerHTML =
-                        '<i class="fas fa-image" style="font-size:32px;display:block;margin-bottom:12px;"></i> Screenshot unavailable';
-                    this.parentNode.insertBefore(fallback, this);
-                }
-            });
-        });
 
         console.log('🌿 Emerald Bot — Premium Discord Companion loaded successfully!');
         console.log('💚 Thank you for using Emerald!');
