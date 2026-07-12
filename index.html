@@ -32,6 +32,8 @@
             --radius: 20px;
             --radius-sm: 12px;
             --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            --emerald-dark: #065f46;
+            --emerald-light: #6ee7b7;
         }
         html {
             scroll-behavior: smooth;
@@ -140,6 +142,162 @@
             justify-content: center;
         }
 
+        /* ── PREMIUM POPUP / AD ── */
+        .premium-popup-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            padding: 20px;
+        }
+        .premium-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .premium-popup {
+            background: var(--card);
+            border-radius: var(--radius);
+            max-width: 560px;
+            width: 100%;
+            padding: 40px 36px 32px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.30);
+            transform: scale(0.9) translateY(30px);
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+            opacity: 0;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+        .premium-popup-overlay.active .premium-popup {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        .premium-popup .close-popup {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+        .premium-popup .close-popup:hover {
+            color: var(--text);
+            background: var(--bg);
+        }
+        .premium-popup .popup-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        .premium-popup h2 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .premium-popup h2 i {
+            color: var(--primary);
+        }
+        .premium-popup p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .premium-popup .benefits-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 16px;
+            margin: 16px 0 24px;
+        }
+        .premium-popup .benefits-list li {
+            list-style: none;
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .premium-popup .benefits-list li i {
+            color: var(--primary);
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+        .premium-popup .popup-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .premium-popup .popup-actions .btn-primary {
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px var(--primary-glow);
+            cursor: pointer;
+        }
+        .premium-popup .popup-actions .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 28px var(--primary-glow-strong);
+        }
+        .premium-popup .popup-actions .btn-secondary {
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 15px;
+            text-decoration: none;
+            background: var(--bg);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .premium-popup .popup-actions .btn-secondary:hover {
+            background: var(--card);
+            border-color: var(--primary-light);
+            color: var(--text);
+        }
+        @media (max-width: 480px) {
+            .premium-popup .benefits-list {
+                grid-template-columns: 1fr;
+            }
+            .premium-popup {
+                padding: 28px 20px 24px;
+            }
+            .premium-popup h2 {
+                font-size: 22px;
+            }
+        }
+
         /* ── GLASS HEADER ── */
         header {
             position: sticky;
@@ -186,7 +344,7 @@
             transition: var(--transition);
         }
         .logo:hover .logo-icon svg {
-            transform: rotate(-8deg) scale(1.08);
+            transform: rotate(-6deg) scale(1.08);
             filter: drop-shadow(0 0 30px var(--primary-glow-strong));
         }
         .logo-icon::after {
@@ -638,6 +796,55 @@
             line-height: 1.7;
         }
 
+        /* ── SCREENSHOT SHOWCASE ── */
+        .screenshot-showcase {
+            padding: 60px 0 80px;
+            background: var(--bg);
+        }
+        .screenshot-showcase .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .screenshot-showcase .showcase-item {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .screenshot-showcase .showcase-item:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.10);
+            border-color: var(--primary-light);
+        }
+        .screenshot-showcase .showcase-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid var(--border);
+        }
+        .screenshot-showcase .showcase-item .caption {
+            padding: 16px 24px;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text);
+            background: var(--card);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .screenshot-showcase .showcase-item .caption i {
+            color: var(--primary);
+        }
+        @media (max-width: 768px) {
+            .screenshot-showcase .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ── DEMO ── */
         .demo {
             padding: 80px 0;
@@ -1075,45 +1282,97 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.20);
         }
 
-        /* ── COMMANDS PAGE ── */
-        .commands-page {
+        /* ── DOCS PAGE ── */
+        .docs-page {
             padding: 80px 0;
         }
-        .commands-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 32px;
+        .docs-header {
+            text-align: center;
+            margin-bottom: 50px;
         }
-        .tab-btn {
-            padding: 8px 18px;
-            border-radius: 40px;
-            border: 1px solid var(--border);
-            background: var(--card);
-            font-weight: 500;
-            font-size: 13px;
-            cursor: pointer;
-            transition: var(--transition);
+        .docs-header h1 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .docs-header p {
             color: var(--text-secondary);
+            font-size: 17px;
+            max-width: 600px;
+            margin: 8px auto 0;
         }
-        .tab-btn:hover {
-            border-color: var(--primary-light);
+        .docs-category {
+            margin-bottom: 48px;
+        }
+        .docs-category h2 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             color: var(--text);
-            transform: translateY(-2px);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
         }
-        .tab-btn.active {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-            box-shadow: 0 4px 16px var(--primary-glow);
+        .docs-category h2 i {
+            color: var(--primary);
         }
-        .commands-search {
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .docs-card {
+            background: var(--card);
+            padding: 18px 22px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .docs-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-light);
+        }
+        .docs-card .cmd-name {
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .docs-card .cmd-name .usage {
+            font-weight: 400;
+            color: var(--text-muted);
+            font-size: 12px;
+            background: var(--bg);
+            padding: 2px 10px;
+            border-radius: 40px;
+        }
+        .docs-card .cmd-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+        .docs-card .cmd-example {
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            background: var(--bg);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            border-left: 3px solid var(--primary);
+        }
+        .docs-search {
             max-width: 480px;
-            margin: 0 auto 36px;
+            margin: 0 auto 40px;
             position: relative;
         }
-        .commands-search input {
+        .docs-search input {
             width: 100%;
             padding: 14px 20px 14px 48px;
             border-radius: 60px;
@@ -1122,224 +1381,34 @@
             font-size: 15px;
             transition: var(--transition);
         }
-        .commands-search input:focus {
+        .docs-search input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 4px var(--primary-glow);
             transform: scale(1.01);
         }
-        .commands-search i {
+        .docs-search i {
             position: absolute;
             left: 18px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
         }
-        .commands-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .cmd-card {
-            background: var(--card);
-            padding: 20px 24px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            transition: var(--transition);
-            cursor: default;
-        }
-        .cmd-card:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: var(--shadow);
-            border-color: var(--primary-light);
-        }
-        .cmd-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
-        .cmd-name {
-            font-weight: 700;
-            color: var(--primary-dark);
-            font-size: 15px;
-        }
-        .cmd-category {
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            background: var(--bg);
-            padding: 2px 12px;
-            border-radius: 40px;
-            letter-spacing: 0.3px;
-        }
-        .cmd-desc {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-        }
 
-        /* ── PREMIUM PAGE ── */
-        .premium-page {
+        /* ── ORDER PAGE ── */
+        .order-page {
             padding: 80px 0;
         }
-        .premium-header {
-            text-align: center;
-            margin-bottom: 56px;
-        }
-        .premium-header .badge {
-            display: inline-block;
-            padding: 6px 20px;
-            border-radius: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #fff;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 16px var(--primary-glow);
-        }
-        .premium-header h1 {
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
-        .premium-header p {
-            color: var(--text-secondary);
-            font-size: 17px;
-            max-width: 600px;
-            margin: 8px auto 0;
-        }
-        .comparison-wrap {
-            overflow-x: auto;
-            background: var(--card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
-            margin-bottom: 50px;
-            transition: var(--transition);
-        }
-        .comparison-wrap:hover {
-            box-shadow: var(--shadow-lg), 0 0 0 2px rgba(12, 218, 125, 0.05);
-        }
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            min-width: 540px;
-        }
-        .comparison-table th {
-            padding: 18px 24px;
-            text-align: left;
-            font-weight: 700;
-            background: var(--bg);
-            border-bottom: 2px solid var(--border);
-        }
-        .comparison-table th:not(:first-child) {
-            text-align: center;
-        }
-        .comparison-table td {
-            padding: 14px 24px;
-            border-bottom: 1px solid var(--border);
-            transition: var(--transition);
-        }
-        .comparison-table tr:hover td {
-            background: rgba(12, 218, 125, 0.02);
-        }
-        .comparison-table td:not(:first-child) {
-            text-align: center;
-        }
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-        .comparison-table .check {
-            color: var(--primary);
-            font-weight: 700;
-        }
-        .comparison-table .cross {
-            color: #EF4444;
-        }
-        .premium-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-        .premium-feat {
-            background: var(--card);
-            padding: 28px 24px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            text-align: center;
-            transition: var(--transition);
-            cursor: default;
-        }
-        .premium-feat:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow);
-            border-color: var(--primary-light);
-        }
-        .premium-feat .icon {
-            font-size: 32px;
-            display: block;
-            margin-bottom: 12px;
-        }
-        .premium-feat h4 {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        .premium-feat p {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        .premium-cta-box {
-            margin-top: 50px;
-            padding: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: var(--radius);
-            color: #fff;
-            text-align: center;
-            box-shadow: 0 8px 40px var(--primary-glow);
-            transition: var(--transition);
-        }
-        .premium-cta-box:hover {
-            transform: scale(1.01);
-            box-shadow: 0 12px 50px var(--primary-glow-strong);
-        }
-        .premium-cta-box h3 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .premium-cta-box p {
-            opacity: 0.85;
-            margin-bottom: 24px;
-        }
-        .premium-cta-box .btn-large {
-            background: #fff;
-            color: var(--primary);
-        }
-        .premium-cta-box .btn-large:hover {
-            transform: translateY(-3px) scale(1.03);
-        }
-
-        /* ── CUSTOM PAGE ── */
-        .custom-page {
-            padding: 80px 0;
-        }
-        .custom-header {
+        .order-header {
             text-align: center;
             margin-bottom: 50px;
         }
-        .custom-header h1 {
+        .order-header h1 {
             font-size: 38px;
             font-weight: 800;
             letter-spacing: -0.5px;
         }
-        .custom-header p {
+        .order-header p {
             color: var(--text-secondary);
             font-size: 17px;
         }
@@ -1445,7 +1514,7 @@
             background: var(--primary);
             color: #fff;
         }
-        .custom-services-row {
+        .order-services-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
@@ -1569,22 +1638,22 @@
             color: var(--primary-dark);
             font-weight: 600;
         }
-        .rules-box {
+        .order-rules {
             margin-top: 30px;
             background: var(--bg);
             padding: 24px 28px;
             border-radius: var(--radius-sm);
             border-left: 4px solid var(--primary);
         }
-        .rules-box h4 {
+        .order-rules h4 {
             font-weight: 700;
             margin-bottom: 8px;
         }
-        .rules-box ul {
+        .order-rules ul {
             padding-left: 20px;
             margin: 0;
         }
-        .rules-box ul li {
+        .order-rules ul li {
             color: var(--text-secondary);
             font-size: 14px;
             line-height: 1.8;
@@ -1759,11 +1828,26 @@
         .donation-buttons .btn-donate-method .paypal {
             color: #0070BA;
         }
-        .donation-buttons .btn-donate-method .kofi {
-            color: #FF5E5E;
+        .donation-buttons .btn-donate-method.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
         }
-        .donation-buttons .btn-donate-method .patreon {
-            color: #F96854;
+        .donation-buttons .btn-donate-method.disabled:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--border);
+        }
+        .donation-methods .coming-soon {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 18px;
+            border-radius: 40px;
+            background: rgba(12, 218, 125, 0.08);
+            color: var(--primary-dark);
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid rgba(12, 218, 125, 0.12);
         }
         .donation-thanks {
             margin-top: 50px;
@@ -2013,7 +2097,7 @@
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
-            .custom-services-row {
+            .order-services-row {
                 grid-template-columns: 1fr;
             }
             .hero h1 {
@@ -2075,16 +2159,10 @@
             .benefits-grid {
                 grid-template-columns: 1fr;
             }
-            .commands-grid {
+            .docs-grid {
                 grid-template-columns: 1fr;
             }
-            .premium-header h1 {
-                font-size: 32px;
-            }
-            .custom-header h1 {
-                font-size: 30px;
-            }
-            .package-grid {
+            .order-package-grid {
                 grid-template-columns: 1fr;
             }
             .donation-tiers {
@@ -2096,17 +2174,6 @@
             .status-card {
                 padding: 30px 20px;
             }
-            .comparison-wrap {
-                border-radius: var(--radius-sm);
-            }
-            .comparison-table {
-                font-size: 13px;
-                min-width: 400px;
-            }
-            .comparison-table th,
-            .comparison-table td {
-                padding: 10px 14px;
-            }
             .footer-grid {
                 grid-template-columns: 1fr;
                 gap: 30px;
@@ -2117,9 +2184,6 @@
                 width: 44px;
                 height: 44px;
                 font-size: 17px;
-            }
-            .premium-cta-box {
-                padding: 28px 20px;
             }
             .donations-header h1 {
                 font-size: 32px;
@@ -2138,6 +2202,9 @@
             .loader-ring:nth-child(2) {
                 width: 150px;
                 height: 150px;
+            }
+            .docs-category h2 {
+                font-size: 22px;
             }
         }
         @media (max-width: 480px) {
@@ -2173,38 +2240,88 @@
             <div class="loader-ring"></div>
             <div class="loader-ring"></div>
             <div class="loader-logo">
-                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <!-- Realistic Emerald Gemstone Logo -->
+                <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient id="emeraldGrad" x1="10%" y1="0%" x2="90%" y2="100%">
                             <stop offset="0%" stop-color="#34D399"/>
-                            <stop offset="35%" stop-color="#10B981"/>
-                            <stop offset="70%" stop-color="#059669"/>
-                            <stop offset="100%" stop-color="#047857"/>
+                            <stop offset="25%" stop-color="#10B981"/>
+                            <stop offset="50%" stop-color="#059669"/>
+                            <stop offset="75%" stop-color="#047857"/>
+                            <stop offset="100%" stop-color="#065f46"/>
                         </linearGradient>
-                        <linearGradient id="ls" x1="0%" y1="0%" x2="50%" y2="50%">
-                            <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
-                            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                        <linearGradient id="emeraldShine" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(255,255,255,0.6)"/>
+                            <stop offset="40%" stop-color="rgba(255,255,255,0)"/>
+                            <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
+                            <stop offset="100%" stop-color="rgba(255,255,255,0.2)"/>
                         </linearGradient>
-                        <filter id="glow">
-                            <feGaussianBlur stdDeviation="2" result="blur"/>
-                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                        <linearGradient id="emeraldGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(12,218,125,0.5)"/>
+                            <stop offset="100%" stop-color="rgba(6,169,94,0.2)"/>
+                        </linearGradient>
+                        <filter id="gemGlow">
+                            <feGaussianBlur stdDeviation="3" result="blur"/>
+                            <feMerge>
+                                <feMergeNode in="blur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
                         </filter>
+                        <clipPath id="gemClip">
+                            <polygon points="40,4 66,18 66,48 52,70 28,70 14,48 14,18"/>
+                        </clipPath>
                     </defs>
-                    <polygon points="32,4 52,14 52,36 42,56 22,56 12,36 12,14" fill="url(#lg)" stroke="#047857" stroke-width="1.5"/>
-                    <polygon points="32,4 42,14 32,24 22,14" fill="rgba(255,255,255,0.12)"/>
-                    <polygon points="42,14 52,36 42,44 32,24" fill="rgba(255,255,255,0.05)"/>
-                    <polygon points="22,14 12,36 22,44 32,24" fill="rgba(0,0,0,0.04)"/>
-                    <polygon points="32,24 42,44 32,56 22,44" fill="rgba(0,0,0,0.06)"/>
-                    <polygon points="28,12 38,20 32,26 22,18" fill="url(#ls)" opacity="0.5"/>
-                    <circle cx="32" cy="32" r="5" fill="white" opacity="0.15"/>
-                    <circle cx="32" cy="32" r="2" fill="white" opacity="0.4"/>
-                    <circle cx="22" cy="18" r="2.5" fill="white" opacity="0.10"/>
-                    <circle cx="22" cy="18" r="1" fill="white" opacity="0.3"/>
-                    <circle cx="42" cy="44" r="1.5" fill="white" opacity="0.08"/>
+                    <!-- Outer glow -->
+                    <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#emeraldGlow)" opacity="0.3"/>
+                    <!-- Main gem body -->
+                    <polygon points="40,4 66,18 66,48 52,70 28,70 14,48 14,18" fill="url(#emeraldGrad)" stroke="#047857" stroke-width="1.5" filter="url(#gemGlow)"/>
+                    <!-- Facet highlights -->
+                    <polygon points="40,4 52,18 40,30 28,18" fill="rgba(255,255,255,0.15)"/>
+                    <polygon points="52,18 66,48 58,56 40,30" fill="rgba(255,255,255,0.06)"/>
+                    <polygon points="28,18 14,48 22,56 40,30" fill="rgba(0,0,0,0.06)"/>
+                    <polygon points="40,30 58,56 52,70 28,70 22,56" fill="rgba(0,0,0,0.08)"/>
+                    <!-- Top shine -->
+                    <polygon points="34,12 46,20 40,26 30,18" fill="url(#emeraldShine)" opacity="0.5"/>
+                    <!-- Center sparkle -->
+                    <circle cx="40" cy="34" r="6" fill="white" opacity="0.08"/>
+                    <circle cx="40" cy="34" r="3" fill="white" opacity="0.25"/>
+                    <circle cx="28" cy="22" r="2" fill="white" opacity="0.12"/>
+                    <circle cx="28" cy="22" r="1" fill="white" opacity="0.3"/>
+                    <circle cx="52" cy="50" r="1.5" fill="white" opacity="0.08"/>
+                    <!-- Inner gem brilliance -->
+                    <polygon points="40,10 48,18 40,24 32,18" fill="rgba(255,255,255,0.05)"/>
+                    <polygon points="48,18 58,34 48,46 40,24" fill="rgba(255,255,255,0.03)"/>
+                    <polygon points="32,18 22,34 32,46 40,24" fill="rgba(0,0,0,0.03)"/>
                 </svg>
             </div>
         </div>
         <div class="loader-text">Loading Emerald</div>
+    </div>
+
+    <!-- ═══ PREMIUM POPUP / AD ═══ -->
+    <div class="premium-popup-overlay" id="premiumPopup">
+        <div class="premium-popup">
+            <button class="close-popup" id="closePopup" aria-label="Close">&times;</button>
+            <div class="popup-badge">✨ LIMITED OFFER</div>
+            <h2><i class="fas fa-gem"></i> Go Premium</h2>
+            <p>Unlock the full power of Emerald Bot with <strong>Premium</strong> — advanced features, priority support, and exclusive tools for your server.</p>
+            <ul class="benefits-list">
+                <li><i class="fas fa-check-circle"></i> Premium‑only commands</li>
+                <li><i class="fas fa-check-circle"></i> Priority responses</li>
+                <li><i class="fas fa-check-circle"></i> Custom profile &amp; banner</li>
+                <li><i class="fas fa-check-circle"></i> 20% off all services</li>
+                <li><i class="fas fa-check-circle"></i> Giveaways &amp; Polls</li>
+                <li><i class="fas fa-check-circle"></i> Reminders &amp; Trivia</li>
+                <li><i class="fas fa-check-circle"></i> Embed Creator &amp; Templates</li>
+                <li><i class="fas fa-check-circle"></i> Custom ad customization</li>
+            </ul>
+            <div class="popup-actions">
+                <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-primary" target="_blank">
+                    <i class="fab fa-discord"></i> Upgrade Now
+                </a>
+                <button class="btn-secondary" id="popupDismiss">Maybe Later</button>
+            </div>
+        </div>
     </div>
 
     <!-- ═══ HEADER ═══ -->
@@ -2213,30 +2330,45 @@
             <div class="header-content">
                 <a href="#" class="logo nav-link" data-page="home">
                     <span class="logo-icon">
-                        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
                             <defs>
-                                <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <linearGradient id="g1" x1="10%" y1="0%" x2="90%" y2="100%">
                                     <stop offset="0%" stop-color="#34D399"/>
-                                    <stop offset="35%" stop-color="#10B981"/>
-                                    <stop offset="70%" stop-color="#059669"/>
-                                    <stop offset="100%" stop-color="#047857"/>
+                                    <stop offset="25%" stop-color="#10B981"/>
+                                    <stop offset="50%" stop-color="#059669"/>
+                                    <stop offset="75%" stop-color="#047857"/>
+                                    <stop offset="100%" stop-color="#065f46"/>
                                 </linearGradient>
-                                <linearGradient id="s1" x1="0%" y1="0%" x2="50%" y2="50%">
-                                    <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
-                                    <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                                <linearGradient id="s1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="rgba(255,255,255,0.6)"/>
+                                    <stop offset="40%" stop-color="rgba(255,255,255,0)"/>
+                                    <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
+                                    <stop offset="100%" stop-color="rgba(255,255,255,0.2)"/>
                                 </linearGradient>
+                                <linearGradient id="gGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="rgba(12,218,125,0.5)"/>
+                                    <stop offset="100%" stop-color="rgba(6,169,94,0.2)"/>
+                                </linearGradient>
+                                <filter id="gFilter">
+                                    <feGaussianBlur stdDeviation="2" result="blur"/>
+                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
                             </defs>
-                            <polygon points="32,4 52,14 52,36 42,56 22,56 12,36 12,14" fill="url(#g1)" stroke="#047857" stroke-width="1.5"/>
-                            <polygon points="32,4 42,14 32,24 22,14" fill="rgba(255,255,255,0.12)"/>
-                            <polygon points="42,14 52,36 42,44 32,24" fill="rgba(255,255,255,0.05)"/>
-                            <polygon points="22,14 12,36 22,44 32,24" fill="rgba(0,0,0,0.04)"/>
-                            <polygon points="32,24 42,44 32,56 22,44" fill="rgba(0,0,0,0.06)"/>
-                            <polygon points="28,12 38,20 32,26 22,18" fill="url(#s1)" opacity="0.5"/>
-                            <circle cx="32" cy="32" r="5" fill="white" opacity="0.15"/>
-                            <circle cx="32" cy="32" r="2" fill="white" opacity="0.4"/>
-                            <circle cx="22" cy="18" r="2.5" fill="white" opacity="0.10"/>
-                            <circle cx="22" cy="18" r="1" fill="white" opacity="0.3"/>
-                            <circle cx="42" cy="44" r="1.5" fill="white" opacity="0.08"/>
+                            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#gGlow)" opacity="0.3"/>
+                            <polygon points="40,4 66,18 66,48 52,70 28,70 14,48 14,18" fill="url(#g1)" stroke="#047857" stroke-width="1.5" filter="url(#gFilter)"/>
+                            <polygon points="40,4 52,18 40,30 28,18" fill="rgba(255,255,255,0.15)"/>
+                            <polygon points="52,18 66,48 58,56 40,30" fill="rgba(255,255,255,0.06)"/>
+                            <polygon points="28,18 14,48 22,56 40,30" fill="rgba(0,0,0,0.06)"/>
+                            <polygon points="40,30 58,56 52,70 28,70 22,56" fill="rgba(0,0,0,0.08)"/>
+                            <polygon points="34,12 46,20 40,26 30,18" fill="url(#s1)" opacity="0.5"/>
+                            <circle cx="40" cy="34" r="6" fill="white" opacity="0.08"/>
+                            <circle cx="40" cy="34" r="3" fill="white" opacity="0.25"/>
+                            <circle cx="28" cy="22" r="2" fill="white" opacity="0.12"/>
+                            <circle cx="28" cy="22" r="1" fill="white" opacity="0.3"/>
+                            <circle cx="52" cy="50" r="1.5" fill="white" opacity="0.08"/>
+                            <polygon points="40,10 48,18 40,24 32,18" fill="rgba(255,255,255,0.05)"/>
+                            <polygon points="48,18 58,34 48,46 40,24" fill="rgba(255,255,255,0.03)"/>
+                            <polygon points="32,18 22,34 32,46 40,24" fill="rgba(0,0,0,0.03)"/>
                         </svg>
                     </span>
                     <span class="logo-text">Emerald</span>
@@ -2250,9 +2382,9 @@
                 <nav id="mainNav">
                     <ul>
                         <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
-                        <li><a href="#" class="nav-link" data-page="commands">Commands</a></li>
+                        <li><a href="#" class="nav-link" data-page="docs">Docs</a></li>
                         <li><a href="#" class="nav-link" data-page="premium">Premium</a></li>
-                        <li><a href="#" class="nav-link" data-page="custom">Custom</a></li>
+                        <li><a href="#" class="nav-link" data-page="order">Order</a></li>
                         <li><a href="#" class="nav-link" data-page="donations">Donations</a></li>
                         <li><a href="#" class="nav-link" data-page="status">Status</a></li>
                     </ul>
@@ -2297,6 +2429,27 @@
                     <div class="stat-item">
                         <span class="stat-number">99.9%</span>
                         <span class="stat-label">Uptime</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SCREENSHOT SHOWCASE ── -->
+        <section class="screenshot-showcase">
+            <div class="container">
+                <div class="section-title">
+                    <h2>See Emerald in action</h2>
+                    <p>Real screenshots from our dashboard and moderation tools.</p>
+                    <span class="accent-line"></span>
+                </div>
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <img src="https://github.com/emeralddiscordbot/Emerald/blob/main/Warning.JPG?raw=true" alt="AutoMod in action" loading="lazy" />
+                        <div class="caption"><i class="fas fa-shield-alt"></i> AutoMod catching spam and bad words in real‑time</div>
+                    </div>
+                    <div class="showcase-item">
+                        <img src="https://github.com/emeralddiscordbot/Emerald/blob/main/Settings%20emerald.JPG?raw=true" alt="Settings dashboard" loading="lazy" />
+                        <div class="caption"><i class="fas fa-sliders-h"></i> The powerful settings dashboard — all controls in one place</div>
                     </div>
                 </div>
             </div>
@@ -2569,35 +2722,24 @@
         </section>
     </div>
 
-    <!-- ═══ COMMANDS PAGE ═══ -->
-    <div id="commands" class="page">
-        <section class="commands-page">
+    <!-- ═══ DOCS PAGE ═══ -->
+    <div id="docs" class="page">
+        <section class="docs-page">
             <div class="container">
-                <div class="section-title">
-                    <h2>Command library</h2>
-                    <p>Explore every command Emerald has to offer.</p>
-                    <span class="accent-line"></span>
+                <div class="docs-header">
+                    <h1>📚 Emerald Command Docs</h1>
+                    <p>Every command explained — how to use them, what they do, and examples.</p>
                 </div>
-                <div class="commands-tabs" id="commandTabs">
-                    <button class="tab-btn active" data-cat="all">All</button>
-                    <button class="tab-btn" data-cat="logging">Logging</button>
-                    <button class="tab-btn" data-cat="autoreply">Auto‑Reply</button>
-                    <button class="tab-btn" data-cat="voting">Voting</button>
-                    <button class="tab-btn" data-cat="reactionroles">Reaction Roles</button>
-                    <button class="tab-btn" data-cat="tickets">Tickets</button>
-                    <button class="tab-btn" data-cat="automod">Auto‑Mod</button>
-                    <button class="tab-btn" data-cat="moderation">Moderation</button>
-                    <button class="tab-btn" data-cat="leveling">Leveling</button>
-                    <button class="tab-btn" data-cat="verification">Verification</button>
-                    <button class="tab-btn" data-cat="antiraid">Anti‑Raid</button>
-                    <button class="tab-btn" data-cat="utility">Utility</button>
-                    <button class="tab-btn" data-cat="premium">Premium</button>
-                </div>
-                <div class="commands-search">
+
+                <div class="docs-search">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="cmdSearch" placeholder="Search commands...">
+                    <input type="text" id="docsSearch" placeholder="Search commands...">
                 </div>
-                <div class="commands-grid" id="commandsGrid"></div>
+
+                <div id="docsContainer">
+                    <!-- Categories will be rendered by JS -->
+                </div>
+
                 <div style="text-align:center;margin-top:40px;">
                     <p style="color:var(--text-secondary);">And many more! Use <code style="background:var(--bg);padding:4px 10px;border-radius:40px;font-size:14px;">/help</code> in Discord to see the full list.</p>
                 </div>
@@ -2607,82 +2749,82 @@
 
     <!-- ═══ PREMIUM PAGE ═══ -->
     <div id="premium" class="page">
-        <section class="premium-page">
+        <section class="premium-page" style="padding:80px 0;">
             <div class="container">
-                <div class="premium-header">
-                    <div class="badge">✨ NEW</div>
-                    <h1>🌿 Emerald Premium</h1>
-                    <p>Unlock exclusive features: priority responses, custom ads, giveaways, polls, reminders, and more!</p>
+                <div class="premium-header" style="text-align:center;margin-bottom:56px;">
+                    <div style="display:inline-block;padding:6px 20px;border-radius:40px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-size:13px;font-weight:700;letter-spacing:0.5px;margin-bottom:16px;box-shadow:0 4px 16px var(--primary-glow);">✨ NEW</div>
+                    <h1 style="font-size:42px;font-weight:800;letter-spacing:-1px;">🌿 Emerald Premium</h1>
+                    <p style="color:var(--text-secondary);font-size:17px;max-width:600px;margin:8px auto 0;">Unlock exclusive features: priority responses, custom ads, giveaways, polls, reminders, and more!</p>
                 </div>
 
-                <div class="comparison-wrap">
-                    <table class="comparison-table">
+                <div style="overflow-x:auto;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-lg);border:1px solid var(--border);margin-bottom:50px;transition:var(--transition);">
+                    <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:540px;">
                         <thead>
                             <tr>
-                                <th>Feature</th>
-                                <th>Free</th>
-                                <th>Premium</th>
+                                <th style="padding:18px 24px;text-align:left;font-weight:700;background:var(--bg);border-bottom:2px solid var(--border);">Feature</th>
+                                <th style="padding:18px 24px;text-align:center;font-weight:700;background:var(--bg);border-bottom:2px solid var(--border);">Free</th>
+                                <th style="padding:18px 24px;text-align:center;font-weight:700;background:var(--bg);border-bottom:2px solid var(--border);">Premium</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Premium‑exclusive commands</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Priority support</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Exclusive fun commands</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Enhanced utility features</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Advanced moderation tools</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Exclusive Premium role</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>💸 20% OFF all services</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Custom profile pictures</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Custom banners</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Expanded customization</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Giveaways &amp; Polls</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Reminders &amp; Trivia</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Embed Creator &amp; Templates</td><td class="cross">✕</td><td class="check">✓</td></tr>
-                            <tr><td>Custom Ad Customization</td><td class="cross">✕</td><td class="check">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Premium‑exclusive commands</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Priority support</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Exclusive fun commands</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Enhanced utility features</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Advanced moderation tools</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Exclusive Premium role</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">💸 20% OFF all services</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Custom profile pictures</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Custom banners</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Expanded customization</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Giveaways &amp; Polls</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Reminders &amp; Trivia</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:1px solid var(--border);">Embed Creator &amp; Templates</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:1px solid var(--border);color:var(--primary);font-weight:700;">✓</td></tr>
+                            <tr><td style="padding:14px 24px;border-bottom:none;">Custom Ad Customization</td><td style="padding:14px 24px;text-align:center;border-bottom:none;color:#EF4444;">✕</td><td style="padding:14px 24px;text-align:center;border-bottom:none;color:var(--primary);font-weight:700;">✓</td></tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="premium-features">
-                    <div class="premium-feat">
-                        <span class="icon">⚡</span>
-                        <h4>Priority responses</h4>
-                        <p>Faster command processing — no waiting in line.</p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:40px;">
+                    <div style="background:var(--card);padding:28px 24px;border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;transition:var(--transition);cursor:default;">
+                        <span style="font-size:32px;display:block;margin-bottom:12px;">⚡</span>
+                        <h4 style="font-size:17px;font-weight:700;margin-bottom:4px;">Priority responses</h4>
+                        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;">Faster command processing — no waiting in line.</p>
                     </div>
-                    <div class="premium-feat">
-                        <span class="icon">🎨</span>
-                        <h4>Custom profile picture</h4>
-                        <p>Choose your style. Stand out with a unique look.</p>
+                    <div style="background:var(--card);padding:28px 24px;border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;transition:var(--transition);cursor:default;">
+                        <span style="font-size:32px;display:block;margin-bottom:12px;">🎨</span>
+                        <h4 style="font-size:17px;font-weight:700;margin-bottom:4px;">Custom profile picture</h4>
+                        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;">Choose your style. Stand out with a unique look.</p>
                     </div>
-                    <div class="premium-feat">
-                        <span class="icon">🖼️</span>
-                        <h4>Custom banner</h4>
-                        <p>Showcase your server's personality with a custom banner.</p>
+                    <div style="background:var(--card);padding:28px 24px;border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;transition:var(--transition);cursor:default;">
+                        <span style="font-size:32px;display:block;margin-bottom:12px;">🖼️</span>
+                        <h4 style="font-size:17px;font-weight:700;margin-bottom:4px;">Custom banner</h4>
+                        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;">Showcase your server's personality with a custom banner.</p>
                     </div>
-                    <div class="premium-feat">
-                        <span class="icon">🛠️</span>
-                        <h4>Advanced tools</h4>
-                        <p>Mass actions, detailed logs, and more.</p>
+                    <div style="background:var(--card);padding:28px 24px;border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;transition:var(--transition);cursor:default;">
+                        <span style="font-size:32px;display:block;margin-bottom:12px;">🛠️</span>
+                        <h4 style="font-size:17px;font-weight:700;margin-bottom:4px;">Advanced tools</h4>
+                        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;">Mass actions, detailed logs, and more.</p>
                     </div>
-                    <div class="premium-feat">
-                        <span class="icon">🎁</span>
-                        <h4>Giveaways</h4>
-                        <p>Auto‑winner selection with custom prizes and duration.</p>
+                    <div style="background:var(--card);padding:28px 24px;border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;transition:var(--transition);cursor:default;">
+                        <span style="font-size:32px;display:block;margin-bottom:12px;">🎁</span>
+                        <h4 style="font-size:17px;font-weight:700;margin-bottom:4px;">Giveaways</h4>
+                        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;">Auto‑winner selection with custom prizes and duration.</p>
                     </div>
-                    <div class="premium-feat">
-                        <span class="icon">📊</span>
-                        <h4>Polls</h4>
-                        <p>Interactive polls with live results and auto‑close.</p>
+                    <div style="background:var(--card);padding:28px 24px;border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;transition:var(--transition);cursor:default;">
+                        <span style="font-size:32px;display:block;margin-bottom:12px;">📊</span>
+                        <h4 style="font-size:17px;font-weight:700;margin-bottom:4px;">Polls</h4>
+                        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;">Interactive polls with live results and auto‑close.</p>
                     </div>
-                    <div class="premium-feat">
-                        <span class="icon">⏰</span>
-                        <h4>Reminders</h4>
-                        <p>Schedule reminders in DM or in‑channel.</p>
+                    <div style="background:var(--card);padding:28px 24px;border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;transition:var(--transition);cursor:default;">
+                        <span style="font-size:32px;display:block;margin-bottom:12px;">⏰</span>
+                        <h4 style="font-size:17px;font-weight:700;margin-bottom:4px;">Reminders</h4>
+                        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;">Schedule reminders in DM or in‑channel.</p>
                     </div>
-                    <div class="premium-feat">
-                        <span class="icon">💎</span>
-                        <h4>Exclusive commands</h4>
-                        <p>Access to /premium dashboard with many utilities.</p>
+                    <div style="background:var(--card);padding:28px 24px;border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;transition:var(--transition);cursor:default;">
+                        <span style="font-size:32px;display:block;margin-bottom:12px;">💎</span>
+                        <h4 style="font-size:17px;font-weight:700;margin-bottom:4px;">Exclusive commands</h4>
+                        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;">Access to /premium dashboard with many utilities.</p>
                     </div>
                 </div>
 
@@ -2707,9 +2849,9 @@
                     </ul>
                 </div>
 
-                <div class="premium-cta-box">
-                    <h3>💚 Upgrade to Premium today</h3>
-                    <p>Get all premium features + 20% off all services. Support Emerald and take your server further.</p>
+                <div style="margin-top:50px;padding:40px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:var(--radius);color:#fff;text-align:center;box-shadow:0 8px 40px var(--primary-glow);transition:var(--transition);">
+                    <h3 style="font-size:28px;font-weight:700;margin-bottom:8px;">💚 Upgrade to Premium today</h3>
+                    <p style="opacity:0.85;margin-bottom:24px;">Get all premium features + 20% off all services. Support Emerald and take your server further.</p>
                     <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-large" target="_blank" style="background:#fff;color:var(--primary);">
                         <i class="fab fa-discord"></i> Contact us to upgrade
                     </a>
@@ -2718,11 +2860,11 @@
         </section>
     </div>
 
-    <!-- ═══ CUSTOM PAGE ═══ -->
-    <div id="custom" class="page">
-        <section class="custom-page">
+    <!-- ═══ ORDER PAGE (formerly Custom) ═══ -->
+    <div id="order" class="page">
+        <section class="order-page">
             <div class="container">
-                <div class="custom-header">
+                <div class="order-header">
                     <h1>🤖 Custom Bot Services</h1>
                     <p>Looking for a bot for your server or project? Choose the package that fits you.</p>
                 </div>
@@ -2804,7 +2946,7 @@
                     </div>
                 </div>
 
-                <div class="custom-services-row">
+                <div class="order-services-row">
                     <div class="service-card">
                         <h3><i class="fas fa-user-circle"></i> Custom Profile Picture</h3>
                         <div class="price-tag">0.50 €</div>
@@ -2834,7 +2976,7 @@
                     </div>
                 </div>
 
-                <div class="rules-box">
+                <div class="order-rules">
                     <h4>📜 Rules &amp; Terms</h4>
                     <ul>
                         <li>Bots are sold as‑is. Minor bugs fixed within 3 days.</li>
@@ -2904,21 +3046,25 @@
 
                 <div class="donation-methods">
                     <h3>💳 Choose your payment method</h3>
-                    <p>We support multiple platforms — pick the one that works best for you.</p>
+                    <p>We currently support PayPal — more options are on the way!</p>
                     <div class="donation-buttons">
                         <a href="https://www.paypal.com/paypalme/mohamedmansour022" class="btn-donate-method" target="_blank">
                             <i class="fab fa-paypal paypal" style="font-size:20px;"></i> PayPal
                         </a>
-                        <a href="#" class="btn-donate-method" target="_blank">
+                        <a href="#" class="btn-donate-method disabled" onclick="return false;">
                             <i class="fas fa-mug-hot kofi" style="font-size:20px;"></i> Ko-fi
+                            <span style="font-size:11px;background:var(--bg);padding:2px 8px;border-radius:40px;color:var(--text-muted);">soon</span>
                         </a>
-                        <a href="#" class="btn-donate-method" target="_blank">
+                        <a href="#" class="btn-donate-method disabled" onclick="return false;">
                             <i class="fab fa-patreon patreon" style="font-size:20px;"></i> Patreon
+                            <span style="font-size:11px;background:var(--bg);padding:2px 8px;border-radius:40px;color:var(--text-muted);">soon</span>
                         </a>
-                        <a href="#" class="btn-donate-method" target="_blank">
+                        <a href="#" class="btn-donate-method disabled" onclick="return false;">
                             <i class="fab fa-bitcoin" style="color:#F7931A;font-size:20px;"></i> Crypto
+                            <span style="font-size:11px;background:var(--bg);padding:2px 8px;border-radius:40px;color:var(--text-muted);">soon</span>
                         </a>
                     </div>
+                    <div class="coming-soon"><i class="fas fa-clock"></i> More payment options coming soon</div>
                 </div>
 
                 <div class="donation-thanks">
@@ -3074,9 +3220,9 @@
                     <h4>Quick links</h4>
                     <ul>
                         <li><a href="#" class="nav-link" data-page="home">Home</a></li>
-                        <li><a href="#" class="nav-link" data-page="commands">Commands</a></li>
+                        <li><a href="#" class="nav-link" data-page="docs">Docs</a></li>
                         <li><a href="#" class="nav-link" data-page="premium">Premium</a></li>
-                        <li><a href="#" class="nav-link" data-page="custom">Custom</a></li>
+                        <li><a href="#" class="nav-link" data-page="order">Order</a></li>
                         <li><a href="#" class="nav-link" data-page="donations">Donations</a></li>
                         <li><a href="#" class="nav-link" data-page="status">Status</a></li>
                         <li><a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" target="_blank">Invite Bot</a></li>
@@ -3100,7 +3246,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 Emerald Bot. Not affiliated with Discord Inc.</p>
+                <p>&copy; 2025 Emerald Bot. Not affiliated with Discord Inc.</p>
                 <p style="margin-top:4px;font-size:12px;">Made with <i class="fas fa-heart" style="color:#EF4444;"></i> for the Discord community</p>
             </div>
         </div>
@@ -3122,10 +3268,13 @@
                     setTimeout(() => {
                         loader.classList.add('hidden');
                         document.body.classList.add('loaded');
+                        // Show premium popup after loader
+                        showPremiumPopup();
                     }, minLoadTime - elapsed);
                 } else {
                     loader.classList.add('hidden');
                     document.body.classList.add('loaded');
+                    showPremiumPopup();
                 }
             };
 
@@ -3133,7 +3282,38 @@
             setTimeout(() => {
                 loader.classList.add('hidden');
                 document.body.classList.add('loaded');
+                showPremiumPopup();
             }, 2000);
+        });
+
+        // ── PREMIUM POPUP ──
+        function showPremiumPopup() {
+            const overlay = document.getElementById('premiumPopup');
+            // Check if user has dismissed before (session storage)
+            if (sessionStorage.getItem('premiumPopupDismissed') === 'true') {
+                return;
+            }
+            setTimeout(() => {
+                overlay.classList.add('active');
+            }, 800);
+        }
+
+        document.getElementById('closePopup').addEventListener('click', function() {
+            document.getElementById('premiumPopup').classList.remove('active');
+            sessionStorage.setItem('premiumPopupDismissed', 'true');
+        });
+
+        document.getElementById('popupDismiss').addEventListener('click', function() {
+            document.getElementById('premiumPopup').classList.remove('active');
+            sessionStorage.setItem('premiumPopupDismissed', 'true');
+        });
+
+        // Close popup on overlay click (but not on the popup itself)
+        document.getElementById('premiumPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                sessionStorage.setItem('premiumPopupDismissed', 'true');
+            }
         });
 
         // ── HEADER SCROLL EFFECT ──
@@ -3148,176 +3328,228 @@
         document.getElementById('privacyDate').textContent = now;
         document.getElementById('tosDate').textContent = now;
 
-        // ── COMMANDS DATA ──
-        const commands = [
-            // Logging
-            { name: '/log_setup', cat: 'logging', desc: 'Setup professional logging system' },
-            { name: '/log_status', cat: 'logging', desc: 'Check logging status' },
-            { name: '/log_test', cat: 'logging', desc: 'Test logging with a sample event' },
-            { name: '/log_disable', cat: 'logging', desc: 'Disable logging system' },
-            // Auto-Reply
-            { name: '/autoreply_setup', cat: 'autoreply', desc: 'Enable auto‑reply system' },
-            { name: '/autoreply_add', cat: 'autoreply', desc: 'Add a new auto‑reply trigger' },
-            { name: '/autoreply_list', cat: 'autoreply', desc: 'List all auto‑reply triggers' },
-            { name: '/autoreply_remove', cat: 'autoreply', desc: 'Remove an auto‑reply trigger' },
-            { name: '/autoreply_test', cat: 'autoreply', desc: 'Test an auto‑reply trigger' },
-            // Voting
-            { name: '/voting_rewards_setup', cat: 'voting', desc: 'Setup voting rewards system' },
-            { name: '/voting_announce', cat: 'voting', desc: 'Set announcement channel' },
-            { name: '/voting_stats', cat: 'voting', desc: 'Show voting statistics' },
-            // Reaction Roles
-            { name: '/reactionrole_advanced', cat: 'reactionroles', desc: 'Create multi‑role reaction panel' },
-            { name: '/reactionrole_add_role', cat: 'reactionroles', desc: 'Add role to reaction panel' },
-            { name: '/reactionrole_setup', cat: 'reactionroles', desc: 'Interactive reaction role setup' },
-            { name: '/reactionrole', cat: 'reactionroles', desc: 'Create reaction role' },
-            { name: '/reactionrole_remove', cat: 'reactionroles', desc: 'Remove reaction role' },
-            { name: '/reactionrole_list', cat: 'reactionroles', desc: 'List all reaction roles' },
-            // Tickets
-            { name: '/ticket_panel', cat: 'tickets', desc: 'Create ticket panel' },
-            { name: '/ticket_setup', cat: 'tickets', desc: 'Setup ticket system' },
-            { name: '/ticket', cat: 'tickets', desc: 'Create support ticket' },
-            { name: '/ticket_close', cat: 'tickets', desc: 'Close ticket' },
-            { name: '/ticket_add_role', cat: 'tickets', desc: 'Add support role' },
-            { name: '/ticket_remove_role', cat: 'tickets', desc: 'Remove support role' },
-            // AutoMod
-            { name: '/automod_advanced', cat: 'automod', desc: 'Configure advanced AutoMod with escalation' },
-            { name: '/automod_config', cat: 'automod', desc: 'Basic AutoMod setup' },
-            { name: '/automod_test', cat: 'automod', desc: 'Test auto‑mod rules' },
-            { name: '/badwords', cat: 'automod', desc: 'Manage filtered words' },
-            { name: '/whitelist_add_role', cat: 'automod', desc: 'Add role to whitelist' },
-            { name: '/whitelist_add_channel', cat: 'automod', desc: 'Add channel to whitelist' },
-            { name: '/whitelist_remove_role', cat: 'automod', desc: 'Remove role from whitelist' },
-            { name: '/whitelist_remove_channel', cat: 'automod', desc: 'Remove channel from whitelist' },
-            { name: '/whitelist_view', cat: 'automod', desc: 'View whitelist settings' },
-            // Moderation
-            { name: '/ban', cat: 'moderation', desc: 'Ban a user' },
-            { name: '/kick', cat: 'moderation', desc: 'Kick a user' },
-            { name: '/warn', cat: 'moderation', desc: 'Warn a user' },
-            { name: '/clear', cat: 'moderation', desc: 'Bulk delete messages' },
-            { name: '/massban', cat: 'moderation', desc: 'Ban multiple users at once' },
-            { name: '/masskick', cat: 'moderation', desc: 'Kick multiple users at once' },
-            { name: '/softban', cat: 'moderation', desc: 'Ban & unban to delete messages' },
-            { name: '/hackban', cat: 'moderation', desc: 'Ban users not in server' },
-            { name: '/tempban', cat: 'moderation', desc: 'Temporarily ban a user' },
-            { name: '/tempmute', cat: 'moderation', desc: 'Temporarily mute a user' },
-            { name: '/voicekick', cat: 'moderation', desc: 'Disconnect from voice channel' },
-            { name: '/voicemute', cat: 'moderation', desc: 'Server mute in voice' },
-            { name: '/voiceunmute', cat: 'moderation', desc: 'Unmute in voice' },
-            { name: '/voice_move', cat: 'moderation', desc: 'Move voice members' },
-            { name: '/voice_disconnect', cat: 'moderation', desc: 'Clear voice channel' },
-            { name: '/nickname', cat: 'moderation', desc: 'Change user nickname' },
-            { name: '/role', cat: 'moderation', desc: 'Add/remove roles' },
-            { name: '/lockdown', cat: 'moderation', desc: 'Lock all channels' },
-            { name: '/unlockdown', cat: 'moderation', desc: 'Unlock all channels' },
-            { name: '/slowmode', cat: 'moderation', desc: 'Set channel slowmode' },
-            { name: '/lock', cat: 'moderation', desc: 'Lock specific channel' },
-            { name: '/unlock', cat: 'moderation', desc: 'Unlock specific channel' },
-            { name: '/nuke', cat: 'moderation', desc: 'Clone and clear channel' },
-            { name: '/warn_bulk', cat: 'moderation', desc: 'Warn multiple users at once' },
-            { name: '/clear_warnings', cat: 'moderation', desc: 'Clear warnings for a user' },
-            { name: '/warn_count', cat: 'moderation', desc: 'Check user warnings' },
-            // Leveling
-            { name: '/level_setup', cat: 'leveling', desc: 'Setup leveling system' },
-            { name: '/level_reward', cat: 'leveling', desc: 'Add role reward for level' },
-            { name: '/rank', cat: 'leveling', desc: 'Check your rank' },
-            { name: '/xp', cat: 'leveling', desc: 'Check your XP' },
-            { name: '/leaderboard', cat: 'leveling', desc: 'Show level leaderboard' },
-            // Verification
-            { name: '/verification_setup', cat: 'verification', desc: 'Setup verification' },
-            { name: '/verification_disable', cat: 'verification', desc: 'Disable verification' },
-            { name: '/verify', cat: 'verification', desc: 'Manually verify user' },
-            // Anti-Raid
-            { name: '/antiraid_setup', cat: 'antiraid', desc: 'Configure raid protection' },
-            { name: '/antiraid_status', cat: 'antiraid', desc: 'Check raid protection status' },
-            { name: '/raid_lockdown', cat: 'antiraid', desc: 'Manual raid lockdown' },
-            { name: '/raid_unlock', cat: 'antiraid', desc: 'Remove raid lockdown' },
-            // Utility
-            { name: '/userinfo', cat: 'utility', desc: 'Get user information' },
-            { name: '/serverinfo', cat: 'utility', desc: 'Get server information' },
-            { name: '/modstats', cat: 'utility', desc: 'View moderation statistics' },
-            { name: '/audit', cat: 'utility', desc: 'View audit log' },
-            { name: '/case', cat: 'utility', desc: 'View specific moderation case' },
-            { name: '/settings', cat: 'utility', desc: 'Open central settings dashboard' },
-            { name: '/backup', cat: 'utility', desc: 'Backup server configuration' },
-            { name: '/poll', cat: 'utility', desc: 'Create a poll' },
-            { name: '/reminder', cat: 'utility', desc: 'Set a reminder' },
-            { name: '/announce', cat: 'utility', desc: 'Send an announcement' },
-            { name: '/bumpdashboard', cat: 'utility', desc: 'Open bump system dashboard' },
-            // Premium
-            { name: '/premium', cat: 'premium', desc: 'Access premium features dashboard' },
-            { name: '/owner', cat: 'premium', desc: 'Owner dashboard for premium management' },
-            // Custom commands & tags
-            { name: '/custom_command', cat: 'utility', desc: 'Create a custom command' },
-            { name: '/custom_command_list', cat: 'utility', desc: 'List custom commands' },
-            { name: '/custom_command_remove', cat: 'utility', desc: 'Remove a custom command' },
-            { name: '/tag', cat: 'utility', desc: 'Create a tag' },
-            { name: '/tag_show', cat: 'utility', desc: 'Show a tag' },
-            { name: '/tag_list', cat: 'utility', desc: 'List all tags' },
-            // Starboard
-            { name: '/starboard_setup', cat: 'utility', desc: 'Configure starboard system' },
-            // Fun
-            { name: '/8ball', cat: 'utility', desc: 'Ask the magic 8-ball' },
-            { name: '/wyr', cat: 'utility', desc: 'Would you rather?' },
-            { name: '/meme', cat: 'utility', desc: 'Get a random meme' },
-            // Emoji / Sticker
-            { name: '/emoji_steal', cat: 'utility', desc: 'Copy emoji from another server' },
-            { name: '/sticker_steal', cat: 'utility', desc: 'Copy sticker from another server' },
-            // Welcome / Leave
-            { name: '/welcome_setup', cat: 'utility', desc: 'Setup welcome system' },
-            { name: '/welcome_test', cat: 'utility', desc: 'Test welcome message' },
-            { name: '/leave_setup', cat: 'utility', desc: 'Setup leave system' },
-            { name: '/leave_test', cat: 'utility', desc: 'Test leave message' },
-        ];
+        // ── DOCS DATA ──
+        const docsData = [{
+            category: "Logging",
+            icon: "fa-chart-line",
+            commands: [
+                { name: "/log_setup", desc: "Setup professional logging system", example: "/log_setup #logs" },
+                { name: "/log_status", desc: "Check logging system status", example: "/log_status" },
+                { name: "/log_test", desc: "Test logging with a sample event", example: "/log_test" },
+                { name: "/log_disable", desc: "Disable logging system", example: "/log_disable" }
+            ]
+        }, {
+            category: "Auto-Reply",
+            icon: "fa-robot",
+            commands: [
+                { name: "/autoreply_setup", desc: "Enable auto‑reply system", example: "/autoreply_setup true" },
+                { name: "/autoreply_add", desc: "Add a new auto‑reply trigger", example: "/autoreply_add hello Hi there!" },
+                { name: "/autoreply_list", desc: "List all auto‑reply triggers", example: "/autoreply_list" },
+                { name: "/autoreply_remove", desc: "Remove an auto‑reply trigger", example: "/autoreply_remove hello" },
+                { name: "/autoreply_test", desc: "Test an auto‑reply trigger", example: "/autoreply_test hello" }
+            ]
+        }, {
+            category: "Voting",
+            icon: "fa-vote-yea",
+            commands: [
+                { name: "/voting_rewards_setup", desc: "Setup voting rewards system", example: "/voting_rewards_setup #votes" },
+                { name: "/voting_announce", desc: "Set announcement channel", example: "/voting_announce #announce" },
+                { name: "/voting_stats", desc: "Show voting statistics", example: "/voting_stats" }
+            ]
+        }, {
+            category: "Reaction Roles",
+            icon: "fa-smile",
+            commands: [
+                { name: "/reactionrole_advanced", desc: "Create multi‑role reaction panel", example: "/reactionrole_advanced #roles 'Pick your role!' 'Choose below'" },
+                { name: "/reactionrole_add_role", desc: "Add role to reaction panel", example: "/reactionrole_add_role 123456789 😀 @Member" },
+                { name: "/reactionrole_setup", desc: "Interactive reaction role setup", example: "/reactionrole_setup" },
+                { name: "/reactionrole", desc: "Create reaction role", example: "/reactionrole #channel 123456789 😀 @Role" },
+                { name: "/reactionrole_remove", desc: "Remove reaction role", example: "/reactionrole_remove 123456789 😀" },
+                { name: "/reactionrole_list", desc: "List all reaction roles", example: "/reactionrole_list" }
+            ]
+        }, {
+            category: "Tickets",
+            icon: "fa-ticket-alt",
+            commands: [
+                { name: "/ticket_panel", desc: "Create ticket panel", example: "/ticket_panel #support Support 'General,Report,Question'" },
+                { name: "/ticket_setup", desc: "Setup ticket system", example: "/ticket_setup #category @support #logs" },
+                { name: "/ticket", desc: "Create support ticket", example: "/ticket" },
+                { name: "/ticket_close", desc: "Close ticket", example: "/ticket_close" },
+                { name: "/ticket_add_role", desc: "Add support role", example: "/ticket_add_role @Support" },
+                { name: "/ticket_remove_role", desc: "Remove support role", example: "/ticket_remove_role @Support" }
+            ]
+        }, {
+            category: "Auto-Mod",
+            icon: "fa-shield-alt",
+            commands: [
+                { name: "/automod_advanced", desc: "Configure advanced AutoMod with escalation", example: "/automod_advanced anti_spam 3 warn,timeout,mute" },
+                { name: "/automod_config", desc: "Basic AutoMod setup", example: "/automod_config anti_spam true delete 3" },
+                { name: "/automod_test", desc: "Test auto‑mod rules", example: "/automod_test anti_spam" },
+                { name: "/badwords", desc: "Manage filtered words", example: "/badwords add badword" },
+                { name: "/whitelist_add_role", desc: "Add role to whitelist", example: "/whitelist_add_role @Mod" },
+                { name: "/whitelist_add_channel", desc: "Add channel to whitelist", example: "/whitelist_add_channel #general" },
+                { name: "/whitelist_remove_role", desc: "Remove role from whitelist", example: "/whitelist_remove_role @Mod" },
+                { name: "/whitelist_remove_channel", desc: "Remove channel from whitelist", example: "/whitelist_remove_channel #general" },
+                { name: "/whitelist_view", desc: "View whitelist settings", example: "/whitelist_view" }
+            ]
+        }, {
+            category: "Moderation",
+            icon: "fa-gavel",
+            commands: [
+                { name: "/ban", desc: "Ban a user", example: "/ban @user Spamming" },
+                { name: "/kick", desc: "Kick a user", example: "/kick @user Inappropriate behavior" },
+                { name: "/warn", desc: "Warn a user", example: "/warn @user Don't spam" },
+                { name: "/clear", desc: "Bulk delete messages", example: "/clear 20" },
+                { name: "/massban", desc: "Ban multiple users at once", example: "/massban 123456,789012,345678 Raid" },
+                { name: "/masskick", desc: "Kick multiple users at once", example: "/masskick @user1,@user2 Inactivity" },
+                { name: "/softban", desc: "Ban & unban to delete messages", example: "/softban @user Cleanup" },
+                { name: "/hackban", desc: "Ban users not in server", example: "/hackban 123456789 Raid" },
+                { name: "/tempban", desc: "Temporarily ban a user", example: "/tempban @user 1h Spam" },
+                { name: "/tempmute", desc: "Temporarily mute a user", example: "/tempmute @user 30m Disruptive" },
+                { name: "/voicekick", desc: "Disconnect from voice channel", example: "/voicekick @user AFK" },
+                { name: "/voicemute", desc: "Server mute in voice", example: "/voicemute @user Loud" },
+                { name: "/voiceunmute", desc: "Unmute in voice", example: "/voiceunmute @user" },
+                { name: "/voice_move", desc: "Move voice members", example: "/voice_move #old #new" },
+                { name: "/voice_disconnect", desc: "Clear voice channel", example: "/voice_disconnect #voice" },
+                { name: "/nickname", desc: "Change user nickname", example: "/nickname @user CoolName" },
+                { name: "/role", desc: "Add/remove roles", example: "/role @user add @Member" },
+                { name: "/lockdown", desc: "Lock all channels", example: "/lockdown Emergency" },
+                { name: "/unlockdown", desc: "Unlock all channels", example: "/unlockdown All clear" },
+                { name: "/slowmode", desc: "Set channel slowmode", example: "/slowmode #general 5" },
+                { name: "/lock", desc: "Lock specific channel", example: "/lock #general" },
+                { name: "/unlock", desc: "Unlock specific channel", example: "/unlock #general" },
+                { name: "/nuke", desc: "Clone and clear channel", example: "/nuke Cleanup" },
+                { name: "/warn_bulk", desc: "Warn multiple users at once", example: "/warn_bulk @user1,@user2 Spam" },
+                { name: "/clear_warnings", desc: "Clear warnings for a user", example: "/clear_warnings @user" },
+                { name: "/warn_count", desc: "Check user warnings", example: "/warn_count @user" }
+            ]
+        }, {
+            category: "Leveling",
+            icon: "fa-chart-line",
+            commands: [
+                { name: "/level_setup", desc: "Setup leveling system", example: "/level_setup true #announce" },
+                { name: "/level_reward", desc: "Add role reward for level", example: "/level_reward 10 @Veteran" },
+                { name: "/rank", desc: "Check your rank", example: "/rank" },
+                { name: "/xp", desc: "Check your XP", example: "/xp @user" },
+                { name: "/leaderboard", desc: "Show level leaderboard", example: "/leaderboard" }
+            ]
+        }, {
+            category: "Verification",
+            icon: "fa-check-circle",
+            commands: [
+                { name: "/verification_setup", desc: "Setup verification", example: "/verification_setup #verify @Verified" },
+                { name: "/verification_disable", desc: "Disable verification", example: "/verification_disable" },
+                { name: "/verify", desc: "Manually verify user", example: "/verify @user" }
+            ]
+        }, {
+            category: "Anti-Raid",
+            icon: "fa-user-shield",
+            commands: [
+                { name: "/antiraid_setup", desc: "Configure raid protection", example: "/antiraid_setup true 5 10 lockdown" },
+                { name: "/antiraid_status", desc: "Check raid protection status", example: "/antiraid_status" },
+                { name: "/raid_lockdown", desc: "Manual raid lockdown", example: "/raid_lockdown Suspicious activity" },
+                { name: "/raid_unlock", desc: "Remove raid lockdown", example: "/raid_unlock All clear" }
+            ]
+        }, {
+            category: "Utility",
+            icon: "fa-tools",
+            commands: [
+                { name: "/userinfo", desc: "Get user information", example: "/userinfo @user" },
+                { name: "/serverinfo", desc: "Get server information", example: "/serverinfo" },
+                { name: "/modstats", desc: "View moderation statistics", example: "/modstats" },
+                { name: "/audit", desc: "View audit log", example: "/audit ban @mod 5" },
+                { name: "/case", desc: "View specific moderation case", example: "/case 123456" },
+                { name: "/settings", desc: "Open central settings dashboard", example: "/settings" },
+                { name: "/backup", desc: "Backup server configuration", example: "/backup" },
+                { name: "/poll", desc: "Create a poll", example: "/poll 'Best color?' 'Red' 'Blue'" },
+                { name: "/reminder", desc: "Set a reminder", example: "/reminder 1h 'Meeting'" },
+                { name: "/announce", desc: "Send an announcement", example: "/announce #general 'Event tonight!'" },
+                { name: "/bumpdashboard", desc: "Open bump system dashboard", example: "/bumpdashboard" }
+            ]
+        }, {
+            category: "Premium",
+            icon: "fa-gem",
+            commands: [
+                { name: "/premium", desc: "Access premium features dashboard", example: "/premium" },
+                { name: "/owner", desc: "Owner dashboard for premium management", example: "/owner" }
+            ]
+        }, {
+            category: "Fun",
+            icon: "fa-star",
+            commands: [
+                { name: "/8ball", desc: "Ask the magic 8-ball", example: "/8ball Will I win?" },
+                { name: "/wyr", desc: "Would you rather?", example: "/wyr" },
+                { name: "/meme", desc: "Get a random meme", example: "/meme dankmemes" },
+                { name: "/emoji_steal", desc: "Copy emoji from another server", example: "/emoji_steal :emoji:" },
+                { name: "/sticker_steal", desc: "Copy sticker from another server", example: "/sticker_steal https://... sticker_name" },
+                { name: "/tag create", desc: "Create a tag", example: "/tag create welcome 'Welcome to the server!'" },
+                { name: "/tag show", desc: "Show a tag", example: "/tag show welcome" },
+                { name: "/tag list", desc: "List all tags", example: "/tag list" },
+                { name: "/tag remove", desc: "Remove a tag", example: "/tag remove welcome" },
+                { name: "/tag edit", desc: "Edit a tag", example: "/tag edit welcome 'New content'" }
+            ]
+        }];
 
-        // ── RENDER COMMANDS ──
-        const grid = document.getElementById('commandsGrid');
-        const searchInput = document.getElementById('cmdSearch');
-        const tabBtns = document.querySelectorAll('#commandTabs .tab-btn');
+        // ── RENDER DOCS ──
+        const docsContainer = document.getElementById('docsContainer');
+        const docsSearch = document.getElementById('docsSearch');
 
-        function renderCommands(cat = 'all', query = '') {
-            const filtered = commands.filter(c => {
-                const matchCat = cat === 'all' || c.cat === cat;
-                const matchQ = query === '' ||
-                    c.name.toLowerCase().includes(query.toLowerCase()) ||
-                    c.desc.toLowerCase().includes(query.toLowerCase());
-                return matchCat && matchQ;
+        function renderDocs(query = '') {
+            let html = '';
+            const q = query.toLowerCase().trim();
+
+            docsData.forEach(cat => {
+                let filteredCommands = cat.commands;
+                if (q) {
+                    filteredCommands = cat.commands.filter(cmd =>
+                        cmd.name.toLowerCase().includes(q) ||
+                        cmd.desc.toLowerCase().includes(q) ||
+                        cmd.example.toLowerCase().includes(q)
+                    );
+                }
+                if (filteredCommands.length === 0) return;
+
+                html += `
+                    <div class="docs-category">
+                        <h2><i class="fas ${cat.icon}"></i> ${cat.category}</h2>
+                        <div class="docs-grid">
+                `;
+                filteredCommands.forEach(cmd => {
+                    html += `
+                        <div class="docs-card">
+                            <div class="cmd-name">
+                                ${cmd.name}
+                                <span class="usage">${cmd.example}</span>
+                            </div>
+                            <div class="cmd-desc">${cmd.desc}</div>
+                            <div class="cmd-example">💡 ${cmd.example}</div>
+                        </div>
+                    `;
+                });
+                html += `
+                        </div>
+                    </div>
+                `;
             });
 
-            grid.innerHTML = filtered.map(c => `
-                <div class="cmd-card">
-                    <div class="cmd-header">
-                        <span class="cmd-name">${c.name}</span>
-                        <span class="cmd-category">${c.cat}</span>
-                    </div>
-                    <div class="cmd-desc">${c.desc}</div>
-                </div>
-            `).join('');
-
-            if (!filtered.length) {
-                grid.innerHTML = `
-                    <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">
-                        <i class="fas fa-search" style="font-size:32px;display:block;margin-bottom:12px;"></i>
-                        No commands found
+            if (!html) {
+                html = `
+                    <div style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+                        <i class="fas fa-search" style="font-size:48px;display:block;margin-bottom:16px;"></i>
+                        <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">No commands found</h3>
+                        <p>Try a different search term or browse the categories above.</p>
                     </div>
                 `;
             }
+
+            docsContainer.innerHTML = html;
         }
 
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                tabBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                renderCommands(this.dataset.cat, searchInput.value);
-            });
+        docsSearch.addEventListener('input', function() {
+            renderDocs(this.value);
         });
 
-        searchInput.addEventListener('input', function() {
-            const active = document.querySelector('#commandTabs .tab-btn.active');
-            const cat = active ? active.dataset.cat : 'all';
-            renderCommands(cat, this.value);
-        });
-
-        renderCommands();
+        renderDocs();
 
         // ── NAVIGATION ──
         const navLinks = document.querySelectorAll('.nav-link');
@@ -3457,13 +3689,29 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.feature-card, .benefit-item, .premium-feat, .tier-card, .package-card, .service-card')
+        document.querySelectorAll('.feature-card, .benefit-item, .premium-feat, .tier-card, .package-card, .service-card, .docs-card')
             .forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(30px)';
                 el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
                 observer.observe(el);
             });
+
+        // ── SCREENSHOT LAZY LOAD FALLBACK ──
+        document.querySelectorAll('.showcase-item img').forEach(img => {
+            img.addEventListener('error', function() {
+                this.style.display = 'none';
+                const parent = this.closest('.showcase-item');
+                if (parent) {
+                    const fallback = document.createElement('div');
+                    fallback.style.cssText =
+                        'padding:40px 20px;text-align:center;background:var(--bg);color:var(--text-muted);font-size:14px;';
+                    fallback.innerHTML =
+                        '<i class="fas fa-image" style="font-size:32px;display:block;margin-bottom:12px;"></i> Screenshot unavailable';
+                    this.parentNode.insertBefore(fallback, this);
+                }
+            });
+        });
 
         console.log('🌿 Emerald Bot — Premium Discord Companion loaded successfully!');
         console.log('💚 Thank you for using Emerald!');
