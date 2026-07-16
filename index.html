@@ -29,11 +29,12 @@
             --border: #E2EDEC;
             --shadow: 0 8px 30px rgba(0, 20, 20, 0.06);
             --shadow-lg: 0 20px 50px rgba(0, 20, 20, 0.10);
+            --shadow-xl: 0 30px 80px rgba(0, 20, 20, 0.14);
             --radius: 20px;
             --radius-sm: 12px;
+            --radius-full: 60px;
             --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-            --emerald-dark: #065f46;
-            --emerald-light: #6ee7b7;
+            --transition-slow: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
         html {
             scroll-behavior: smooth;
@@ -56,6 +57,22 @@
             padding: 0 24px;
         }
 
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
         /* ── LOADING SCREEN ── */
         #loader {
             position: fixed;
@@ -66,22 +83,28 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
         #loader.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
-        .loader-logo {
-            width: 120px;
-            height: 120px;
-            animation: loaderPulse 1s ease-in-out infinite alternate;
+        .loader-logo-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 140px;
+            height: 140px;
         }
-        .loader-logo svg {
-            width: 100%;
-            height: 100%;
+        .loader-logo-wrap img {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+            animation: loaderPulse 1.2s ease-in-out infinite alternate;
             filter: drop-shadow(0 0 40px var(--primary-glow-strong));
+            border-radius: 12px;
         }
         .loader-ring {
             position: absolute;
@@ -109,32 +132,74 @@
             margin-top: 32px;
             animation: loaderFade 1.2s ease-in-out infinite alternate;
         }
+        .loader-progress {
+            width: 160px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .loader-progress::after {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: 4px;
+            animation: progressSlide 1.8s ease-in-out infinite;
+        }
+        @keyframes progressSlide {
+            0% {
+                left: -100%;
+                width: 60%;
+            }
+            50% {
+                left: 20%;
+                width: 80%;
+            }
+            100% {
+                left: 100%;
+                width: 60%;
+            }
+        }
         @keyframes loaderPulse {
-            0% { transform: scale(0.85); opacity: 0.6; }
-            100% { transform: scale(1.1); opacity: 1; }
+            0% {
+                transform: scale(0.85);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
         }
         @keyframes loaderSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
         @keyframes loaderFade {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.8; }
-        }
-        .loader-rings-wrap {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0.8;
+            }
         }
 
-        /* ── PREMIUM POPUP / AD ── */
+        /* ── PREMIUM POPUP ── */
         .premium-popup-overlay {
             position: fixed;
             inset: 0;
             z-index: 9998;
             background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -154,7 +219,7 @@
             width: 100%;
             padding: 40px 36px 32px;
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.30);
-            transform: scale(0.9) translateY(30px);
+            transform: scale(0.92) translateY(40px);
             transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
             opacity: 0;
             position: relative;
@@ -176,6 +241,7 @@
             transition: var(--transition);
             padding: 4px 8px;
             border-radius: 8px;
+            line-height: 1;
         }
         .premium-popup .close-popup:hover {
             color: var(--text);
@@ -215,6 +281,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px 16px;
             margin: 16px 0 24px;
+            padding: 0;
         }
         .premium-popup .benefits-list li {
             list-style: none;
@@ -237,7 +304,7 @@
         }
         .premium-popup .popup-actions .btn-primary {
             padding: 12px 28px;
-            border-radius: 60px;
+            border-radius: var(--radius-full);
             font-weight: 600;
             font-size: 15px;
             text-decoration: none;
@@ -257,7 +324,7 @@
         }
         .premium-popup .popup-actions .btn-secondary {
             padding: 12px 24px;
-            border-radius: 60px;
+            border-radius: var(--radius-full);
             font-weight: 500;
             font-size: 15px;
             text-decoration: none;
@@ -273,9 +340,15 @@
             color: var(--text);
         }
         @media (max-width: 480px) {
-            .premium-popup .benefits-list { grid-template-columns: 1fr; }
-            .premium-popup { padding: 28px 20px 24px; }
-            .premium-popup h2 { font-size: 22px; }
+            .premium-popup .benefits-list {
+                grid-template-columns: 1fr;
+            }
+            .premium-popup {
+                padding: 28px 20px 24px;
+            }
+            .premium-popup h2 {
+                font-size: 22px;
+            }
         }
 
         /* ── GLASS HEADER ── */
@@ -290,7 +363,7 @@
             transition: var(--transition);
         }
         header.scrolled {
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.92);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
         }
         .header-content {
@@ -316,22 +389,25 @@
             height: 44px;
             transition: var(--transition);
             position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
         }
-        .logo-icon svg {
+        .logo-icon img {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 12px var(--primary-glow));
+            object-fit: cover;
+            display: block;
             transition: var(--transition);
         }
-        .logo:hover .logo-icon svg {
-            transform: rotate(-6deg) scale(1.08);
-            filter: drop-shadow(0 0 30px var(--primary-glow-strong));
+        .logo:hover .logo-icon img {
+            transform: scale(1.08) rotate(-4deg);
         }
         .logo-icon::after {
             content: '';
             position: absolute;
             inset: -4px;
-            border-radius: 50%;
+            border-radius: 14px;
             background: var(--primary-glow);
             filter: blur(16px);
             z-index: -1;
@@ -409,7 +485,7 @@
         }
         .btn-ghost {
             padding: 8px 16px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             font-weight: 500;
             font-size: 13px;
             text-decoration: none;
@@ -430,7 +506,7 @@
         }
         .btn-primary {
             padding: 8px 20px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             font-weight: 600;
             font-size: 13px;
             text-decoration: none;
@@ -479,14 +555,20 @@
             display: block;
         }
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ── HERO ── */
         .hero {
             padding: 80px 0 60px;
-            background: radial-gradient(ellipse at 30% 20%, rgba(12, 218, 125, 0.06) 0%, transparent 60%),
+            background: radial-gradient(ellipse at 30% 20%, rgba(12, 218, 125, 0.07) 0%, transparent 60%),
                 radial-gradient(ellipse at 70% 80%, rgba(88, 101, 242, 0.05) 0%, transparent 60%);
             position: relative;
             overflow: hidden;
@@ -499,12 +581,16 @@
             width: 200%;
             height: 200%;
             background: radial-gradient(circle at 50% 50%, rgba(12, 218, 125, 0.03) 0%, transparent 70%);
-            animation: heroGlow 8s ease-in-out infinite alternate;
+            animation: heroGlow 10s ease-in-out infinite alternate;
             pointer-events: none;
         }
         @keyframes heroGlow {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(5%, 5%) scale(1.2); }
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(5%, 5%) scale(1.2);
+            }
         }
         .hero-grid {
             display: grid;
@@ -517,9 +603,11 @@
             text-align: left;
         }
         .hero-content .hero-badge {
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px 6px 14px;
+            border-radius: var(--radius-full);
             background: rgba(12, 218, 125, 0.10);
             color: var(--primary-dark);
             font-size: 13px;
@@ -529,9 +617,17 @@
             border: 1px solid rgba(12, 218, 125, 0.15);
             animation: badgePulse 3s ease-in-out infinite;
         }
+        .hero-content .hero-badge i {
+            font-size: 14px;
+        }
         @keyframes badgePulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(12, 218, 125, 0.1); }
-            50% { box-shadow: 0 0 20px 4px rgba(12, 218, 125, 0.15); }
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(12, 218, 125, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 20px 4px rgba(12, 218, 125, 0.15);
+            }
         }
         .hero-content h1 {
             font-size: 54px;
@@ -572,7 +668,7 @@
         }
         .btn-large {
             padding: 14px 32px;
-            border-radius: 60px;
+            border-radius: var(--radius-full);
             font-weight: 600;
             font-size: 15px;
             text-decoration: none;
@@ -615,59 +711,86 @@
             border-color: var(--primary-light);
         }
 
-        /* ── HERO CARD STACK ── */
-        .hero-cards {
+        /* ── HERO VISUAL ── */
+        .hero-visual {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 380px;
         }
-        .card-stack {
+        .hero-logo-display {
             position: relative;
             width: 100%;
-            max-width: 480px;
-            aspect-ratio: 16/10;
+            max-width: 420px;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .card-stack .card {
-            position: absolute;
-            width: 85%;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            border: 1px solid var(--border);
-            background: var(--card);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: default;
-        }
-        .card-stack .card img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .card-stack .card:first-child {
-            top: 0;
-            left: 0;
+        .hero-logo-display img {
+            width: 280px;
+            height: 280px;
+            object-fit: contain;
+            border-radius: 24px;
+            filter: drop-shadow(0 20px 60px var(--primary-glow-strong));
+            animation: logoFloat 4s ease-in-out infinite;
+            position: relative;
             z-index: 2;
-            transform: rotate(-4deg) scale(0.95);
         }
-        .card-stack .card:last-child {
-            bottom: 0;
-            right: 0;
-            z-index: 1;
-            transform: rotate(6deg) scale(0.95);
+        @keyframes logoFloat {
+            0%,
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+            50% {
+                transform: translateY(-12px) scale(1.02);
+            }
         }
-        .card-stack .card:hover {
-            transform: rotate(0deg) scale(1.02);
-            z-index: 3;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        .hero-logo-display .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-glow), transparent 70%);
+            filter: blur(40px);
+            z-index: 0;
         }
-        .card-stack .card:first-child:hover {
-            transform: rotate(0deg) scale(1.02);
+        .hero-logo-display .orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.4;
+            animation: orbPulse 6s ease-in-out infinite;
         }
-        .card-stack .card:last-child:hover {
-            transform: rotate(0deg) scale(1.02);
+        .hero-logo-display .orb:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            right: 10%;
+            opacity: 0.2;
+            animation: orbPulse 8s ease-in-out infinite reverse;
         }
+        .hero-logo-display .orb:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 10%;
+            left: 10%;
+            opacity: 0.15;
+            animation: orbPulse 7s ease-in-out infinite 2s;
+        }
+        @keyframes orbPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.4);
+                opacity: 0.5;
+            }
+        }
+
         .hero-stats {
             display: flex;
             gap: 40px;
@@ -676,6 +799,18 @@
         }
         .hero-stats .stat-item {
             text-align: center;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            min-width: 100px;
+            transition: var(--transition);
+        }
+        .hero-stats .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-light);
         }
         .hero-stats .stat-number {
             font-size: 32px;
@@ -685,12 +820,12 @@
             line-height: 1;
         }
         .hero-stats .stat-label {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         @media (max-width: 992px) {
@@ -709,12 +844,12 @@
             .hero-buttons {
                 justify-content: center;
             }
-            .hero-cards {
-                min-height: 300px;
+            .hero-visual {
+                min-height: 280px;
             }
-            .card-stack {
-                max-width: 400px;
-                margin: 0 auto;
+            .hero-logo-display img {
+                width: 200px;
+                height: 200px;
             }
             .hero-stats {
                 justify-content: center;
@@ -724,14 +859,19 @@
             .hero-content h1 {
                 font-size: 34px;
             }
-            .card-stack {
-                max-width: 300px;
+            .hero-logo-display img {
+                width: 160px;
+                height: 160px;
             }
             .hero-stats {
-                gap: 20px;
+                gap: 12px;
+            }
+            .hero-stats .stat-item {
+                padding: 8px 16px;
+                min-width: 70px;
             }
             .hero-stats .stat-number {
-                font-size: 26px;
+                font-size: 24px;
             }
         }
 
@@ -787,7 +927,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(12, 218, 125, 0.03), transparent);
+            background: linear-gradient(135deg, rgba(12, 218, 125, 0.04), transparent);
             opacity: 0;
             transition: var(--transition);
         }
@@ -888,6 +1028,7 @@
         /* ── TESTIMONIALS ── */
         .testimonials {
             padding: 80px 0;
+            background: var(--bg);
         }
         .testimonial-slider {
             max-width: 800px;
@@ -969,6 +1110,7 @@
             background: var(--border);
             cursor: pointer;
             transition: var(--transition);
+            border: none;
         }
         .dot:hover {
             background: var(--primary-light);
@@ -1011,6 +1153,12 @@
             font-size: 16px;
             transition: var(--transition);
             user-select: none;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            color: var(--text);
+            font-family: inherit;
         }
         .faq-question:hover {
             background: rgba(12, 218, 125, 0.04);
@@ -1018,6 +1166,8 @@
         .faq-question i {
             color: var(--primary);
             transition: var(--transition);
+            flex-shrink: 0;
+            margin-left: 16px;
         }
         .faq-question.active i {
             transform: rotate(180deg);
@@ -1091,7 +1241,7 @@
         }
         .tab-btn {
             padding: 8px 18px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             border: 1px solid var(--border);
             background: var(--card);
             font-weight: 500;
@@ -1099,6 +1249,7 @@
             cursor: pointer;
             transition: var(--transition);
             color: var(--text-secondary);
+            font-family: inherit;
         }
         .tab-btn:hover {
             border-color: var(--primary-light);
@@ -1119,11 +1270,12 @@
         .commands-search input {
             width: 100%;
             padding: 14px 20px 14px 48px;
-            border-radius: 60px;
+            border-radius: var(--radius-full);
             border: 1px solid var(--border);
             background: var(--card);
             font-size: 15px;
             transition: var(--transition);
+            font-family: inherit;
         }
         .commands-search input:focus {
             outline: none;
@@ -1174,7 +1326,7 @@
             color: var(--text-muted);
             background: var(--bg);
             padding: 2px 12px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             letter-spacing: 0.3px;
         }
         .cmd-desc {
@@ -1243,6 +1395,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
         .docs-card .cmd-name .usage {
             font-weight: 400;
@@ -1250,7 +1403,8 @@
             font-size: 12px;
             background: var(--bg);
             padding: 2px 10px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
+            font-family: monospace;
         }
         .docs-card .cmd-desc {
             color: var(--text-secondary);
@@ -1276,11 +1430,12 @@
         .docs-search input {
             width: 100%;
             padding: 14px 20px 14px 48px;
-            border-radius: 60px;
+            border-radius: var(--radius-full);
             border: 1px solid var(--border);
             background: var(--card);
             font-size: 15px;
             transition: var(--transition);
+            font-family: inherit;
         }
         .docs-search input:focus {
             outline: none;
@@ -1344,7 +1499,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             padding: 4px 12px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             background: var(--bg);
             color: var(--text-muted);
         }
@@ -1390,7 +1545,7 @@
         }
         .package-card .btn-order {
             padding: 12px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             border: none;
@@ -1402,6 +1557,7 @@
             font-size: 14px;
             display: block;
             box-shadow: 0 4px 12px var(--primary-glow);
+            font-family: inherit;
         }
         .package-card .btn-order:hover {
             transform: translateY(-3px) scale(1.02);
@@ -1453,7 +1609,7 @@
         .service-card .style-note {
             display: inline-block;
             padding: 4px 14px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             background: rgba(12, 218, 125, 0.08);
             color: var(--primary-dark);
             font-size: 13px;
@@ -1484,7 +1640,7 @@
         }
         .service-card .btn-order {
             padding: 11px 28px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             border: none;
@@ -1495,6 +1651,7 @@
             display: inline-block;
             font-size: 14px;
             box-shadow: 0 4px 12px var(--primary-glow);
+            font-family: inherit;
         }
         .service-card .btn-order:hover {
             transform: translateY(-3px) scale(1.02);
@@ -1520,7 +1677,7 @@
         .addon-item {
             background: var(--bg);
             padding: 12px 18px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1576,11 +1733,22 @@
             animation: heartBeat 1.5s ease-in-out infinite;
         }
         @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            15% { transform: scale(1.2); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.15); }
-            60% { transform: scale(1); }
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            15% {
+                transform: scale(1.2);
+            }
+            30% {
+                transform: scale(1);
+            }
+            45% {
+                transform: scale(1.15);
+            }
+            60% {
+                transform: scale(1);
+            }
         }
         .donations-header h1 {
             font-size: 42px;
@@ -1649,7 +1817,7 @@
         }
         .tier-card .btn-donate {
             padding: 11px 28px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             border: none;
@@ -1661,6 +1829,7 @@
             font-size: 14px;
             width: 100%;
             box-shadow: 0 4px 12px var(--primary-glow);
+            font-family: inherit;
         }
         .tier-card .btn-donate:hover {
             transform: translateY(-3px) scale(1.02);
@@ -1698,7 +1867,7 @@
         }
         .donation-buttons .btn-donate-method {
             padding: 12px 28px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             font-weight: 600;
             font-size: 14px;
             text-decoration: none;
@@ -1709,6 +1878,8 @@
             border: 1px solid var(--border);
             background: var(--bg);
             color: var(--text);
+            font-family: inherit;
+            cursor: pointer;
         }
         .donation-buttons .btn-donate-method:hover {
             transform: translateY(-4px) scale(1.02);
@@ -1732,7 +1903,7 @@
             display: inline-block;
             margin-top: 12px;
             padding: 6px 18px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             background: rgba(12, 218, 125, 0.08);
             color: var(--primary-dark);
             font-size: 13px;
@@ -1779,7 +1950,7 @@
         }
         .status-card:hover {
             transform: scale(1.01);
-            box-shadow: var(--shadow-lg), 0 0 0 2px rgba(12, 218, 125, 0.05);
+            box-shadow: var(--shadow-xl), 0 0 0 2px rgba(12, 218, 125, 0.05);
         }
         .status-icon {
             font-size: 64px;
@@ -1788,13 +1959,20 @@
             animation: statusPulse 2s ease-in-out infinite;
         }
         @keyframes statusPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
         }
         .status-badge {
             display: inline-block;
             padding: 8px 28px;
-            border-radius: 40px;
+            border-radius: var(--radius-full);
             background: var(--primary);
             color: #fff;
             font-weight: 600;
@@ -1945,6 +2123,11 @@
             font-size: 13px;
             color: #6A8484;
         }
+        .footer-bottom .heart {
+            color: #EF4444;
+            display: inline-block;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
 
         /* ── BACK TO TOP ── */
         .back-top {
@@ -2063,7 +2246,11 @@
             .donation-methods {
                 padding: 28px 20px;
             }
-            .loader-logo {
+            .loader-logo-wrap {
+                width: 100px;
+                height: 100px;
+            }
+            .loader-logo-wrap img {
                 width: 80px;
                 height: 80px;
             }
@@ -2077,6 +2264,10 @@
             }
             .docs-category h2 {
                 font-size: 22px;
+            }
+            .commands-tabs .tab-btn {
+                font-size: 12px;
+                padding: 6px 14px;
             }
         }
         @media (max-width: 480px) {
@@ -2096,6 +2287,17 @@
             .addons-grid {
                 grid-template-columns: 1fr;
             }
+            .hero-logo-display img {
+                width: 140px;
+                height: 140px;
+            }
+            .commands-tabs {
+                gap: 4px;
+            }
+            .commands-tabs .tab-btn {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
         }
     </style>
 </head>
@@ -2103,57 +2305,16 @@
 
     <!-- ═══ LOADING SCREEN ═══ -->
     <div id="loader">
-        <div class="loader-rings-wrap">
+        <div class="loader-logo-wrap">
             <div class="loader-ring"></div>
             <div class="loader-ring"></div>
-            <div class="loader-logo">
-                <!-- Realistic Emerald Gemstone Logo -->
-                <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="emeraldGrad" x1="10%" y1="0%" x2="90%" y2="100%">
-                            <stop offset="0%" stop-color="#34D399"/>
-                            <stop offset="25%" stop-color="#10B981"/>
-                            <stop offset="50%" stop-color="#059669"/>
-                            <stop offset="75%" stop-color="#047857"/>
-                            <stop offset="100%" stop-color="#065f46"/>
-                        </linearGradient>
-                        <linearGradient id="emeraldShine" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(255,255,255,0.6)"/>
-                            <stop offset="40%" stop-color="rgba(255,255,255,0)"/>
-                            <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
-                            <stop offset="100%" stop-color="rgba(255,255,255,0.2)"/>
-                        </linearGradient>
-                        <linearGradient id="emeraldGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(12,218,125,0.5)"/>
-                            <stop offset="100%" stop-color="rgba(6,169,94,0.2)"/>
-                        </linearGradient>
-                        <filter id="gemGlow">
-                            <feGaussianBlur stdDeviation="3" result="blur"/>
-                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                        </filter>
-                    </defs>
-                    <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#emeraldGlow)" opacity="0.3"/>
-                    <polygon points="40,4 66,18 66,48 52,70 28,70 14,48 14,18" fill="url(#emeraldGrad)" stroke="#047857" stroke-width="1.5" filter="url(#gemGlow)"/>
-                    <polygon points="40,4 52,18 40,30 28,18" fill="rgba(255,255,255,0.15)"/>
-                    <polygon points="52,18 66,48 58,56 40,30" fill="rgba(255,255,255,0.06)"/>
-                    <polygon points="28,18 14,48 22,56 40,30" fill="rgba(0,0,0,0.06)"/>
-                    <polygon points="40,30 58,56 52,70 28,70 22,56" fill="rgba(0,0,0,0.08)"/>
-                    <polygon points="34,12 46,20 40,26 30,18" fill="url(#emeraldShine)" opacity="0.5"/>
-                    <circle cx="40" cy="34" r="6" fill="white" opacity="0.08"/>
-                    <circle cx="40" cy="34" r="3" fill="white" opacity="0.25"/>
-                    <circle cx="28" cy="22" r="2" fill="white" opacity="0.12"/>
-                    <circle cx="28" cy="22" r="1" fill="white" opacity="0.3"/>
-                    <circle cx="52" cy="50" r="1.5" fill="white" opacity="0.08"/>
-                    <polygon points="40,10 48,18 40,24 32,18" fill="rgba(255,255,255,0.05)"/>
-                    <polygon points="48,18 58,34 48,46 40,24" fill="rgba(255,255,255,0.03)"/>
-                    <polygon points="32,18 22,34 32,46 40,24" fill="rgba(0,0,0,0.03)"/>
-                </svg>
-            </div>
+            <img src="https://raw.githubusercontent.com/emeralddiscordbot/Emerald/main/Emerald%20logo.png" alt="Emerald Logo" />
         </div>
         <div class="loader-text">Loading Emerald</div>
+        <div class="loader-progress"></div>
     </div>
 
-    <!-- ═══ PREMIUM POPUP / AD ═══ -->
+    <!-- ═══ PREMIUM POPUP ═══ -->
     <div class="premium-popup-overlay" id="premiumPopup">
         <div class="premium-popup">
             <button class="close-popup" id="closePopup" aria-label="Close">&times;</button>
@@ -2185,52 +2346,13 @@
             <div class="header-content">
                 <a href="#" class="logo nav-link" data-page="home">
                     <span class="logo-icon">
-                        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="g1" x1="10%" y1="0%" x2="90%" y2="100%">
-                                    <stop offset="0%" stop-color="#34D399"/>
-                                    <stop offset="25%" stop-color="#10B981"/>
-                                    <stop offset="50%" stop-color="#059669"/>
-                                    <stop offset="75%" stop-color="#047857"/>
-                                    <stop offset="100%" stop-color="#065f46"/>
-                                </linearGradient>
-                                <linearGradient id="s1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="rgba(255,255,255,0.6)"/>
-                                    <stop offset="40%" stop-color="rgba(255,255,255,0)"/>
-                                    <stop offset="70%" stop-color="rgba(255,255,255,0)"/>
-                                    <stop offset="100%" stop-color="rgba(255,255,255,0.2)"/>
-                                </linearGradient>
-                                <linearGradient id="gGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="rgba(12,218,125,0.5)"/>
-                                    <stop offset="100%" stop-color="rgba(6,169,94,0.2)"/>
-                                </linearGradient>
-                                <filter id="gFilter">
-                                    <feGaussianBlur stdDeviation="2" result="blur"/>
-                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                </filter>
-                            </defs>
-                            <ellipse cx="40" cy="40" rx="38" ry="38" fill="url(#gGlow)" opacity="0.3"/>
-                            <polygon points="40,4 66,18 66,48 52,70 28,70 14,48 14,18" fill="url(#g1)" stroke="#047857" stroke-width="1.5" filter="url(#gFilter)"/>
-                            <polygon points="40,4 52,18 40,30 28,18" fill="rgba(255,255,255,0.15)"/>
-                            <polygon points="52,18 66,48 58,56 40,30" fill="rgba(255,255,255,0.06)"/>
-                            <polygon points="28,18 14,48 22,56 40,30" fill="rgba(0,0,0,0.06)"/>
-                            <polygon points="40,30 58,56 52,70 28,70 22,56" fill="rgba(0,0,0,0.08)"/>
-                            <polygon points="34,12 46,20 40,26 30,18" fill="url(#s1)" opacity="0.5"/>
-                            <circle cx="40" cy="34" r="6" fill="white" opacity="0.08"/>
-                            <circle cx="40" cy="34" r="3" fill="white" opacity="0.25"/>
-                            <circle cx="28" cy="22" r="2" fill="white" opacity="0.12"/>
-                            <circle cx="28" cy="22" r="1" fill="white" opacity="0.3"/>
-                            <circle cx="52" cy="50" r="1.5" fill="white" opacity="0.08"/>
-                            <polygon points="40,10 48,18 40,24 32,18" fill="rgba(255,255,255,0.05)"/>
-                            <polygon points="48,18 58,34 48,46 40,24" fill="rgba(255,255,255,0.03)"/>
-                            <polygon points="32,18 22,34 32,46 40,24" fill="rgba(0,0,0,0.03)"/>
-                        </svg>
+                        <img src="https://raw.githubusercontent.com/emeralddiscordbot/Emerald/main/Emerald%20logo.png" alt="Emerald Logo" />
                     </span>
                     <span class="logo-text">Emerald</span>
                     <span class="logo-badge">v2</span>
                 </a>
 
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
                     <i class="fas fa-bars"></i>
                 </button>
 
@@ -2247,10 +2369,10 @@
                 </nav>
 
                 <div class="header-buttons">
-                    <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-ghost" target="_blank">
+                    <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-ghost" target="_blank" rel="noopener">
                         <i class="fab fa-discord"></i> Support
                     </a>
-                    <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-primary green" target="_blank">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-primary green" target="_blank" rel="noopener">
                         <i class="fas fa-plus"></i> Invite
                     </a>
                 </div>
@@ -2264,14 +2386,16 @@
             <div class="container">
                 <div class="hero-grid">
                     <div class="hero-content">
-                        <div class="hero-badge">✨ New: Emerald Premium with advanced features!</div>
+                        <div class="hero-badge">
+                            <i class="fas fa-sparkles"></i> New: Emerald Premium with advanced features!
+                        </div>
                         <h1>Your All‑in‑One<br><span class="highlight">Discord Companion</span></h1>
                         <p>From advanced moderation to leveling, tickets, auto‑reply, and professional logging — Emerald does it all with style, speed, and simplicity.</p>
                         <div class="hero-buttons">
-                            <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-large primary" target="_blank">
+                            <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-large primary" target="_blank" rel="noopener">
                                 <i class="fas fa-plus"></i> Add to Server
                             </a>
-                            <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-large secondary" target="_blank">
+                            <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-large secondary" target="_blank" rel="noopener">
                                 <i class="fab fa-discord"></i> Join Support
                             </a>
                         </div>
@@ -2290,14 +2414,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hero-cards">
-                        <div class="card-stack">
-                            <div class="card">
-                                <img src="https://github.com/emeralddiscordbot/Emerald/blob/main/Warning.JPG?raw=true" alt="AutoMod in action" loading="lazy" />
-                            </div>
-                            <div class="card">
-                                <img src="https://github.com/emeralddiscordbot/Emerald/blob/main/Settings%20emerald.JPG?raw=true" alt="Settings dashboard" loading="lazy" />
-                            </div>
+                    <div class="hero-visual">
+                        <div class="hero-logo-display">
+                            <div class="orb"></div>
+                            <div class="orb"></div>
+                            <div class="orb"></div>
+                            <img src="https://raw.githubusercontent.com/emeralddiscordbot/Emerald/main/Emerald%20logo.png" alt="Emerald Bot Logo" />
                         </div>
                     </div>
                 </div>
@@ -2459,9 +2581,9 @@
                         </div>
                     </div>
                     <div class="testimonial-dots">
-                        <span class="dot active" data-index="0"></span>
-                        <span class="dot" data-index="1"></span>
-                        <span class="dot" data-index="2"></span>
+                        <button class="dot active" data-index="0" aria-label="Testimonial 1"></button>
+                        <button class="dot" data-index="1" aria-label="Testimonial 2"></button>
+                        <button class="dot" data-index="2" aria-label="Testimonial 3"></button>
                     </div>
                 </div>
             </div>
@@ -2476,38 +2598,38 @@
                 </div>
                 <div class="faq-list">
                     <div class="faq-item">
-                        <div class="faq-question">
+                        <button class="faq-question">
                             <span>How do I add Emerald to my server?</span>
                             <i class="fas fa-chevron-down"></i>
-                        </div>
+                        </button>
                         <div class="faq-answer">Simply click the "Add to Server" button on our website, authorize the bot, and it's ready to go in seconds.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
+                        <button class="faq-question">
                             <span>What permissions does Emerald need?</span>
                             <i class="fas fa-chevron-down"></i>
-                        </div>
+                        </button>
                         <div class="faq-answer">Emerald requires standard moderation permissions (read/send messages, manage messages, kick/ban) to function fully. You can customize them during invite.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
+                        <button class="faq-question">
                             <span>Is Emerald free to use?</span>
                             <i class="fas fa-chevron-down"></i>
-                        </div>
+                        </button>
                         <div class="faq-answer">Yes! All core features are completely free. We offer a Premium tier for advanced features and priority support.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
+                        <button class="faq-question">
                             <span>Where can I get support?</span>
                             <i class="fas fa-chevron-down"></i>
-                        </div>
+                        </button>
                         <div class="faq-answer">Join our Discord support server using the "Support" button. Our team and community are available 24/7.</div>
                     </div>
                     <div class="faq-item">
-                        <div class="faq-question">
+                        <button class="faq-question">
                             <span>Can I suggest new features?</span>
                             <i class="fas fa-chevron-down"></i>
-                        </div>
+                        </button>
                         <div class="faq-answer">Absolutely! We love hearing from our community. Drop your suggestions in our Discord server and we'll review them.</div>
                     </div>
                 </div>
@@ -2518,7 +2640,7 @@
             <div class="container">
                 <h2>Ready to upgrade your server?</h2>
                 <p>Join thousands of communities that trust Emerald for moderation, engagement, and fun.</p>
-                <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-large" target="_blank">
+                <a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" class="btn-large" target="_blank" rel="noopener">
                     <i class="fas fa-plus"></i> Add Emerald Now
                 </a>
             </div>
@@ -2576,7 +2698,7 @@
                 </div>
 
                 <div id="docsContainer">
-                    <!-- Categories will be rendered by JS -->
+                    <!-- Rendered by JS -->
                 </div>
 
                 <div style="text-align:center;margin-top:40px;">
@@ -2691,7 +2813,7 @@
                 <div style="margin-top:50px;padding:40px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:var(--radius);color:#fff;text-align:center;box-shadow:0 8px 40px var(--primary-glow);transition:var(--transition);">
                     <h3 style="font-size:28px;font-weight:700;margin-bottom:8px;">💚 Upgrade to Premium today</h3>
                     <p style="opacity:0.85;margin-bottom:24px;">Get all premium features + 20% off all services. Support Emerald and take your server further.</p>
-                    <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-large" target="_blank" style="background:#fff;color:var(--primary);">
+                    <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-large" target="_blank" rel="noopener" style="background:#fff;color:var(--primary);">
                         <i class="fab fa-discord"></i> Contact us to upgrade
                     </a>
                 </div>
@@ -2699,7 +2821,7 @@
         </section>
     </div>
 
-    <!-- ═══ ORDER PAGE (formerly Custom) ═══ -->
+    <!-- ═══ ORDER PAGE ═══ -->
     <div id="order" class="page">
         <section class="order-page">
             <div class="container">
@@ -2722,7 +2844,7 @@
                             <li style="margin-top:8px;color:var(--text-muted);font-size:13px;">⏱️ 24–48h delivery</li>
                             <li style="color:var(--text-muted);font-size:13px;">!ping, !help, !rules, !info, !say</li>
                         </ul>
-                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order now</a>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank" rel="noopener">Order now</a>
                     </div>
 
                     <div class="package-card">
@@ -2739,7 +2861,7 @@
                             <li><i class="fas fa-check"></i> Basic auto‑moderation</li>
                             <li style="margin-top:8px;color:var(--text-muted);font-size:13px;">⏱️ 2–4 days</li>
                         </ul>
-                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order now</a>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank" rel="noopener">Order now</a>
                     </div>
 
                     <div class="package-card">
@@ -2755,7 +2877,7 @@
                             <li><i class="fas fa-check"></i> Error handling &amp; logging</li>
                             <li style="margin-top:8px;color:var(--text-muted);font-size:13px;">⏱️ 4–7 days</li>
                         </ul>
-                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order now</a>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank" rel="noopener">Order now</a>
                     </div>
 
                     <div class="package-card premium">
@@ -2771,7 +2893,7 @@
                             <li><i class="fas fa-check"></i> Long‑term maintenance</li>
                             <li style="margin-top:8px;color:var(--text-muted);font-size:13px;">💬 Price depends on complexity</li>
                         </ul>
-                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Contact for quote</a>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank" rel="noopener">Contact for quote</a>
                     </div>
                 </div>
 
@@ -2797,7 +2919,7 @@
                             <li><i class="fas fa-check"></i> Any style (minimalist, detailed, animated, etc.)</li>
                             <li><i class="fas fa-check"></i> Delivered in 2–4 days</li>
                         </ul>
-                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order profile</a>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank" rel="noopener">Order profile</a>
                     </div>
 
                     <div class="service-card">
@@ -2811,7 +2933,7 @@
                             <li><i class="fas fa-check"></i> Multiple revisions</li>
                             <li><i class="fas fa-check"></i> Delivered in 3–5 days</li>
                         </ul>
-                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank">Order banner</a>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" class="btn-order" target="_blank" rel="noopener">Order banner</a>
                     </div>
                 </div>
 
@@ -2853,7 +2975,7 @@
                             <li><i class="fas fa-check"></i> Name in credits</li>
                             <li><i class="fas fa-check"></i> Monthly shoutout</li>
                         </ul>
-                        <a href="https://www.paypal.com/paypalme/mohamedmansour022" class="btn-donate" target="_blank">Donate €5</a>
+                        <a href="https://www.paypal.com/paypalme/mohamedmansour022" class="btn-donate" target="_blank" rel="noopener">Donate €5</a>
                     </div>
 
                     <div class="tier-card popular">
@@ -2866,7 +2988,7 @@
                             <li><i class="fas fa-check"></i> Early access to new features</li>
                             <li><i class="fas fa-check"></i> Custom bot nickname</li>
                         </ul>
-                        <a href="https://www.paypal.com/paypalme/mohamedmansour022" class="btn-donate" target="_blank">Donate €15</a>
+                        <a href="https://www.paypal.com/paypalme/mohamedmansour022" class="btn-donate" target="_blank" rel="noopener">Donate €15</a>
                     </div>
 
                     <div class="tier-card">
@@ -2879,7 +3001,7 @@
                             <li><i class="fas fa-check"></i> Custom bot command</li>
                             <li><i class="fas fa-check"></i> Lifetime recognition</li>
                         </ul>
-                        <a href="https://www.paypal.com/paypalme/mohamedmansour022" class="btn-donate" target="_blank">Donate €30</a>
+                        <a href="https://www.paypal.com/paypalme/mohamedmansour022" class="btn-donate" target="_blank" rel="noopener">Donate €30</a>
                     </div>
                 </div>
 
@@ -2887,15 +3009,15 @@
                     <h3>💳 Choose your payment method</h3>
                     <p>We currently support PayPal — more options are on the way!</p>
                     <div class="donation-buttons">
-                        <a href="https://www.paypal.com/paypalme/mohamedmansour022" class="btn-donate-method" target="_blank">
+                        <a href="https://www.paypal.com/paypalme/mohamedmansour022" class="btn-donate-method" target="_blank" rel="noopener">
                             <i class="fab fa-paypal paypal" style="font-size:20px;"></i> PayPal
                         </a>
                         <a href="#" class="btn-donate-method disabled" onclick="return false;">
-                            <i class="fas fa-mug-hot kofi" style="font-size:20px;"></i> Ko-fi
+                            <i class="fas fa-mug-hot" style="font-size:20px;"></i> Ko-fi
                             <span style="font-size:11px;background:var(--bg);padding:2px 8px;border-radius:40px;color:var(--text-muted);">soon</span>
                         </a>
                         <a href="#" class="btn-donate-method disabled" onclick="return false;">
-                            <i class="fab fa-patreon patreon" style="font-size:20px;"></i> Patreon
+                            <i class="fab fa-patreon" style="font-size:20px;"></i> Patreon
                             <span style="font-size:11px;background:var(--bg);padding:2px 8px;border-radius:40px;color:var(--text-muted);">soon</span>
                         </a>
                         <a href="#" class="btn-donate-method disabled" onclick="return false;">
@@ -2986,7 +3108,7 @@
                     <h2>9. Changes to this policy</h2>
                     <p>We may update this policy. Continued use constitutes acceptance.</p>
                     <h2>10. Contact us</h2>
-                    <p>Via our <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank">support server</a>.</p>
+                    <p>Via our <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank" rel="noopener">support server</a>.</p>
                 </div>
             </div>
         </section>
@@ -3036,7 +3158,7 @@
                     <h2>13. Changes</h2>
                     <p>We may update these Terms. Continued use constitutes acceptance.</p>
                     <h2>14. Contact</h2>
-                    <p>Via our <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank">support server</a>.</p>
+                    <p>Via our <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank" rel="noopener">support server</a>.</p>
                 </div>
             </div>
         </section>
@@ -3050,9 +3172,9 @@
                     <h4>Emerald</h4>
                     <p style="font-size:14px;line-height:1.7;max-width:240px;">Smart Discord bot with 100+ commands — moderation, leveling, tickets, and more.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank" rel="noopener" aria-label="Discord"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -3065,7 +3187,7 @@
                         <li><a href="#" class="nav-link" data-page="order">Order</a></li>
                         <li><a href="#" class="nav-link" data-page="donations">Donations</a></li>
                         <li><a href="#" class="nav-link" data-page="status">Status</a></li>
-                        <li><a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" target="_blank">Invite Bot</a></li>
+                        <li><a href="https://discord.com/oauth2/authorize?client_id=1427340751880323172&permissions=8&integration_type=0&scope=bot" target="_blank" rel="noopener">Invite Bot</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -3078,29 +3200,29 @@
                 <div class="footer-col">
                     <h4>Support</h4>
                     <ul>
-                        <li><a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank">Discord Server</a></li>
-                        <li><a href="#" class="nav-link" data-page="home" onclick="scrollToFAQ()">FAQ</a></li>
-                        <li><a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank">Report Bug</a></li>
-                        <li><a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank">Feature Request</a></li>
+                        <li><a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank" rel="noopener">Discord Server</a></li>
+                        <li><a href="#" class="nav-link" data-page="home" onclick="scrollToFAQ();return false;">FAQ</a></li>
+                        <li><a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank" rel="noopener">Report Bug</a></li>
+                        <li><a href="https://discord.com/channels/1429507288900698316/1429507289571655812" target="_blank" rel="noopener">Feature Request</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Emerald Bot. Not affiliated with Discord Inc.</p>
-                <p style="margin-top:4px;font-size:12px;">Made with <i class="fas fa-heart" style="color:#EF4444;"></i> for the Discord community</p>
+                <p style="margin-top:4px;font-size:12px;">Made with <span class="heart"><i class="fas fa-heart"></i></span> for the Discord community</p>
             </div>
         </div>
     </footer>
 
     <!-- ═══ BACK TO TOP ═══ -->
-    <button class="back-top" id="backTopBtn"><i class="fas fa-arrow-up"></i></button>
+    <button class="back-top" id="backTopBtn" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
     <script>
         // ── LOADING SCREEN ──
         window.addEventListener('load', function() {
             const loader = document.getElementById('loader');
             const startTime = Date.now();
-            const minLoadTime = 1000;
+            const minLoadTime = 1200;
 
             const hideLoader = () => {
                 const elapsed = Date.now() - startTime;
@@ -3122,15 +3244,13 @@
                 loader.classList.add('hidden');
                 document.body.classList.add('loaded');
                 showPremiumPopup();
-            }, 2000);
+            }, 2200);
         });
 
         // ── PREMIUM POPUP ──
         function showPremiumPopup() {
             const overlay = document.getElementById('premiumPopup');
-            if (sessionStorage.getItem('premiumPopupDismissed') === 'true') {
-                return;
-            }
+            if (sessionStorage.getItem('premiumPopupDismissed') === 'true') return;
             setTimeout(() => {
                 overlay.classList.add('active');
             }, 800);
@@ -3165,38 +3285,32 @@
         document.getElementById('privacyDate').textContent = now;
         document.getElementById('tosDate').textContent = now;
 
-        // ── COMMANDS DATA (for /commands page) ──
+        // ── COMMANDS DATA ──
         const commands = [
-            // Logging
             { name: '/log_setup', cat: 'logging', desc: 'Setup professional logging system' },
             { name: '/log_status', cat: 'logging', desc: 'Check logging status' },
             { name: '/log_test', cat: 'logging', desc: 'Test logging with a sample event' },
             { name: '/log_disable', cat: 'logging', desc: 'Disable logging system' },
-            // Auto-Reply
             { name: '/autoreply_setup', cat: 'autoreply', desc: 'Enable auto‑reply system' },
             { name: '/autoreply_add', cat: 'autoreply', desc: 'Add a new auto‑reply trigger' },
             { name: '/autoreply_list', cat: 'autoreply', desc: 'List all auto‑reply triggers' },
             { name: '/autoreply_remove', cat: 'autoreply', desc: 'Remove an auto‑reply trigger' },
             { name: '/autoreply_test', cat: 'autoreply', desc: 'Test an auto‑reply trigger' },
-            // Voting
             { name: '/voting_rewards_setup', cat: 'voting', desc: 'Setup voting rewards system' },
             { name: '/voting_announce', cat: 'voting', desc: 'Set announcement channel' },
             { name: '/voting_stats', cat: 'voting', desc: 'Show voting statistics' },
-            // Reaction Roles
             { name: '/reactionrole_advanced', cat: 'reactionroles', desc: 'Create multi‑role reaction panel' },
             { name: '/reactionrole_add_role', cat: 'reactionroles', desc: 'Add role to reaction panel' },
             { name: '/reactionrole_setup', cat: 'reactionroles', desc: 'Interactive reaction role setup' },
             { name: '/reactionrole', cat: 'reactionroles', desc: 'Create reaction role' },
             { name: '/reactionrole_remove', cat: 'reactionroles', desc: 'Remove reaction role' },
             { name: '/reactionrole_list', cat: 'reactionroles', desc: 'List all reaction roles' },
-            // Tickets
             { name: '/ticket_panel', cat: 'tickets', desc: 'Create ticket panel' },
             { name: '/ticket_setup', cat: 'tickets', desc: 'Setup ticket system' },
             { name: '/ticket', cat: 'tickets', desc: 'Create support ticket' },
             { name: '/ticket_close', cat: 'tickets', desc: 'Close ticket' },
             { name: '/ticket_add_role', cat: 'tickets', desc: 'Add support role' },
             { name: '/ticket_remove_role', cat: 'tickets', desc: 'Remove support role' },
-            // AutoMod
             { name: '/automod_advanced', cat: 'automod', desc: 'Configure advanced AutoMod with escalation' },
             { name: '/automod_config', cat: 'automod', desc: 'Basic AutoMod setup' },
             { name: '/automod_test', cat: 'automod', desc: 'Test auto‑mod rules' },
@@ -3206,7 +3320,6 @@
             { name: '/whitelist_remove_role', cat: 'automod', desc: 'Remove role from whitelist' },
             { name: '/whitelist_remove_channel', cat: 'automod', desc: 'Remove channel from whitelist' },
             { name: '/whitelist_view', cat: 'automod', desc: 'View whitelist settings' },
-            // Moderation
             { name: '/ban', cat: 'moderation', desc: 'Ban a user' },
             { name: '/kick', cat: 'moderation', desc: 'Kick a user' },
             { name: '/warn', cat: 'moderation', desc: 'Warn a user' },
@@ -3233,22 +3346,18 @@
             { name: '/warn_bulk', cat: 'moderation', desc: 'Warn multiple users at once' },
             { name: '/clear_warnings', cat: 'moderation', desc: 'Clear warnings for a user' },
             { name: '/warn_count', cat: 'moderation', desc: 'Check user warnings' },
-            // Leveling
             { name: '/level_setup', cat: 'leveling', desc: 'Setup leveling system' },
             { name: '/level_reward', cat: 'leveling', desc: 'Add role reward for level' },
             { name: '/rank', cat: 'leveling', desc: 'Check your rank' },
             { name: '/xp', cat: 'leveling', desc: 'Check your XP' },
             { name: '/leaderboard', cat: 'leveling', desc: 'Show level leaderboard' },
-            // Verification
             { name: '/verification_setup', cat: 'verification', desc: 'Setup verification' },
             { name: '/verification_disable', cat: 'verification', desc: 'Disable verification' },
             { name: '/verify', cat: 'verification', desc: 'Manually verify user' },
-            // Anti-Raid
             { name: '/antiraid_setup', cat: 'antiraid', desc: 'Configure raid protection' },
             { name: '/antiraid_status', cat: 'antiraid', desc: 'Check raid protection status' },
             { name: '/raid_lockdown', cat: 'antiraid', desc: 'Manual raid lockdown' },
             { name: '/raid_unlock', cat: 'antiraid', desc: 'Remove raid lockdown' },
-            // Utility
             { name: '/userinfo', cat: 'utility', desc: 'Get user information' },
             { name: '/serverinfo', cat: 'utility', desc: 'Get server information' },
             { name: '/modstats', cat: 'utility', desc: 'View moderation statistics' },
@@ -3260,33 +3369,27 @@
             { name: '/reminder', cat: 'utility', desc: 'Set a reminder' },
             { name: '/announce', cat: 'utility', desc: 'Send an announcement' },
             { name: '/bumpdashboard', cat: 'utility', desc: 'Open bump system dashboard' },
-            // Premium
             { name: '/premium', cat: 'premium', desc: 'Access premium features dashboard' },
             { name: '/owner', cat: 'premium', desc: 'Owner dashboard for premium management' },
-            // Custom commands & tags
             { name: '/custom_command', cat: 'utility', desc: 'Create a custom command' },
             { name: '/custom_command_list', cat: 'utility', desc: 'List custom commands' },
             { name: '/custom_command_remove', cat: 'utility', desc: 'Remove a custom command' },
             { name: '/tag', cat: 'utility', desc: 'Create a tag' },
             { name: '/tag_show', cat: 'utility', desc: 'Show a tag' },
             { name: '/tag_list', cat: 'utility', desc: 'List all tags' },
-            // Starboard
             { name: '/starboard_setup', cat: 'utility', desc: 'Configure starboard system' },
-            // Fun
             { name: '/8ball', cat: 'utility', desc: 'Ask the magic 8-ball' },
             { name: '/wyr', cat: 'utility', desc: 'Would you rather?' },
             { name: '/meme', cat: 'utility', desc: 'Get a random meme' },
-            // Emoji / Sticker
             { name: '/emoji_steal', cat: 'utility', desc: 'Copy emoji from another server' },
             { name: '/sticker_steal', cat: 'utility', desc: 'Copy sticker from another server' },
-            // Welcome / Leave
             { name: '/welcome_setup', cat: 'utility', desc: 'Setup welcome system' },
             { name: '/welcome_test', cat: 'utility', desc: 'Test welcome message' },
             { name: '/leave_setup', cat: 'utility', desc: 'Setup leave system' },
             { name: '/leave_test', cat: 'utility', desc: 'Test leave message' },
         ];
 
-        // ── RENDER COMMANDS PAGE ──
+        // ── RENDER COMMANDS ──
         const grid = document.getElementById('commandsGrid');
         const searchInput = document.getElementById('cmdSearch');
         const tabBtns = document.querySelectorAll('#commandTabs .tab-btn');
@@ -3301,22 +3404,22 @@
             });
 
             grid.innerHTML = filtered.map(c => `
-                <div class="cmd-card">
-                    <div class="cmd-header">
-                        <span class="cmd-name">${c.name}</span>
-                        <span class="cmd-category">${c.cat}</span>
+                    <div class="cmd-card">
+                        <div class="cmd-header">
+                            <span class="cmd-name">${c.name}</span>
+                            <span class="cmd-category">${c.cat}</span>
+                        </div>
+                        <div class="cmd-desc">${c.desc}</div>
                     </div>
-                    <div class="cmd-desc">${c.desc}</div>
-                </div>
-            `).join('');
+                `).join('');
 
             if (!filtered.length) {
                 grid.innerHTML = `
-                    <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">
-                        <i class="fas fa-search" style="font-size:32px;display:block;margin-bottom:12px;"></i>
-                        No commands found
-                    </div>
-                `;
+                        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">
+                            <i class="fas fa-search" style="font-size:32px;display:block;margin-bottom:12px;"></i>
+                            No commands found
+                        </div>
+                    `;
             }
         }
 
@@ -3518,36 +3621,36 @@
                 if (filteredCommands.length === 0) return;
 
                 html += `
-                    <div class="docs-category">
-                        <h2><i class="fas ${cat.icon}"></i> ${cat.category}</h2>
-                        <div class="docs-grid">
-                `;
+                        <div class="docs-category">
+                            <h2><i class="fas ${cat.icon}"></i> ${cat.category}</h2>
+                            <div class="docs-grid">
+                    `;
                 filteredCommands.forEach(cmd => {
                     html += `
-                        <div class="docs-card">
-                            <div class="cmd-name">
-                                ${cmd.name}
-                                <span class="usage">${cmd.example}</span>
+                            <div class="docs-card">
+                                <div class="cmd-name">
+                                    ${cmd.name}
+                                    <span class="usage">${cmd.example}</span>
+                                </div>
+                                <div class="cmd-desc">${cmd.desc}</div>
+                                <div class="cmd-example">💡 ${cmd.example}</div>
                             </div>
-                            <div class="cmd-desc">${cmd.desc}</div>
-                            <div class="cmd-example">💡 ${cmd.example}</div>
-                        </div>
-                    `;
+                        `;
                 });
                 html += `
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
             });
 
             if (!html) {
                 html = `
-                    <div style="text-align:center;padding:60px 20px;color:var(--text-muted);">
-                        <i class="fas fa-search" style="font-size:48px;display:block;margin-bottom:16px;"></i>
-                        <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">No commands found</h3>
-                        <p>Try a different search term or browse the categories above.</p>
-                    </div>
-                `;
+                        <div style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+                            <i class="fas fa-search" style="font-size:48px;display:block;margin-bottom:16px;"></i>
+                            <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">No commands found</h3>
+                            <p>Try a different search term or browse the categories above.</p>
+                        </div>
+                    `;
             }
 
             docsContainer.innerHTML = html;
@@ -3683,10 +3786,10 @@
             }
         };
 
-        // ── INTERACTIVE: Feature cards entrance animation ──
+        // ── INTERSECTION OBSERVER FOR ANIMATIONS ──
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            threshold: 0.08,
+            rootMargin: '0px 0px -30px 0px'
         };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -3697,7 +3800,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.feature-card, .benefit-item, .premium-feat, .tier-card, .package-card, .service-card, .docs-card, .cmd-card')
+        document.querySelectorAll('.feature-card, .benefit-item, .tier-card, .package-card, .service-card, .docs-card, .cmd-card')
             .forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(30px)';
